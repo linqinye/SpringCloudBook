@@ -1,0 +1,663 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Spring Cloud Zuul · 编写docker学习笔记</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="Dazzle">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-chapter-fold/chapter-fold.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Spring Cloud Config.html" />
+    
+    
+    <link rel="prev" href="../Chapter4/Spring Cloud Feign.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    前言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../Chapter1/Spring Cloud Eureka.html">
+            
+                <a href="../Chapter1/Spring Cloud Eureka.html">
+            
+                    
+                    Spring Cloud Eureka
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../Chapter2/Spring cloud Ribbon.html">
+            
+                <a href="../Chapter2/Spring cloud Ribbon.html">
+            
+                    
+                    Spring cloud Ribbon
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../Chapter3/Spring Cloud Hystrix.html">
+            
+                <a href="../Chapter3/Spring Cloud Hystrix.html">
+            
+                    
+                    Spring Cloud Hystrix
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../Chapter4/Spring Cloud Feign.html">
+            
+                <a href="../Chapter4/Spring Cloud Feign.html">
+            
+                    
+                    Spring Cloud Feign
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.6" data-path="Spring Cloud Zuul.html">
+            
+                <a href="Spring Cloud Zuul.html">
+            
+                    
+                    Spring Cloud Zuul
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Spring Cloud Config.html">
+            
+                <a href="Spring Cloud Config.html">
+            
+                    
+                    Spring Cloud Config
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="Spring Cloud Bus.html">
+            
+                <a href="Spring Cloud Bus.html">
+            
+                    
+                    Spring Cloud Bus
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Spring Cloud Zuul</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#spring-cloud-zuulapi&#x7F51;&#x5173;"><b></b>Spring Cloud Zuul(API&#x7F51;&#x5173;)</a></li><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x5FEB;&#x901F;&#x5165;&#x95E8;"><b></b>&#x5FEB;&#x901F;&#x5165;&#x95E8;</a></li><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#1api-gateway"><b></b>1.api-gateway</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#2enablezuulproxy&#x6CE8;&#x89E3;&#x5F00;&#x542F;zuul&#x7684;api&#x7F51;&#x5173;&#x670D;&#x52A1;&#x529F;&#x80FD;"><b></b>2.@EnableZuulProxy&#x6CE8;&#x89E3;&#x5F00;&#x542F;Zuul&#x7684;API&#x7F51;&#x5173;&#x670D;&#x52A1;&#x529F;&#x80FD;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#3applicationproperties&#x4E2D;&#x914D;&#x7F6E;zuul&#x5E94;&#x7528;&#x7684;&#x57FA;&#x7840;&#x4FE1;&#x606F;"><b></b>3.application.properties&#x4E2D;&#x914D;&#x7F6E;Zuul&#x5E94;&#x7528;&#x7684;&#x57FA;&#x7840;&#x4FE1;&#x606F;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x8BF7;&#x6C42;&#x8DEF;&#x7531;"><b></b>&#x8BF7;&#x6C42;&#x8DEF;&#x7531;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x8BF7;&#x6C42;&#x8FC7;&#x6EE4;"><b></b>&#x8BF7;&#x6C42;&#x8FC7;&#x6EE4;</a></li></ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x8DEF;&#x7531;&#x8BE6;&#x89E3;"><b></b>&#x8DEF;&#x7531;&#x8BE6;&#x89E3;</a></li><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x4F20;&#x7EDF;&#x8DEF;&#x7531;&#x65B9;&#x5F0F;"><b></b>&#x4F20;&#x7EDF;&#x8DEF;&#x7531;&#x65B9;&#x5F0F;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x9762;&#x5411;&#x670D;&#x52A1;&#x7684;&#x8DEF;&#x7531;"><b></b>&#x9762;&#x5411;&#x670D;&#x52A1;&#x7684;&#x8DEF;&#x7531;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x670D;&#x52A1;&#x8DEF;&#x7531;&#x7684;&#x9ED8;&#x8BA4;&#x89C4;&#x5219;"><b></b>&#x670D;&#x52A1;&#x8DEF;&#x7531;&#x7684;&#x9ED8;&#x8BA4;&#x89C4;&#x5219;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x81EA;&#x5B9A;&#x4E49;&#x8DEF;&#x7531;&#x6620;&#x5C04;&#x89C4;&#x5219;"><b></b>&#x81EA;&#x5B9A;&#x4E49;&#x8DEF;&#x7531;&#x6620;&#x5C04;&#x89C4;&#x5219;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x8DEF;&#x5F84;&#x5339;&#x914D;"><b></b>&#x8DEF;&#x5F84;&#x5339;&#x914D;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x8DEF;&#x7531;&#x524D;&#x7F00;"><b></b>&#x8DEF;&#x7531;&#x524D;&#x7F00;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x672C;&#x5730;&#x8DF3;&#x8F6C;"><b></b>&#x672C;&#x5730;&#x8DF3;&#x8F6C;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#cookie&#x548C;&#x5934;&#x4FE1;&#x606F;"><b></b>Cookie&#x548C;&#x5934;&#x4FE1;&#x606F;</a></li></ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x8FC7;&#x6EE4;&#x5668;&#x8BE6;&#x89E3;"><b></b>&#x8FC7;&#x6EE4;&#x5668;&#x8BE6;&#x89E3;</a></li><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x8FC7;&#x6EE4;&#x5668;"><b></b>&#x8FC7;&#x6EE4;&#x5668;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x8BF7;&#x6C42;&#x751F;&#x547D;&#x5468;&#x671F;"><b></b>&#x8BF7;&#x6C42;&#x751F;&#x547D;&#x5468;&#x671F;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x6838;&#x5FC3;&#x8FC7;&#x6EE4;&#x5668;"><b></b>&#x6838;&#x5FC3;&#x8FC7;&#x6EE4;&#x5668;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x5F02;&#x5E38;&#x5904;&#x7406;"><b></b>&#x5F02;&#x5E38;&#x5904;&#x7406;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x7981;&#x7528;&#x8FC7;&#x6EE4;&#x5668;"><b></b>&#x7981;&#x7528;&#x8FC7;&#x6EE4;&#x5668;</a></li></ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x52A8;&#x6001;&#x52A0;&#x8F7D;"><b></b>&#x52A8;&#x6001;&#x52A0;&#x8F7D;</a></li><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x52A8;&#x6001;&#x8DEF;&#x7531;"><b></b>&#x52A8;&#x6001;&#x8DEF;&#x7531;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x52A8;&#x6001;&#x8FC7;&#x6EE4;&#x5668;"><b></b>&#x52A8;&#x6001;&#x8FC7;&#x6EE4;&#x5668;</a></li></ul></ul></ul></div><a href="#spring-cloud-zuulapi&#x7F51;&#x5173;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="spring-cloud-zuulapi&#x7F51;&#x5173;"><a name="spring-cloud-zuulapi&#x7F51;&#x5173;" class="anchor-navigation-ex-anchor" href="#spring-cloud-zuulapi&#x7F51;&#x5173;"><i class="fa fa-link" aria-hidden="true"></i></a>Spring Cloud Zuul(API&#x7F51;&#x5173;)</h1>
+<h2 id="&#x5FEB;&#x901F;&#x5165;&#x95E8;"><a name="&#x5FEB;&#x901F;&#x5165;&#x95E8;" class="anchor-navigation-ex-anchor" href="#&#x5FEB;&#x901F;&#x5165;&#x95E8;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x5FEB;&#x901F;&#x5165;&#x95E8;</h2>
+<h3 id="1api-gateway"><a name="1api-gateway" class="anchor-navigation-ex-anchor" href="#1api-gateway"><i class="fa fa-link" aria-hidden="true"></i></a>1.api-gateway</h3>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-netflix-zuul&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre><p>zuul&#x5305;&#x542B;&#x4E0B;&#x5217;&#x4F9D;&#x8D56;&#xFF1A;</p>
+<ul>
+<li>spring-cloud-starter-hystrix&#xFF1A; &#x8BE5;&#x4F9D;&#x8D56;&#x7528;&#x6765;&#x5728;&#x7F51;&#x5173;&#x670D;&#x52A1;&#x4E2D;&#x5B9E;&#x73B0;&#x5BF9;&#x5FAE;&#x670D;&#x52A1;&#x8F6C;&#x53D1;&#x65F6;&#x5019;&#x7684;&#x4FDD;&#x62A4;&#x673A;&#x5236;&#xFF0C;&#x901A;&#x8FC7;&#x7EBF;&#x7A0B;&#x9694;&#x79BB;&#x548C;&#x65AD;&#x8DEF;&#x5668;&#xFF0C;&#x9632;&#x6B62;&#x5FAE;&#x670D;&#x52A1;&#x7684;&#x6545;&#x969C;&#x5F15;&#x53D1;API&#x7F51;&#x5173;&#x8D44;&#x6E90;&#x65E0;&#x6CD5;&#x91CA;&#x653E;&#xFF0C; &#x4ECE;&#x800C;&#x5F71;&#x54CD;&#x5176;&#x4ED6;&#x5E94;&#x7528;&#x7684;&#x5BF9;&#x5916;&#x670D;&#x52A1;&#x3002;</li>
+<li>spring-cloud-starter-Ribbon: &#x8BE5;&#x4F9D;&#x8D56;&#x7528;&#x6765;&#x5B9E;&#x73B0;&#x5728;&#x7F51;&#x5173;&#x670D;&#x52A1;&#x8FDB;&#x884C;&#x8DEF;&#x7531;&#x8F6C;&#x53D1;&#x65F6;&#x5019;&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x4EE5;&#x53CA;&#x8BF7;&#x6C42;&#x91CD;&#x8BD5;&#x3002;</li>
+<li>spring-boot-starter-actuator: &#x8BE5;&#x4F9D;&#x8D56;&#x7528;&#x6765;&#x63D0;&#x4F9B;&#x5E38;&#x89C4;&#x7684;&#x5FAE;&#x670D;&#x52A1;&#x7BA1;&#x7406;&#x7AEF;&#x70B9;&#x3002; &#x53E6;&#x5916;&#xFF0C; &#x5728;Spring Cloud Zuul&#x4E2D;&#x8FD8;&#x7279;&#x522B;&#x63D0;&#x4F9B;&#x4E86;/routes&#x7AEF;&#x70B9;&#x6765;&#x8FD4;&#x56DE;&#x5F53;&#x524D;&#x7684;&#x6240;&#x6709;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x3002;</li>
+</ul>
+<h3 id="2enablezuulproxy&#x6CE8;&#x89E3;&#x5F00;&#x542F;zuul&#x7684;api&#x7F51;&#x5173;&#x670D;&#x52A1;&#x529F;&#x80FD;"><a name="2enablezuulproxy&#x6CE8;&#x89E3;&#x5F00;&#x542F;zuul&#x7684;api&#x7F51;&#x5173;&#x670D;&#x52A1;&#x529F;&#x80FD;" class="anchor-navigation-ex-anchor" href="#2enablezuulproxy&#x6CE8;&#x89E3;&#x5F00;&#x542F;zuul&#x7684;api&#x7F51;&#x5173;&#x670D;&#x52A1;&#x529F;&#x80FD;"><i class="fa fa-link" aria-hidden="true"></i></a>2.@EnableZuulProxy&#x6CE8;&#x89E3;&#x5F00;&#x542F;Zuul&#x7684;API&#x7F51;&#x5173;&#x670D;&#x52A1;&#x529F;&#x80FD;</h3>
+<h3 id="3applicationproperties&#x4E2D;&#x914D;&#x7F6E;zuul&#x5E94;&#x7528;&#x7684;&#x57FA;&#x7840;&#x4FE1;&#x606F;"><a name="3applicationproperties&#x4E2D;&#x914D;&#x7F6E;zuul&#x5E94;&#x7528;&#x7684;&#x57FA;&#x7840;&#x4FE1;&#x606F;" class="anchor-navigation-ex-anchor" href="#3applicationproperties&#x4E2D;&#x914D;&#x7F6E;zuul&#x5E94;&#x7528;&#x7684;&#x57FA;&#x7840;&#x4FE1;&#x606F;"><i class="fa fa-link" aria-hidden="true"></i></a>3.application.properties&#x4E2D;&#x914D;&#x7F6E;Zuul&#x5E94;&#x7528;&#x7684;&#x57FA;&#x7840;&#x4FE1;&#x606F;</h3>
+<pre><code>spring.application.name = api-gateway
+server.port = 5555
+</code></pre><h3 id="&#x8BF7;&#x6C42;&#x8DEF;&#x7531;"><a name="&#x8BF7;&#x6C42;&#x8DEF;&#x7531;" class="anchor-navigation-ex-anchor" href="#&#x8BF7;&#x6C42;&#x8DEF;&#x7531;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x8BF7;&#x6C42;&#x8DEF;&#x7531;</h3>
+<ul>
+<li>&#x4E3A;&#x4E86;&#x4E0E;Eureka&#x6574;&#x5408;&#xFF0C; &#x6211;&#x4EEC;&#x9700;&#x8981;&#x5728; api-gateway &#x7684; pom.xml &#x4E2D;&#x5F15;&#x5165;spring&#xAD;cloud-starter-eureka&#x4F9D;&#x8D56;</li>
+<li>&#x5728;api-gateway&#x7684;application.properties &#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x6307;&#x5B9A;Eureka&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C; &#x5E76;&#x4E14;&#x914D;&#x7F6E;&#x670D;&#x52A1;&#x8DEF;&#x7531;.</li>
+</ul>
+<pre><code>zuul.routes.api-a.path=/api-a/**
+zuul.routes.api-a.serviceId=hello-service
+zuul.routes.api-b.path=/api-b/**
+zuul.routes.api-b.serviceId=feign-consumer
+eureka.client.serviceUrl.defaultZone=http://localhost:11112/eureka/
+</code></pre><p>&#x901A;&#x8FC7;&#x4E0A;&#x9762;&#x7684;&#x642D;&#x5EFA;&#x5DE5;&#x4F5C;&#xFF0C; &#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x670D;&#x52A1;&#x7F51;&#x5173;&#x6765;&#x8BBF;&#x95EE; hello-service &#x548C;feign-consumer&#x8FD9;&#x4E24;&#x4E2A;&#x670D;&#x52A1; &#x4E86;&#x3002; &#x6839;&#x636E;&#x914D;&#x7F6E;&#x7684;&#x6620;&#x5C04;&#x5173;&#x7CFB;&#xFF0C; &#x5206;&#x522B;&#x5411;&#x7F51;&#x5173;&#x53D1; &#x8D77;&#x4E0B;&#x9762;&#x8FD9;&#x4E9B;&#x8BF7;&#x6C42;&#x3002;
+&#x2022; <a href="http://localhost:5555/api-a/hello" target="_blank">http://localhost:5555/api-a/hello</a>: &#x8BE5; url&#x7B26;&#x5408;/api-a/<strong>&#x89C4;&#x5219;&#xFF0C; &#x7531;api-a&#x8DEF;&#x7531;&#x8D1F;&#x8D23;&#x8F6C;&#x53D1;&#xFF0C;&#x8BE5;&#x8DEF;&#x7531;&#x6620;&#x5C04;&#x7684;serviceId&#x4E3A;hello-service, &#x6240;&#x4EE5;&#x6700;&#x7EC8;/hello&#x8BF7;&#x6C42;&#x4F1A;&#x88AB;&#x53D1;&#x9001;&#x5230;hello-service&#x670D;&#x52A1;&#x7684; &#x67D0;&#x4E2A; &#x5B9E;&#x4F8B;&#x4E0A;&#x53BB;&#x3002;
+&#x2022; <a href="http://localhost:5555/api-b/feign-consumer" target="_blank">http://localhost:5555/api-b/feign-consumer</a>: &#x8BE5;url&#x7B26;&#x5408;/api-b/</strong>&#x89C4;&#x5219;&#xFF0C;&#x7531; api-b&#x8DEF;&#x7531;&#x8D1F;&#x8D23;&#x8F6C;&#x53D1;&#xFF0C;&#x8BE5;&#x8DEF;&#x7531;&#x6620;&#x5C04;&#x7684;serviceId&#x4E3A;feign-consumer,&#x6240;&#x4EE5;&#x6700;&#x7EC8;/feign-consumer&#x8BF7;&#x6C42;&#x4F1A;&#x88AB;&#x53D1;&#x9001;&#x5230;feign-consumer&#x670D;&#x52A1;&#x7684;&#x67D0;&#x4E2A;&#x5B9E;&#x4F8B;&#x4E0A;&#x53BB;.</p>
+<h3 id="&#x8BF7;&#x6C42;&#x8FC7;&#x6EE4;"><a name="&#x8BF7;&#x6C42;&#x8FC7;&#x6EE4;" class="anchor-navigation-ex-anchor" href="#&#x8BF7;&#x6C42;&#x8FC7;&#x6EE4;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x8BF7;&#x6C42;&#x8FC7;&#x6EE4;</h3>
+<ul>
+<li>&#x5265;&#x79BB;&#x51FA;&#x6821;&#x9A8C;&#x903B;&#x8F91;&#xFF0C;&#x6784;&#x5EFA;&#x72EC;&#x7ACB;&#x7684;&#x9274;&#x6743;&#x670D;&#x52A1;</li>
+<li>&#x524D;&#x7F6E;&#x7F51;&#x5173;&#x5B8C;&#x6210;&#x975E;&#x4E1A;&#x52A1;&#x6027;&#x8D28;&#x7684;&#x6821;&#x9A8C;</li>
+<li>&#x5728;&#x8BF7;&#x6C42;&#x5230;&#x8FBE;&#x7684;&#x65F6;&#x5019;&#x5C31;&#x5B8C;&#x6210;&#x6821;&#x9A8C;&#x548C;&#x8FC7;&#x6EE4;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x8F6C;&#x53D1;&#x540E;&#x518D;&#x8FC7;&#x6EE4;&#x800C;&#x5BFC;&#x81F4;&#x66F4;&#x957F;&#x7684;&#x8BF7;&#x6C42;&#x5EF6;&#x8FDF;</li>
+<li>&#x901A;&#x8FC7;&#x5728;&#x7F51;&#x5173;&#x4E2D;&#x5B8C;&#x6210;&#x6821;&#x9A8C;&#x548C;&#x8FC7;&#x6EE4;&#xFF0C; &#x5FAE;&#x670D;&#x52A1;&#x5E94;&#x7528;&#x7AEF;&#x5C31;&#x53EF;&#x4EE5;&#x53BB;&#x9664;&#x5404;&#x79CD;&#x590D;&#x6742;&#x7684;&#x8FC7;&#x6EE4;&#x5668;&#x548C;&#x62E6;&#x622A;&#x5668;&#x4E86;</li>
+</ul>
+<p>Zuul &#x5141;&#x8BB8;&#x5F00;&#x53D1;&#x8005;&#x5728;API&#x7F51;&#x5173;&#x4E0A;&#x901A;&#x8FC7;&#x5B9A;&#x4E49;&#x8FC7;&#x6EE4;&#x5668;&#x6765;&#x5B9E;&#x73B0;&#x5BF9;&#x8BF7;&#x6C42;&#x7684;&#x62E6;&#x622A;&#x4E0E;&#x8FC7;&#x6EE4;&#xFF0C;&#x5B9E;&#x73B0;&#x7684;&#x65B9;&#x6CD5;&#x975E;&#x5E38;&#x7B80;&#x5355;&#xFF0C;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x8981;&#x7EE7;&#x627F; ZuulFilter&#x62BD;&#x8C61;&#x7C7B;&#x5E76;&#x5B9E;&#x73B0;&#x5B83;&#x5B9A;&#x4E49;&#x7684;4&#x4E2A;&#x62BD;&#x8C61;&#x51FD;&#x6570;&#x5C31;&#x53EF;&#x4EE5;&#x5B8C;&#x6210;&#x5BF9;&#x8BF7;&#x6C42;&#x7684;&#x62E6;&#x622A;&#x548C;&#x8FC7;&#x6EE4;&#x4E86;.</p>
+<p><strong>&#x5B9E;&#x73B0;&#x4E86;&#x5728;&#x8BF7;&#x6C42;&#x88AB;&#x8DEF;&#x7531;&#x4E4B;&#x524D;&#x68C0;&#x67E5;HttpServletRequet&#x4E2D;&#x662F;&#x5426;&#x6709; accessToken &#x53C2;&#x6570;&#xFF0C; &#x82E5;&#x6709;&#x5C31;&#x8FDB;&#x884C;&#x8DEF;&#x7531;&#xFF0C; &#x82E5;&#x6CA1;&#x6709;&#x5C31;&#x62D2;&#x7EDD;&#x8BBF;&#x95EE;&#xFF0C; &#x8FD4;&#x56DE; 401 Unauthorized &#x9519;&#x8BEF;</strong></p>
+<pre><code>@Slf4j
+public class AccessFilter extends ZuulFilter {
+    @Override
+    public String filterType() {
+        return &quot;pre&quot;;
+    }
+
+    @Override
+    public int filterOrder() {
+        return 0;
+    }
+
+    @Override
+    public boolean shouldFilter() {
+        return true;
+    }
+
+    @Override
+    public Object run() throws ZuulException {
+        RequestContext ctx = RequestContext.getCurrentContext();
+        HttpServletRequest request = ctx.getRequest();
+        log.info(&quot;send {} request to{}&quot;, request.getMethod () ,
+                request.getRequestURL().toString());
+        Object accessToken = request.getParameter(&quot;accessToken&quot;);
+        if(accessToken ==  null) {
+            log.warn(&quot;access token is empty&quot;);
+            ctx.setSendZuulResponse(false);
+            ctx.setResponseStatusCode(401);
+            return null;
+        }
+            log.info(&quot;access token ok&quot;);
+            return null;
+    }
+}
+</code></pre><p>&#x5728;&#x4E0A;&#x9762;&#x5B9E;&#x73B0;&#x7684;&#x8FC7;&#x6EE4;&#x5668;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x901A;&#x8FC7;&#x7EE7;&#x627F;ZuulFilter&#x62BD;&#x8C61;&#x7C7B;&#x5E76;&#x91CD;&#x5199;&#x4E0B;&#x9762;4&#x4E2A;&#x65B9;&#x6CD5;&#x6765;&#x5B9E;&#x73B0;&#x81EA;&#x5B9A;&#x4E49;&#x7684;&#x8FC7;&#x6EE4;&#x5668;&#x3002; &#x8FD9;4&#x4E2A;&#x65B9;&#x6CD5;&#x5206;&#x522B;&#x5B9A;&#x4E49;&#x4E86;&#x5982;&#x4E0B;&#x5185;&#x5BB9;&#x3002;</p>
+<ul>
+<li><strong>FilterType: &#x8FC7;&#x6EE4;&#x5668;&#x7684;&#x7C7B;&#x578B;</strong>&#xFF0C; &#x5B83;&#x51B3;&#x5B9A;&#x8FC7;&#x6EE4;&#x5668;&#x5728;&#x8BF7;&#x6C42;&#x7684;&#x54EA;&#x4E2A;&#x751F;&#x547D;&#x5468;&#x671F;&#x4E2D;&#x6267;&#x884C;&#x3002; &#x8FD9;&#x91CC;&#x5B9A;&#x4E49;&#x4E3A;pre, &#x4EE3;&#x8868;&#x4F1A;&#x5728;&#x8BF7;&#x6C42;&#x88AB;&#x8DEF;&#x7531;&#x4E4B;&#x524D;&#x6267;&#x884C;&#x3002;</li>
+<li><strong>FilterOrder: &#x8FC7;&#x6EE4;&#x5668;&#x7684;&#x6267;&#x884C;&#x987A;&#x5E8F;</strong>&#x3002; &#x5F53;&#x8BF7;&#x6C42;&#x5728;&#x4E00;&#x4E2A;&#x9636;&#x6BB5;&#x4E2D;&#x5B58;&#x5728;&#x591A;&#x4E2A;&#x8FC7;&#x6EE4;&#x5668;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x6839;&#x636E;&#x8BE5;&#x65B9;&#x6CD5;&#x8FD4;&#x56DE;&#x7684;&#x503C;&#x6765;&#x4F9D;&#x6B21;&#x6267;&#x884C;&#x3002;</li>
+<li><strong>shouldFilter: &#x5224;&#x65AD;&#x8BE5;&#x8FC7;&#x6EE4;&#x5668;&#x662F;&#x5426;&#x9700;&#x8981;&#x88AB;&#x6267;&#x884C;</strong>&#x3002; &#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;&#x4E86;true, &#x56E0;&#x6B64;&#x8BE5;&#x8FC7;&#x6EE4;&#x5668;&#x5BF9;&#x6240;&#x6709;&#x8BF7;&#x6C42;&#x90FD;&#x4F1A;&#x751F;&#x6548;&#x3002; &#x5B9E;&#x9645;&#x8FD0;&#x7528;&#x4E2D;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5229;&#x7528;&#x8BE5;&#x51FD;&#x6570;&#x6765;&#x6307;&#x5B9A;&#x8FC7;&#x6EE4;&#x5668;&#x7684;&#x6709;&#x6548;&#x8303;&#x56F4;&#x3002;</li>
+<li><strong>run: &#x8FC7;&#x6EE4;&#x5668;&#x7684;&#x5177;&#x4F53;&#x903B;&#x8F91;</strong>&#x3002; &#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x901A;&#x8FC7;ctx.setSendZuulResponse(false)&#x4EE4;zuul&#x8FC7;&#x6EE4;&#x8BE5;&#x8BF7;&#x6C42;&#xFF0C; &#x4E0D;&#x5BF9;&#x5176;&#x8FDB;&#x884C;&#x8DEF;&#x7531;&#xFF0C; &#x7136;&#x540E;&#x901A;&#x8FC7; ctx.setResponseStatus&#xAD;Code (401)&#x8BBE;&#x7F6E;&#x4E86;&#x5176;&#x8FD4;&#x56DE;&#x7684;&#x9519;&#x8BEF;&#x7801;&#xFF0C;&#x5F53;&#x7136;&#x4E5F;&#x53EF;&#x4EE5;&#x8FDB;&#x4E00;&#x6B65;&#x4F18;&#x5316;&#x6211;&#x4EEC;&#x7684;&#x8FD4;&#x56DE;&#xFF0C;&#x6BD4;&#x5982;&#xFF0C;&#x901A;&#x8FC7;ctx.setResponseBody(body)&#x5BF9;&#x8FD4;&#x56DE;&#x7684;body&#x5185;&#x5BB9;&#x8FDB;&#x884C;&#x7F16;&#x8F91;&#x7B49;.</li>
+</ul>
+<p>&#x5B9E;&#x73B0;&#x4E86;&#x81EA;&#x5B9A;&#x4E49;&#x8FC7;&#x6EE4;&#x5668;&#x4E4B;&#x540E;&#xFF0C; &#x5B83;&#x5E76;&#x4E0D;&#x4F1A;&#x76F4;&#x63A5;&#x751F;&#x6548;&#xFF0C; &#x6211;&#x4EEC;&#x8FD8;&#x9700;&#x8981;&#x4E3A;&#x5176;&#x521B;&#x5EFA;&#x5177;&#x4F53;&#x7684;Bean&#x624D;&#x80FD;&#x542F;&#x52A8;&#x8BE5;&#x8FC7;&#x6EE4;&#x5668;&#xFF0C; &#x6BD4;&#x5982;&#xFF0C; &#x5728;&#x5E94;&#x7528;&#x4E3B;&#x7C7B;&#x4E2D;&#x589E;&#x52A0;&#x5982;&#x4E0B;&#x5185;&#x5BB9;</p>
+<pre><code>@SpringBootApplication
+@EnableZuulProxy
+@EnableDiscoveryClient
+public class ApiGatewayApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(ApiGatewayApplication.class, args);
+    }
+
+    @Bean
+    public AccessFilter accessFilter(){
+        return new AccessFilter();
+    }
+
+}
+</code></pre><p>&#x5728;&#x5BF9;api-gateway&#x670D;&#x52A1;&#x5B8C;&#x6210;&#x4E86;&#x4E0A;&#x9762;&#x7684;&#x6539;&#x9020;&#x4E4B;&#x540E;&#xFF0C; &#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x91CD;&#x65B0;&#x542F;&#x52A8;&#x5B83;&#xFF0C; &#x5E76;&#x53D1;&#x8D77;&#x4E0B;&#x9762;&#x7684;&#x8BF7;&#x6C42;&#xFF0C; &#x5BF9;&#x4E0A;&#x9762;&#x5B9A;&#x4E49;&#x7684;&#x8FC7;&#x6EE4;&#x5668;&#x505A; &#x4E00; &#x4E2A;&#x9A8C;&#x8BC1;&#x3002;
+&#x2022; <a href="http://localhost:5555/api-a/hello" target="_blank">http://localhost:5555/api-a/hello</a>: &#x8FD4;&#x56DE;401&#x9519;&#x8BEF;&#x3002;
+&#x2022; <a href="http://localhost:5555/api-a/hello&amp;accessToken" target="_blank">http://localhost:5555/api-a/hello&amp;accessToken</a> = token: &#x6B63;&#x786E;&#x8DEF;&#x7531;&#x5230;hello-service&#x7684;/hello&#x63A5;&#x53E3;&#xFF0C; &#x5E76;&#x8FD4;&#x56DE;Hello World&#x3002;</p>
+<p><strong>&#x603B;&#x7ED3;</strong></p>
+<ul>
+<li>&#x5B83;&#x4F5C;&#x4E3A;&#x7CFB;&#x7EDF;&#x7684;&#x7EDF;&#x4E00;&#x5165;&#x53E3;&#xFF0C;&#x5C4F;&#x853D;&#x4E86;&#x7CFB;&#x7EDF;&#x5185;&#x90E8;&#x5404;&#x4E2A;&#x5FAE;&#x670D;&#x52A1;&#x7684;&#x7EC6;&#x8282;&#x3002;</li>
+<li>&#x5B83;&#x53EF;&#x4EE5;&#x4E0E;&#x670D;&#x52A1;&#x6CBB;&#x7406;&#x6846;&#x67B6;&#x7ED3;&#x5408;&#xFF0C;&#x5B9E;&#x73B0;&#x81EA;&#x52A8;&#x5316;&#x7684;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x7EF4;&#x62A4;&#x4EE5;&#x53CA;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x7684;&#x8DEF;&#x7531;&#x8F6C;&#x53D1;&#x3002;</li>
+<li>&#x5B83;&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;&#x63A5;&#x53E3;&#x6743;&#x9650;&#x6821;&#x9A8C;&#x4E0E;&#x5FAE;&#x670D;&#x52A1;&#x4E1A;&#x52A1;&#x903B;&#x8F91;&#x7684;&#x89E3;&#x8026;&#x3002;</li>
+<li>&#x901A;&#x8FC7;&#x670D;&#x52A1;&#x7F51;&#x5173;&#x4E2D;&#x7684;&#x8FC7;&#x7096;&#x5668;&#xFF0C; &#x5728;&#x5404;&#x751F;&#x547D;&#x5468;&#x671F;&#x4E2D;&#x53BB;&#x6821;&#x9A8C;&#x8BF7;&#x6C42;&#x7684;&#x5185;&#x5BB9;&#xFF0C; &#x5C06;&#x539F;&#x672C;&#x5728;&#x5BF9;&#x5916;&#x670D;&#x52A1;&#x5C42;&#x505A;&#x7684;&#x6821;&#x9A8C;&#x524D;&#x79FB;&#xFF0C; &#x4FDD;&#x8BC1;&#x4E86;&#x5FAE;&#x670D;&#x52A1;&#x7684;&#x65E0;&#x72B6;&#x6001;&#x6027;&#xFF0C; &#x540C;&#x65F6;&#x964D;&#x4F4E;&#x4E86;&#x5FAE;&#x670D;&#x52A1;&#x7684;&#x6D4B;&#x8BD5;&#x96BE;&#x5EA6;&#xFF0C; &#x8BA9;&#x670D;&#x52A1;&#x672C;&#x8EAB;&#x66F4;&#x96C6;&#x4E2D;&#x5173;&#x6CE8;&#x4E1A;&#x52A1;&#x903B;&#x8F91;&#x7684;&#x5904;&#x7406;</li>
+</ul>
+<h2 id="&#x8DEF;&#x7531;&#x8BE6;&#x89E3;"><a name="&#x8DEF;&#x7531;&#x8BE6;&#x89E3;" class="anchor-navigation-ex-anchor" href="#&#x8DEF;&#x7531;&#x8BE6;&#x89E3;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x8DEF;&#x7531;&#x8BE6;&#x89E3;</h2>
+<h3 id="&#x4F20;&#x7EDF;&#x8DEF;&#x7531;&#x65B9;&#x5F0F;"><a name="&#x4F20;&#x7EDF;&#x8DEF;&#x7531;&#x65B9;&#x5F0F;" class="anchor-navigation-ex-anchor" href="#&#x4F20;&#x7EDF;&#x8DEF;&#x7531;&#x65B9;&#x5F0F;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x4F20;&#x7EDF;&#x8DEF;&#x7531;&#x65B9;&#x5F0F;</h3>
+<h4 id="&#x5355;&#x5B9E;&#x4F8B;&#x914D;&#x7F6E;"><a name="&#x5355;&#x5B9E;&#x4F8B;&#x914D;&#x7F6E;" class="anchor-navigation-ex-anchor" href="#&#x5355;&#x5B9E;&#x4F8B;&#x914D;&#x7F6E;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x5355;&#x5B9E;&#x4F8B;&#x914D;&#x7F6E;</h4>
+<pre><code class="lang-java">zuul.routes.api-a-url.path=/api-a-url<span class="hljs-comment">/**
+zuul.routes.api-a-url.url=http://localhost:8080/
+</span></code></pre>
+<p>&#x8BE5;&#x914D;&#x7F6E;&#x5B9A;&#x4E49;&#x4E86;&#x53D1;&#x5F80;API&#x7F51;&#x5173;&#x670D;&#x52A1;&#x7684;&#x8BF7;&#x6C42;&#x4E2D;&#xFF0C; &#x6240;&#x6709;&#x7B26;&#x5408;/api-a-url/**&#x89C4;&#x5219;&#x7684;&#x8BBF;&#x95EE;&#x90FD;&#x5C06;&#x88AB;&#x8DEF;&#x7531;&#x8F6C;&#x53D1;&#x5230;<a href="http://localhost:8080/&#x5730;&#x5740;&#x4E0A;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;" target="_blank">http://localhost:8080/&#x5730;&#x5740;&#x4E0A;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;</a> &#x8BF4;&#xFF0C;&#x5F53;&#x6211;&#x4EEC;&#x8BBF;&#x95EE;<a href="http://localhost:5555/api-a-url/hello&#x7684;&#x65F6;&#x5019;&#xFF0C;API&#x7F51;&#x5173;&#x670D;&#x52A1;&#x4F1A;&#x5C06;&#x8BE5;&#x8BF7;&#x6C42;&#x8DEF;&#x7531;&#x5230;http://localhost:8080/hello&#x63D0;&#x4F9B;&#x7684;&#x5FAE;&#x670D;&#x52A1;&#x63A5;&#x53E3;&#x4E0A;&#x3002;" target="_blank">http://localhost:5555/api-a-url/hello&#x7684;&#x65F6;&#x5019;&#xFF0C;API&#x7F51;&#x5173;&#x670D;&#x52A1;&#x4F1A;&#x5C06;&#x8BE5;&#x8BF7;&#x6C42;&#x8DEF;&#x7531;&#x5230;http://localhost:8080/hello&#x63D0;&#x4F9B;&#x7684;&#x5FAE;&#x670D;&#x52A1;&#x63A5;&#x53E3;&#x4E0A;&#x3002;</a> &#x5176;&#x4E2D; &#xFF0C;&#x914D;&#x7F6E;&#x5C5E;&#x6027;zuul.routes.api-a-url.path &#x4E2D;&#x7684;api-a-url&#x90E8;&#x5206;&#x4E3A;&#x8DEF;&#x7531;&#x7684;&#x540D;&#x5B57;&#xFF0C;&#x53EF;&#x4EE5;&#x4EFB;&#x610F;&#x5B9A;&#x4E49;&#xFF0C;&#x4F46;&#x662F;<code>&#x4E00;&#x7EC4;path&#x548C;url&#x6620;&#x5C04;&#x5173;&#x7CFB;&#x7684;&#x8DEF;&#x7531;&#x540D;&#x8981;&#x76F8;&#x540C;</code>&#xFF0C;&#x9762;&#x5411;&#x670D;&#x52A1;&#x7684;&#x6620;&#x5C04;&#x65B9;&#x5F0F;&#x4E5F;&#x662F;&#x5982;&#x6B64;&#x3002;</p>
+<h4 id="&#x591A;&#x5B9E;&#x4F8B;&#x914D;&#x7F6E;"><a name="&#x591A;&#x5B9E;&#x4F8B;&#x914D;&#x7F6E;" class="anchor-navigation-ex-anchor" href="#&#x591A;&#x5B9E;&#x4F8B;&#x914D;&#x7F6E;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x591A;&#x5B9E;&#x4F8B;&#x914D;&#x7F6E;</h4>
+<pre><code class="lang-java">zuul.routes.user-service.path = /user-service<span class="hljs-comment">/**
+zuul.routes.user-service.serviceid=user-service
+ribbon.eureka.enabled = false
+user-service.ribbon.listOfServers = http://localhost:8080/,http://localhost:8081/
+</span></code></pre>
+<p>&#x8BE5; &#x914D; &#x7F6E; &#x5B9E; &#x73B0;&#x4E86;&#x5BF9; &#x7B26; &#x5408; /user-service/** &#x89C4; &#x5219; &#x7684; &#x8BF7; &#x6C42; &#x8DEF; &#x5F84; &#x8F6C; &#x53D1; &#x5230;<a href="http://localhost:8080/&#x548C;http://localhost:8081/&#x4E24;&#x4E2A;&#x5B9E;&#x4F8B;&#x5730;&#x5740;&#x7684;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x3002;" target="_blank">http://localhost:8080/&#x548C;http://localhost:8081/&#x4E24;&#x4E2A;&#x5B9E;&#x4F8B;&#x5730;&#x5740;&#x7684;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x3002;</a> &#x5B83;&#x7684;&#x914D;&#x7F6E;&#x65B9;&#x5F0F;&#x4E0E;&#x670D;&#x52A1;&#x8DEF;&#x7531;&#x7684;&#x914D;&#x7F6E; &#x65B9;&#x5F0F;&#x4E00; &#x6837;&#xFF0C;&#x90FD;&#x91C7;&#x7528;&#x4E86;zuul.routes.
+&lt; route&gt;.path&#x4E0E;zuul.routes. &lt; route&gt;.serviceId&#x53C2;&#x6570;&#x5BF9;&#x7684;&#x6620;&#x5C04;&#x65B9;&#x5F0F;&#xFF0C;&#x53EA;&#x662F;&#x8FD9;&#x91CC;&#x7684; serviceid &#x662F;&#x7531;&#x7528;&#x6237;&#x624B;&#x5DE5;&#x547D;&#x540D; &#x7684;&#x670D;&#x52A1;&#x540D;&#x79F0; &#xFF0C;&#x914D; &#x5408;ribbon.listOfServers &#x53C2;&#x6570;&#x5B9E;&#x73B0;&#x670D;&#x52A1;&#x4E0E;&#x5B9E;&#x4F8B;&#x7684;&#x7EF4;&#x62A4;&#x3002;&#x7531;&#x4E8E;&#x5B58;&#x5728;&#x591A;&#x4E2A;&#x5B9E;&#x4F8B;&#xFF0C;API&#x7F51;&#x5173;&#x5728;&#x8FDB;&#x884C;&#x8DEF;&#x7531;&#x8F6C;&#x53D1;&#x65F6;&#x9700;&#x8981;&#x5B9E;&#x73B0;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x7B56;&#x7565;&#xFF0C;&#x4E8E;&#x662F;&#x8FD9;&#x91CC;&#x8FD8;&#x9700;&#x8981;Spring Cloud Ribbon&#x7684;&#x914D;&#x5408;&#x3002;&#x7531;&#x5343;&#x5728;Spring Cloud Zuul&#x4E2D;&#x81EA;&#x5E26;&#x4E86;&#x5BF9;Ribbon&#x7684;&#x4F9D;&#x8D56;&#xFF0C; &#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x505A; &#x4E00; &#x4E9B;&#x914D;&#x7F6E;&#x5373;&#x53EF;&#x3002;</p>
+<ul>
+<li>ribbon.eureka.enabled:&#x7531;&#x4E8E;zuul.routes. &lt; route&gt;.serviceid&#x6307;&#x5B9A;&#x7684;&#x662F;&#x670D;&#x52A1;&#x540D;&#x79F0;&#xFF0C;&#x9ED8;&#x8BA4;&#x6E05;&#x51B5;&#x4E0B;Ribbon&#x4F1A;&#x6839;&#x636E;&#x670D;&#x52A1;&#x53D1;&#x73B0;&#x673A;&#x5236;&#x6765;&#x83B7;&#x53D6;&#x914D;&#x7F6E;&#x670D;&#x52A1;&#x540D;&#x5BF9;&#x5E94;&#x7684;&#x5B9E;&#x4F8B;&#x6E05;&#x5355;&#x3002; &#x4F46;&#x662F;&#xFF0C;&#x8BE5;&#x793A;&#x4F8B;&#x5E76;&#x6CA1;&#x6709;&#x6574;&#x5408;&#x7C7B;&#x4F3C;Eureka&#x4E4B;&#x7C7B;&#x7684;&#x670D;&#x52A1;&#x6CBB;&#x7406;&#x6846;&#x67B6;&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x5C06;&#x8BE5;&#x53C2;&#x6570;&#x8BBE;&#x7F6E;&#x4E3A;false, &#x5426;&#x5219;&#x914D;&#x7F6E;&#x7684;serviceId&#x83B7;&#x53D6;&#x4E0D;&#x5230;&#x5BF9;&#x5E94;&#x5B9E;&#x4F8B;&#x7684;&#x6E05;&#x5355;.</li>
+<li>user-service.ribbon.listOfServers: &#x8BE5; &#x53C2;&#x6570;&#x5185;&#x5BB9;&#x4E0E; zuul.routes.<route>.serviceid &#x7684;&#x914D;&#x7F6E;&#x76F8;&#x5BF9; &#x5E94;&#xFF0C; &#x5F00;&#x5934;&#x7684; user-service &#x5BF9;&#x5E94;&#x4E86;serviceId&#x7684;&#x503C;&#xFF0C; &#x8FD9;&#x4E24;&#x4E2A;&#x53C2;&#x6570;&#x7684;&#x914D;&#x7F6E;&#x76F8;&#x5F53;&#x4E8E;&#x5728;&#x8BE5;&#x5E94;&#x7528;&#x5185;&#x90E8;&#x624B;&#x5DE5;&#x7EF4;&#x62A4;&#x4E86;&#x670D;&#x52A1;&#x4E0E;&#x5B9E;&#x4F8B;&#x7684;&#x5BF9;&#x5E94;&#x5173;&#x7CFB;.</route></li>
+</ul>
+<p><strong>&#x4E0D;&#x8BBA;&#x662F;&#x5355;&#x5B9E;&#x4F8B;&#x8FD8;&#x662F;&#x591A;&#x5B9E;&#x4F8B;&#x7684;&#x914D;&#x7F6E;&#x65B9;&#x5F0F;&#xFF0C;&#x6211;&#x4EEC;&#x90FD;&#x9700;&#x8981;&#x4E3A;&#x6BCF;&#x4E00;&#x5BF9;&#x6620;&#x5C04;&#x5173;&#x7CFB;&#x6307;&#x5B9A;&#x4E00;&#x4E2A;&#x540D;&#x79F0;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x4E0A;&#x9762;&#x914D;&#x7F6E;&#x4E2D;&#x7684; <route>, &#x6BCF;&#x4E00;&#x4E2A;<route>&#x5BF9;&#x5E94;&#x4E86;&#x4E00;&#x6761;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x3002; &#x6BCF;&#x6761;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x90FD;&#x9700;&#x8981;&#x901A;&#x8FC7; path &#x5C5E;&#x6027;&#x6765;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x7528;&#x6765;&#x5339;&#x914D;&#x5BA2;&#x6237;&#x7AEF;&#x8BF7;&#x6C42;&#x7684;&#x8DEF;&#x5F84;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C; &#x5E76;&#x901A;&#x8FC7; url &#x6216;serviceId&#x5C5E;&#x6027;&#x6765;&#x6307;&#x5B9A;&#x8BF7;&#x6C42;&#x8868;&#x8FBE;&#x5F0F;&#x6620;&#x5C04;&#x5177;&#x4F53;&#x5B9E;&#x4F8B;&#x5730;&#x5740;&#x6216;&#x670D;&#x52A1;&#x540D;&#x3002;</route></route></strong></p>
+<h3 id="&#x9762;&#x5411;&#x670D;&#x52A1;&#x7684;&#x8DEF;&#x7531;"><a name="&#x9762;&#x5411;&#x670D;&#x52A1;&#x7684;&#x8DEF;&#x7531;" class="anchor-navigation-ex-anchor" href="#&#x9762;&#x5411;&#x670D;&#x52A1;&#x7684;&#x8DEF;&#x7531;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x9762;&#x5411;&#x670D;&#x52A1;&#x7684;&#x8DEF;&#x7531;</h3>
+<p>&#x4F20;&#x7EDF;&#x8DEF;&#x7531;&#x8FD0;&#x7EF4;&#x4FEE;&#x6539;&#x914D;&#x7F6E;&#x9EBB;&#x70E6;&#xFF0C;&#x53EF;&#x4EE5;&#x8BA9;&#x8DEF;&#x7531;&#x7684;path&#x4E0D;&#x662F;&#x6620;&#x5C04;&#x5177;&#x4F53;&#x7684;url, &#x800C;&#x662F;&#x8BA9;&#x5B83;&#x6620;&#x5C04;&#x5230;&#x67D0;&#x4E2A;&#x5177;&#x4F53;&#x7684;&#x670D;&#x52A1; &#xFF0C;&#x800C;&#x5177;&#x4F53;&#x7684;url&#x5219;&#x4EA4;&#x7ED9;Eureka&#x7684;&#x670D;&#x52A1;&#x53D1;&#x73B0;&#x673A;&#x5236;&#x53BB;&#x81EA;&#x52A8;&#x7EF4;&#x62A4;&#xFF0C;&#x6211;&#x4EEC;&#x79F0;&#x8FD9;&#x7C7B;&#x8DEF;&#x7531;&#x4E3A;&#x9762;&#x5411;&#x670D;&#x52A1;&#x7684;&#x8DEF;&#x7531;&#x3002;</p>
+<p><strong>zuul.routes.<route>.path&#x4E0E;zuul.routes.<route>.serviceid&#x53C2;&#x6570;&#x5BF9;&#x7684;&#x65B9;&#x5F0F;&#x8FDB;&#x884C;&#x914D;&#x7F6E;, &#x5176;&#x4E2D;<route>&#x53EF;&#x4EE5;&#x6307;&#x5B9A;&#x4E3A;&#x4EFB;&#x610F;&#x7684;&#x8DEF;&#x7531;&#x540D;&#x79F0;</route></route></route></strong></p>
+<pre><code class="lang-java">zuul.routes.user-service.path=/user-service<span class="hljs-comment">/**
+zuul.routes.user-service.serviceid=user-service
+</span></code></pre>
+<p>&#x5BF9;&#x5343;&#x9762;&#x5411;&#x670D;&#x52A1;&#x7684;&#x8DEF;&#x7531;&#x914D;&#x7F6E;&#xFF0C;&#x66F4;&#x7B80;&#x6D01;&#x7684;&#x914D;&#x7F6E;&#x65B9;&#x5F0F;&#xFF1A;zuul.routes.<serviceid>=<path></path>, &#x5176;&#x4E2D;<serviceid>&#x7528;&#x6765;&#x6307;&#x5B9A;&#x8DEF;&#x7531;&#x7684;&#x5177;&#x4F53;&#x670D;&#x52A1;&#x540D;&#xFF0C;<path></path>&#x7528;&#x6765;&#x914D;&#x7F6E;&#x5339;&#x914D;&#x7684;&#x8BF7;&#x6C42;&#x8868;&#x8FBE;&#x5F0F;</serviceid></serviceid></p>
+<pre><code class="lang-java">zuul.routes.user-service=/user-service<span class="hljs-comment">/**
+</span></code></pre>
+<p>&#x5F53;&#x91C7;&#x7528;path&#x4E0E;serviceId&#x4EE5;&#x670D;&#x52A1;&#x8DEF;&#x7531;&#x7684;&#x65B9;&#x5F0F;&#x5B9E;&#x73B0;&#x65F6;&#xFF0C;&#x5728;&#x6CA1;&#x6709;&#x914D;&#x7F6E;&#x4EFB;&#x4F55;&#x5B9E;&#x4F8B;&#x5730;&#x5740;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5916;&#x90E8;&#x8BF7;&#x6C42;&#x7ECF;&#x8FC7;API&#x7F51;&#x5173;&#x7684;&#x65F6;&#x5019;&#xFF0C; &#x5B83;&#x662F;&#x5982;&#x4F55;&#x88AB;&#x89E3;&#x6790;&#x5E76;&#x8F6C;&#x53D1;&#x5230;&#x670D;&#x52A1;&#x5177;&#x4F53;&#x5B9E;&#x4F8B;&#x7684;&#x5462;&#xFF1F;</p>
+<p><strong><em>&#x7B54;</em></strong></p>
+<p>Zuul&#x5DE7;&#x5999;&#x5730;&#x6574;&#x5408;&#x4E86;Eureka &#x6765;&#x5B9E;&#x73B0;&#x9762;&#x5411;&#x670D;&#x52A1;&#x7684;&#x8DEF;&#x7531;&#x3002;&#x5B9E;&#x9645;&#x4E0A;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x5C06;API&#x7F51;&#x5173;&#x4E5F;&#x770B;&#x4F5C;Eureka&#x670D;&#x52A1;&#x6CBB;&#x7406;&#x4E0B;&#x7684;
+&#x4E00;&#x4E2A;&#x666E;&#x901A;&#x5FAE;&#x670D;&#x52A1;&#x5E94;&#x7528;&#x3002; &#x5B83;&#x9664;&#x4E86;&#x4F1A;&#x5C06;&#x81EA;&#x5DF1;&#x6CE8;&#x518C;&#x5230;Eureka&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x4E0A;&#x4E4B;&#x5916;&#xFF0C;&#x4E5F;&#x4F1A;&#x4ECE;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x83B7;&#x53D6;&#x6240;&#x6709;&#x670D;&#x52A1;&#x4EE5;&#x53CA;&#x5B83;&#x4EEC;&#x7684;&#x5B9E;&#x4F8B;&#x6E05;&#x5355;&#x3002;&#x6240;&#x4EE5;&#xFF0C;&#x5728;Eureka&#x7684;&#x5E2E;&#x52A9;&#x4E0B;&#xFF0C;API&#x7F51;&#x5173;&#x670D;&#x52A1;&#x672C;&#x8EAB;&#x5C31;&#x5DF2;&#x7ECF;&#x7EF4;&#x62A4;&#x4E86;&#x7CFB;&#x7EDF;&#x4E2D;&#x6240;&#x6709; serviceId&#x4E0E;&#x5B9E;&#x4F8B;&#x5730;&#x5740;&#x7684;&#x6620;&#x5C04;&#x5173;&#x7CFB;&#x3002;&#x5F53;&#x6709;&#x5916;&#x90E8;&#x8BF7;&#x6C42;&#x5230;&#x8FBE; API &#x7F51;&#x5173;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6839;&#x636E;&#x8BF7;&#x6C42;&#x7684;URL&#x8DEF;&#x5F84;&#x627E;&#x5230;&#x6700;&#x4F73;&#x5339;&#x914D;&#x7684;path&#x89C4;&#x5219;&#xFF0C; API &#x7F51;&#x5173;&#x5C31;&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#x8981;&#x5C06;&#x8BE5;&#x8BF7;&#x6C42;&#x8DEF;&#x7531;&#x5230;&#x54EA;&#x4E2A;&#x5177;&#x4F53;&#x7684;serviceId&#x4E0A;&#x53BB;&#x3002;&#x7531;&#x4E8E;&#x5728; API &#x7F51;&#x5173;&#x4E2D;&#x5DF2;&#x7ECF;&#x77E5;&#x9053;serviceid&#x5BF9;&#x5E94;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x7684;&#x5730;&#x5740;&#x6E05;&#x5355;&#xFF0C;&#x90A3;&#x4E48;&#x53EA;&#x9700;&#x8981;&#x901A;&#x8FC7;Ribbon&#x7684;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x7B56;&#x7565;&#xFF0C;&#x76F4;&#x63A5;&#x5728;&#x8FD9;&#x4E9B;&#x6E05;&#x5355;&#x4E2D;&#x9009;&#x62E9;&#x4E00;&#x4E2A;&#x5177;&#x4F53;&#x7684;&#x5B9E;&#x4F8B;&#x8FDB;&#x884C;&#x8F6C;&#x53D1;&#x5C31;&#x80FD;&#x5B8C;&#x6210;&#x8DEF;&#x7531;&#x5DE5;&#x4F5C;&#x4E86;.</p>
+<h3 id="&#x670D;&#x52A1;&#x8DEF;&#x7531;&#x7684;&#x9ED8;&#x8BA4;&#x89C4;&#x5219;"><a name="&#x670D;&#x52A1;&#x8DEF;&#x7531;&#x7684;&#x9ED8;&#x8BA4;&#x89C4;&#x5219;" class="anchor-navigation-ex-anchor" href="#&#x670D;&#x52A1;&#x8DEF;&#x7531;&#x7684;&#x9ED8;&#x8BA4;&#x89C4;&#x5219;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x670D;&#x52A1;&#x8DEF;&#x7531;&#x7684;&#x9ED8;&#x8BA4;&#x89C4;&#x5219;</h3>
+<p>&#x5BF9;&#x4E8E;&#x5177;&#x6709;&#x89C4;&#x5219;&#x6027;&#x7684;&#x914D;&#x7F6E;&#x5185;&#x5BB9;&#xFF0C; &#x6211;&#x4EEC;&#x603B;&#x662F;&#x5E0C;&#x671B;&#x53EF;&#x4EE5;&#x81EA;&#x52A8;&#x5316;&#x5730;&#x5B8C;&#x6210;&#x3002; &#x975E;&#x5E38;&#x5E86;&#x5E78;&#xFF0C;Zuul&#x9ED8;&#x8BA4;&#x5B9E;&#x73B0;&#x4E86;&#x8FD9;&#x6837;&#x7684;&#x8D34;&#x5FC3;&#x529F;&#x80FD;&#xFF0C; &#x5F53;&#x6211;&#x4EEC;&#x4E3A;Spring Cloud Zuul&#x6784;&#x5EFA;&#x7684; API &#x7F51;&#x5173;&#x670D;&#x52A1;&#x5F15;&#x5165;Spring Cloud Eureka&#x4E4B;&#x540E;&#xFF0C; &#x5B83;&#x4E3A;Eureka&#x4E2D;&#x7684;&#x6BCF;&#x4E2A;&#x670D;&#x52A1;&#x90FD;&#x81EA;&#x52A8;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x9ED8;&#x8BA4;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#xFF0C; &#x8FD9;&#x4E9B;&#x9ED8;&#x8BA4;&#x89C4;&#x5219;&#x7684;path&#x4F1A;&#x4F7F;&#x7528;serviceId&#x914D;&#x7F6E;&#x7684;&#x670D;&#x52A1;&#x540D;&#x4F5C;&#x4E3A;&#x8BF7;&#x6C42;&#x524D;&#x7F00;&#x3002;</p>
+<p>&#x7531;&#x5343;&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#x6240;&#x6709;Eureka&#x4E0A;&#x7684;&#x670D;&#x52A1;&#x90FD;&#x4F1A;<strong>&#x88AB;Zuul&#x81EA;&#x52A8;&#x5730;&#x521B;&#x5EFA;&#x6620;&#x5C04;&#x5173;&#x7CFB;</strong>&#x6765;&#x8FDB;&#x884C;&#x8DEF;&#x7531;&#xFF0C;&#x8FD9;&#x4F1A;&#x4F7F;&#x5F97; &#x4E00; &#x4E9B;&#x6211;&#x4EEC;&#x4E0D;&#x5E0C;&#x671B;&#x5BF9;&#x5916;&#x5F00;&#x653E;&#x7684;&#x670D;&#x52A1;&#x4E5F;&#x53EF;&#x80FD;&#x88AB;&#x5916;&#x90E8;&#x8BBF;&#x95EE;&#x5230;&#x3002; &#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#xFF0C; &#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<strong>zuul.ignored-services&#x53C2;&#x6570;&#x6765;&#x8BBE;&#x7F6E;</strong>&#x4E00;&#x4E2A;&#x670D;&#x52A1;&#x540D;&#x5339;&#x914D;&#x8868;&#x8FBE;&#x5F0F;&#x6765;&#x5B9A;&#x4E49;<strong>&#x4E0D;&#x81EA;&#x52A8;&#x521B;&#x5EFA;&#x8DEF;&#x7531;&#x7684;&#x89C4;&#x5219;</strong>&#x3002; Zuul&#x5728;&#x81EA;&#x52A8;&#x521B;&#x5EFA;&#x670D;&#x52A1;&#x8DEF;&#x7531;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x6839;&#x636E;&#x8BE5;&#x8868;&#x8FBE;&#x5F0F;&#x6765;&#x8FDB;&#x884C;&#x5224;&#x65AD;&#xFF0C; &#x5982;&#x679C;&#x670D;&#x52A1;&#x540D;&#x5339;&#x914D;&#x8868;&#x8FBE;&#x5F0F; &#xFF0C; &#x90A3; &#x4E48; Zuul &#x5C06;&#x8DF3;&#x8FC7;&#x8BE5;&#x670D; &#x52A1; &#xFF0C;&#x4E0D;&#x4E3A;&#x5176;&#x521B;&#x5EFA;&#x8DEF;&#x7531;&#x89C4;&#x5219; &#x3002;&#x6BD4;&#x5982;&#xFF0C;&#x8BBE; &#x7F6E; &#x4E3A;zuul.ignored-services=*&#x7684;&#x65F6;&#x5019;&#xFF0C;Zuul&#x5C06;&#x5BF9;&#x6240;&#x6709;&#x7684;&#x670D;&#x52A1;&#x90FD;&#x4E0D;&#x81EA;&#x52A8;&#x521B;&#x5EFA;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x3002; &#x5728;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x8981;&#x5728;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x9010;&#x4E2A;&#x4E3A;&#x9700;&#x8981;&#x8DEF;&#x7531;&#x7684;&#x670D;&#x52A1;&#x6DFB;&#x52A0;&#x6620;&#x5C04;&#x89C4;&#x5219;&#xFF08;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;path&#x4E0E; serviceId&#x7EC4;&#x5408;&#x7684;&#x914D;&#x7F6E;&#x65B9;&#x5F0F;&#xFF0C; &#x4E5F;&#x53EF;&#x4F7F;&#x7528;&#x66F4;&#x7B80;&#x6D01;&#x7684; zuul.routes.<serviceid>=<path></path>&#x914D;&#x7F6E;&#x65B9;&#x5F0F;&#xFF09;&#xFF0C;&#x53EA;&#x6709;&#x5728;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x51FA;&#x73B0;&#x7684;&#x6620;&#x5C04;&#x89C4;&#x5219;&#x4F1A;&#x88AB;&#x521B;&#x5EFA;&#x8DEF;&#x7531;&#xFF0C;&#x800C;&#x4ECE;Eureka&#x4E2D;&#x83B7;&#x53D6;&#x7684;&#x5176;&#x4ED6;&#x670D;&#x52A1;&#xFF0C;Zuul&#x5C06;&#x4E0D;&#x4F1A;&#x518D;&#x4E3A;&#x5B83;&#x4EEC;&#x521B;&#x5EFA;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x3002;</serviceid></p>
+<h3 id="&#x81EA;&#x5B9A;&#x4E49;&#x8DEF;&#x7531;&#x6620;&#x5C04;&#x89C4;&#x5219;"><a name="&#x81EA;&#x5B9A;&#x4E49;&#x8DEF;&#x7531;&#x6620;&#x5C04;&#x89C4;&#x5219;" class="anchor-navigation-ex-anchor" href="#&#x81EA;&#x5B9A;&#x4E49;&#x8DEF;&#x7531;&#x6620;&#x5C04;&#x89C4;&#x5219;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x81EA;&#x5B9A;&#x4E49;&#x8DEF;&#x7531;&#x6620;&#x5C04;&#x89C4;&#x5219;</h3>
+<p>&#x6211;&#x4EEC;&#x5728;&#x6784;&#x5EFA;&#x5FAE;&#x670D;&#x52A1;&#x7CFB;&#x7EDF;&#x8FDB;&#x884C;&#x4E1A;&#x52A1;&#x903B;&#x8F91;&#x5F00;&#x53D1;&#x7684;&#x65F6;&#x5019;&#xFF0C; &#x4E3A;&#x4E86;&#x517C;&#x5BB9;&#x5916;&#x90E8;&#x4E0D;&#x540C;&#x7248;&#x672C;&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x7A0B;&#x5E8F;&#xFF08;&#x5C3D;&#x91CF;&#x4E0D;&#x5F3A;&#x8FEB;&#x7528;&#x6237;&#x5347;&#x7EA7;&#x5BA2;&#x6237;&#x7AEF;&#xFF09;&#xFF0C;&#x4E00; &#x822C;&#x90FD;&#x4F1A;&#x91C7;&#x7528;&#x5F00;&#x95ED;&#x539F;&#x5219;&#x6765;&#x8FDB;&#x884C;&#x8BBE;&#x8BA1;&#x4E0E;&#x5F00;&#x53D1;&#x3002;&#x8FD9;&#x4F7F;&#x5F97;&#x7CFB;&#x7EDF;&#x5728;&#x8FED;&#x4EE3;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x6709;&#x65F6;&#x5019;&#x4F1A;&#x9700;&#x8981;&#x6211;&#x4EEC;&#x4E3A;&#x4E00;&#x7EC4;&#x4E92;&#x76F8;&#x914D;&#x5408;&#x7684;&#x5FAE;&#x670D;&#x52A1;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x7248;&#x672C;&#x6807;&#x8BC6;&#x6765;&#x65B9;&#x4FBF;&#x7BA1;&#x7406;&#x5B83;&#x4EEC;&#x7684;&#x7248;&#x672C;&#x5173;&#x7CFB;&#xFF0C;&#x6839;&#x636E;&#x8FD9;&#x4E2A;&#x6807;&#x8BC6;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5F88;&#x5BB9;&#x6613;&#x5730;&#x77E5;&#x9053;&#x8FD9;&#x4E9B;&#x670D;&#x52A1;&#x9700;&#x8981;&#x4E00;&#x8D77;&#x542F;&#x52A8;&#x5E76;&#x914D;&#x5408;&#x4F7F;&#x7528;&#x3002;&#x6BD4;&#x5982;&#x53EF;&#x4EE5;&#x91C7; &#x7528; &#x7C7B; &#x4F3C;&#x8FD9; &#x6837; &#x7684; &#x547D; &#x540D;&#xFF1A;userservice-vl &#x3001;userservice-v2&#x3001;orderservice-vl&#x3001;orderservice-v2&#x3002;&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;Zuul&#x81EA;&#x52A8;&#x4E3A;&#x670D;&#x52A1;&#x521B;&#x5EFA;&#x7684;&#x8DEF;&#x7531;&#x8868;&#x8FBE;&#x5F0F;&#x4F1A;&#x91C7;&#x7528;&#x670D;&#x52A1;&#x540D;&#x4F5C;&#x4E3A;&#x524D;&#x7F00;&#xFF0C; &#x6BD4;&#x5982;&#x9488;&#x5BF9;&#x4E0A;&#x9762;&#x7684;userservice-vl &#x548C;userservice-v2,&#x5B83;&#x4F1A;&#x4EA7;&#x751F;/userservice-vl &#x548C;/userservice-v2&#x4E24;&#x4E2A;&#x8DEF;&#x5F84;&#x8868;&#x8FBE;&#x5F0F;&#x6765;&#x6620;&#x5C04;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x6837;&#x751F;
+&#x6210;&#x51FA;&#x6765;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x89C4;&#x5219;&#x8F83;&#x4E3A;&#x5355; &#x4E00; &#xFF0C;&#x4E0D;&#x5229;&#x4E8E;&#x901A;&#x8FC7;&#x8DEF;&#x5F84;&#x89C4;&#x5219;&#x6765;&#x8FDB;&#x884C;&#x7BA1;&#x7406;&#x3002; &#x901A;&#x5E38;&#x7684;&#x505A;&#x6CD5;&#x662F;&#x4E3A;&#x8FD9;&#x4E9B;&#x4E0D;&#x540C;&#x7248; &#x672C;&#x7684; &#x5FAE; &#x670D; &#x52A1; &#x5E94; &#x7528; &#x751F; &#x6210;&#x4EE5;&#x7248; &#x672C;&#x4EE3;&#x53F7; &#x4F5C; &#x4E3A; &#x8DEF; &#x7531; &#x524D; &#x7F00; &#x5B9A; &#x4E49; &#x7684; &#x8DEF; &#x7531; &#x89C4; &#x5219; &#xFF0C; &#x6BD4;&#x5982;/vl/userservice/ &#x3002; &#x8FD9;&#x65F6;&#x5019;&#xFF0C; &#x901A;&#x8FC7;&#x8FD9;&#x6837;&#x5177;&#x6709;&#x7248;&#x672C;&#x53F7;&#x524D;&#x7F00;&#x7684; URL &#x8DEF;&#x5F84;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x5F88;&#x5BB9;&#x6613;&#x5730;&#x901A;&#x8FC7;&#x8DEF;&#x5F84;&#x8868;&#x8FBE;&#x5F0F;&#x6765;&#x5F52;&#x7C7B;&#x548C;&#x7BA1;&#x7406;&#x8FD9;&#x4E9B;&#x5177;&#x6709;&#x7248;&#x672C;&#x4FE1;&#x606F;&#x7684;&#x5FAE;&#x670D;&#x52A1;&#x4E86;&#x3002;</p>
+<p>&#x5BF9;&#x4E0A;&#x9762;&#x6240;&#x8FF0;&#x7684;&#x9700;&#x6C42;&#xFF0C;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x7684;&#x5404;&#x4E2A;&#x5FAE;&#x670D;&#x52A1;&#x5E94;&#x7528;&#x90FD;&#x9075;&#x5FAA;&#x4E86;&#x7C7B;&#x4F3C;userservice-vl&#x8FD9;&#x6837;&#x7684;&#x547D;&#x540D;&#x89C4;&#x5219;&#xFF0C;&#x901A;&#x8FC7;&#xFF0D;&#x5206;&#x9694;&#x7684;&#x89C4;&#x8303;&#x6765;&#x5B9A;&#x4E49;&#x670D;&#x52A1;&#x540D;&#x548C;&#x670D;&#x52A1;&#x7248;&#x672C;&#x6807;&#x8BC6;&#x7684;&#x8BDD;&#xFF0C;&#x90A3;&#x4E48;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;Zuul&#x4E2D;&#x81EA;&#x5B9A;&#x4E49;&#x670D;&#x52A1;&#x4E0E;&#x8DEF;&#x7531;&#x6620;&#x5C04; &#x5173;&#x7CFB;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x6765;&#x5B9E;&#x73B0;&#x4E3A;&#x7B26;&#x5408;&#x4E0A;&#x8FF0;&#x89C4;&#x5219;&#x7684;&#x5FAE;&#x670D;&#x52A1;&#x81EA;&#x52A8;&#x5316;&#x5730;&#x521B;&#x5EFA;&#x7C7B;&#x4F3C;/vl/userservice/** &#x7684;&#x8DEF;&#x7531;&#x5339;&#x914D;&#x89C4;&#x5219;&#x3002; &#x5B9E;&#x73B0;&#x6B65;&#x9AA4;&#x975E;&#x5E38;&#x7B80;&#x5355;&#xFF0C; &#x53EA;&#x9700;&#x5728; API &#x7F51;&#x5173;&#x7A0B;&#x5E8F;&#x4E2D;&#xFF0C; &#x589E;&#x52A0;&#x5982;&#x4E0B;Bean&#x7684;&#x521B;&#x5EFA;&#x5373;&#x53EF;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-meta">@Bean</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> PatternServiceRouteMapper <span class="hljs-title">serviceRouteMapper</span> <span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> PatternServiceRouteMapper(
+        <span class="hljs-string">&quot;(?&lt;name&gt;^.+)-(?&lt;version&gt;v.+$)&quot;</span>,
+        <span class="hljs-string">&quot;${version}/${name}&quot;</span>);
+}
+</code></pre>
+<p>PatternServiceRouteMapper&#x5BF9;&#x8C61;&#x53EF;&#x4EE5;&#x8BA9;&#x5F00;&#x53D1;&#x8005;<strong>&#x901A;&#x8FC7;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x6765;&#x81EA;&#x5B9A;&#x4E49;&#x670D;&#x52A1;&#x4E0E;&#x8DEF;&#x7531;&#x6620;&#x5C04;&#x7684;&#x751F;&#x6210;&#x5173;&#x7CFB;</strong>&#x3002; &#x5176;&#x4E2D;&#x6784;&#x9020;&#x51FD;&#x6570;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#x662F;&#x7528;&#x6765;&#x5339;&#x914D;&#x670D;&#x52A1;&#x540D;&#x79F0;&#x662F;&#x5426;&#x7B26;&#x5408;&#x8BE5;&#x81EA;&#x5B9A;&#x4E49;&#x89C4;&#x5219;&#x7684;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C; &#x800C;&#x7B2C;&#x4E8C;&#x4E2A;&#x53C2;&#x6570;&#x5219;&#x662F;&#x5B9A;&#x4E49;&#x6839;&#x636E;&#x670D;&#x52A1;&#x540D;&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x5185;&#x5BB9;&#x8F6C;&#x6362;&#x51FA;&#x7684;&#x8DEF;&#x5F84;&#x8868;&#x8FBE;&#x5F0F;&#x89C4;&#x5219;&#x3002;&#x5F53;&#x5F00;&#x53D1;&#x8005;&#x5728; API &#x7F51;&#x5173;&#x4E2D;&#x5B9A;&#x4E49;&#x4E86;PatternServiceRouteMapper &#x5B9E;&#x73B0;&#x4E4B;&#x540E;&#xFF0C;&#x53EA;&#x8981;&#x7B26;&#x5408;&#x7B2C;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#x5B9A;&#x4E49;&#x89C4;&#x5219;&#x7684;&#x670D;&#x52A1;&#x540D;&#xFF0C; &#x90FD;&#x4F1A;&#x4F18;&#x5148;&#x4F7F;&#x7528;&#x8BE5;&#x5B9E;&#x73B0;&#x6784;&#x5EFA;&#x51FA;&#x7684;&#x8DEF;&#x5F84;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x5339;&#x914D;&#x4E0A;&#x7684;&#x670D;&#x52A1;&#x5219;&#x8FD8;&#x662F;&#x4F1A;&#x4F7F;&#x7528;&#x9ED8;&#x8BA4;&#x7684;&#x8DEF;&#x7531;&#x6620;&#x5C04;&#x89C4;&#x5219;&#xFF0C;&#x5373;&#x91C7;&#x7528;&#x5B8C;&#x6574;&#x670D;&#x52A1;&#x540D;&#x4F5C;&#x4E3A;&#x524D;&#x7F00;&#x7684;&#x8DEF;&#x5F84;&#x8868;&#x8FBE;&#x5F0F;&#x3002;</p>
+<h3 id="&#x8DEF;&#x5F84;&#x5339;&#x914D;"><a name="&#x8DEF;&#x5F84;&#x5339;&#x914D;" class="anchor-navigation-ex-anchor" href="#&#x8DEF;&#x5F84;&#x5339;&#x914D;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x8DEF;&#x5F84;&#x5339;&#x914D;</h3>
+<p>&#x5728;Zuul&#x4E2D;&#xFF0C;&#x8DEF;&#x7531;&#x5339;&#x914D;&#x7684;&#x8DEF;&#x5F84;&#x8868;&#x8FBE;&#x5F0F;&#x91C7;&#x7528;&#x4E86;Ant&#x98CE;&#x683C;&#x5B9A;&#x4E49;&#x3002;</p>
+<p>Ant&#x98CE;&#x683C;&#x7684;&#x8DEF;&#x5F84;&#x8868;&#x8FBE;&#x5F0F;&#x4F7F;&#x7528;&#x8D77;&#x6765;&#x975E;&#x5E38;&#x7B80;&#x5355;&#xFF0C;&#x5B83; &#x4E00; &#x5171;&#x6709;&#x4E0B;&#x9762;&#x8FD9;&#x4E09;&#x79CD;&#x901A;&#x914D;&#x7B26;&#x3002;</p>
+<table>
+<thead>
+<tr>
+<th>&#xFF1F;</th>
+<th>&#x5339;&#x914D;&#x4EFB;&#x610F;&#x5355; &#x4E2A;&#x5B57;&#x7B26;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>*</td>
+<td>&#x5339;&#x914D;&#x4EFB;&#x610F;&#x6570;&#x6735;&#x7684;&#x5B57;&#x7B26;</td>
+</tr>
+<tr>
+<td>**</td>
+<td>&#x5339;&#x914D;&#x4EFB;&#x610F;&#x6570;&#x5740;&#x7684;&#x5B57;&#x7B26;&#xFF0C; &#x652F;&#x5F85;&#x591A;&#x7EA7;&#x76EE;&#x5F55;</td>
+</tr>
+</tbody>
+</table>
+<p>&#x5F53;&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x901A;&#x914D;&#x7B26;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x7ECF;&#x5E38;&#x4F1A;&#x78B0;&#x5230;&#x8FD9;&#x6837;&#x7684;&#x95EE;&#x9898;&#xFF1A;&#x4E00;&#x4E2A;URL &#x8DEF;&#x5F84;&#x53EF;&#x80FD;&#x4F1A;&#x88AB;&#x591A;&#x4E2A;&#x4E0D;&#x540C;&#x8DEF;&#x7531;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x5339;&#x914D;&#x4E0A;&#x3002; &#x6BD4;&#x5982;&#xFF0C;&#x6709;&#x8FD9;&#x6837;&#x4E00;&#x4E2A;&#x573A;&#x666F;&#xFF0C;&#x6211;&#x4EEC;&#x5728;&#x7CFB;&#x7EDF;&#x5EFA;&#x8BBE;&#x7684;&#x4E00;&#x5F00;&#x59CB;&#x5B9E;&#x73B0;&#x4E86;user-service &#x670D;&#x52A1;</p>
+<pre><code class="lang-java">zuul.routes.user-service.path=/user-service<span class="hljs-comment">/**
+zuul.routes.user-service.serviceid=user-service
+</span></code></pre>
+<p>&#x968F;&#x7740;&#x7248;&#x672C;&#x7684;&#x8FED;&#x4EE3;&#xFF0C; &#x6211;&#x4EEC;&#x5BF9; user-service &#x670D;&#x52A1;&#x505A;&#x4E86;&#x4E00;&#x4E9B;&#x529F;&#x80FD;&#x62C6;&#x5206;&#xFF0C; &#x5C06;&#x539F;&#x5C5E;&#x4E8E;user-service &#x670D;&#x52A1;&#x7684;&#x67D0;&#x4E9B;&#x529F;&#x80FD;&#x62C6;&#x5206;&#x5230;&#x4E86;&#x53E6;&#x5916; &#x4E00; &#x4E2A;&#x5168;&#x65B0;&#x7684;&#x670D;&#x52A1; user-service-ext &#x4E2D;&#x53BB;&#xFF0C;&#x800C;&#x8FD9;&#x4E9B;&#x62C6;&#x5206;&#x7684;&#x5916;&#x90E8;&#x8C03;&#x7528; URL &#x8DEF;&#x5F84;&#x5E0C;&#x671B;&#x80FD;&#x591F;&#x7B26;&#x5408;&#x89C4;&#x5219; /userservice/ext/**, &#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5C31;&#x5728;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x589E;&#x52A0;&#x4E00;&#x4E2A;&#x8DEF;&#x7531;&#x89C4;&#x5219;</p>
+<pre><code class="lang-java">zuul.routes.user-service.path=/user-service<span class="hljs-comment">/**
+zuul.routes.user-service.serviceid=user-service
+zuul.routes.user-service-ex&#x4E03;.path=/user-service/ext/**
+zuul.routes.user-service-ext.serviceid=user-service-ext
+</span></code></pre>
+<p>&#x6B64;&#x65F6;&#xFF0C; &#x8C03;&#x7528; user-service-ext&#x670D;&#x52A1;&#x7684; URL &#x8DEF;&#x5F84;&#x5B9E;&#x9645;&#x4E0A;&#x4F1A;&#x540C;&#x65F6;&#x88AB; /user&#xAD;service/<strong> &#x548C; /user-service/ext/</strong> &#x4E24;&#x4E2A;&#x8868;&#x8FBE;&#x5F0F;&#x6240;&#x5339;&#x914D;&#x3002; &#x5728;&#x903B;&#x8F91;&#x4E0A;&#xFF0C; API &#x7F51;&#x5173;&#x670D;&#x52A1;&#x9700;&#x8981;&#x4F18;&#x5148;&#x9009;&#x62E9; /user-service/ext/<strong> &#x8DEF;&#x7531;&#xFF0C;&#x7136;&#x540E;&#x518D;&#x5339;&#x914D; /user-service/</strong> &#x8DEF;&#x7531;&#x624D;&#x80FD;&#x5B9E;&#x73B0;&#x4E0A;&#x8FF0;&#x9700;&#x6C42;&#x3002;&#x4F46;&#x662F;&#x5982;&#x679C;&#x4F7F;&#x7528;&#x4E0A;&#x9762;&#x7684;&#x914D;&#x7F6E;&#x65B9;&#x5F0F;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x65E0;&#x6CD5;&#x4FDD;&#x8BC1;&#x8FD9;&#x6837;&#x7684;&#x8DEF;&#x7531;&#x4F18;&#x5148;&#x987A;&#x5E8F;&#x7684;&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x7684;&#x8DEF;&#x7531;&#x5339;&#x914D;&#x7B97;&#x6CD5;&#x4E2D;&#xFF0C; &#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5B83;&#x5728;&#x4F7F;&#x7528;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x5339;&#x914D;&#x8BF7;&#x6C42;&#x8DEF;&#x5F84;&#x7684;&#x65F6;&#x5019;&#x662F;&#x901A;&#x8FC7;&#x7EBF;&#x6027;&#x904D;&#x5386;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x5728;&#x8BF7;&#x6C42;&#x8DEF;&#x5F84;&#x83B7;&#x53D6;&#x5230;&#x7B2C; &#x4E00; &#x4E2A;&#x5339;&#x914D;&#x7684;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x4E4B;&#x540E;&#x5C31;&#x8FD4;&#x56DE;&#x5E76;&#x7ED3;&#x675F;&#x5339;&#x914D;&#x8FC7;&#x7A0B;&#x3002;&#x6240;&#x4EE5;&#x5F53;&#x5B58;&#x5728;&#x591A;&#x4E2A;&#x5339;&#x914D;&#x7684;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x65F6;&#xFF0C; &#x5339;&#x914D;&#x7ED3;&#x679C;&#x5B8C;&#x5168;&#x53D6;&#x51B3;&#x4E8E;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x7684;&#x4FDD;&#x5B58;&#x987A;&#x5E8F;&#x3002;</p>
+<pre><code class="lang-java"><span class="hljs-meta">@Override</span>
+<span class="hljs-keyword">public</span> Route getMatchingRoute{<span class="hljs-keyword">final</span> String path) {
+    ZuulRoute route= <span class="hljs-keyword">null</span>;
+    <span class="hljs-keyword">if</span> (!matchesignoredPatterns(adjustedPath)) {
+        <span class="hljs-keyword">for</span> (Entry&lt;String, ZuulRoute&gt; entry : <span class="hljs-keyword">this</span>. routes. get () . entrySet ()) {
+            String pattern= entry. getKey () ;
+            log.debug(<span class="hljs-string">&quot;Matching pat&#x4E03;ern:&quot;</span> + pattern);
+                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.pathMatcher.match(pattern, adjustedPa&#x4E03;h)) {
+                    route = entry.getValue();
+                    <span class="hljs-keyword">break</span>;
+                }
+        }
+        log.debug(<span class="hljs-string">&quot;route matched=&quot;</span> + route);
+        <span class="hljs-keyword">return</span> getRoute(route, adjustedPath);
+}
+</code></pre>
+<p>&#x4E0B;&#x9762;&#x6240;&#x793A;&#x7684;&#x4EE3;&#x7801;&#x662F;&#x57FA;&#x7840;&#x7684;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x52A0;&#x8F7D;&#x7B97;&#x6CD5;&#xFF0C; &#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x8FD9;&#x4E9B;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x662F;&#x901A;&#x8FC7;LinkedHashMap&#x4FDD;&#x5B58;&#x7684;&#xFF0C; &#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#xFF0C; &#x8DEF;&#x7531;&#x89C4;&#x5219;&#x7684;&#x4FDD;&#x5B58;&#x662F;&#x6709;&#x5E8F;&#x7684;&#xFF0C; &#x800C;&#x5185;&#x5BB9;&#x7684;&#x52A0;&#x8F7D;&#x662F;&#x901A;&#x8FC7;&#x904D;&#x5386;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x4F9D;&#x6B21;&#x52A0;&#x5165;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x5BFC;&#x81F4;&#x95EE;&#x9898;&#x7684;&#x6839;&#x672C;&#x539F;&#x56E0;&#x662F;&#x5BF9;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x5185;&#x5BB9;&#x7684;&#x8BFB;&#x53D6;&#x3002;</p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">protected</span> Map&lt;String, ZuulRoute&gt; <span class="hljs-title">locateRoutes</span><span class="hljs-params">()</span> </span>{
+    LinkedHashMap&lt;String, ZuulRoute&gt; routesMap = <span class="hljs-keyword">new</span> LinkedHashMap&lt;String,ZuulRoute&gt;();
+    <span class="hljs-keyword">for</span> (ZuulRoute route : <span class="hljs-keyword">this</span>.properties.getRoutes() .values()) {
+        routesMap.put(route.getPath(), route);
+    }
+    <span class="hljs-keyword">return</span> routesMap;
+}
+</code></pre>
+<p>&#x7531;&#x5343;properties&#x7684;&#x914D;&#x7F6E;&#x5185;&#x5BB9;&#x65E0;&#x6CD5;&#x4FDD;&#x8BC1;&#x6709;&#x5E8F;&#xFF0C;&#x6240;&#x4EE5;&#x5F53;&#x51FA;&#x73B0;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x7684;&#x65F6;&#x5019;&#xFF0C; &#x4E3A;&#x4E86;&#x4FDD;&#x8BC1;&#x8DEF;&#x7531;&#x7684;&#x4F18;&#x5148;&#x987A;&#x5E8F;&#xFF0C; &#x6211;&#x4EEC;&#x9700;&#x8981;&#x4F7F;&#x7528;YAML&#x6587;&#x4EF6;&#x6765;&#x914D;&#x7F6E;&#xFF0C; &#x4EE5;&#x5B9E;&#x73B0;&#x6709;&#x5E8F;&#x7684;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#xFF0C; &#x6BD4;&#x5982;&#x4F7F;&#x7528;&#x4E0B;&#x9762;&#x7684;&#x5B9A;&#x4E49;</p>
+<pre><code class="lang-yaml"><span class="hljs-attr">zuul:</span>
+<span class="hljs-attr">    routes:</span>
+<span class="hljs-attr">        user-service-ext:</span>
+<span class="hljs-attr">            path:</span> /user-service/ext/**
+<span class="hljs-attr">            serviceld:</span> user-service-ext
+<span class="hljs-attr">        user-service:</span>
+<span class="hljs-attr">            path:</span> /user-service/**
+<span class="hljs-attr">            serviceld:</span> user-service
+</code></pre>
+<p><strong><em>&#x5FFD;&#x7565;&#x8868;&#x8FBE;&#x5F0F;</em></strong></p>
+<p>&#x901A;&#x8FC7; path &#x53C2;&#x6570;&#x5B9A;&#x4E49;&#x7684; Ant &#x8868;&#x8FBE;&#x5F0F;&#x5DF2;&#x7ECF;&#x80FD;&#x591F;&#x5B8C;&#x6210; API &#x7F51;&#x5173;&#x4E0A;&#x7684;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x914D;&#x7F6E;&#x529F;&#x80FD;&#xFF0C;&#x4F46;&#x662F;&#x4E3A;&#x4E86;&#x66F4;&#x7EC6;&#x7C92;&#x5EA6;&#x548C;&#x66F4;&#x4E3A;&#x7075;&#x6D3B;&#x5730;&#x914D;&#x7F6E;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#xFF0C; Zuul &#x8FD8;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A;&#x5FFD;&#x7565;&#x8868;&#x8FBE;&#x5F0F;&#x53C2;&#x6570;zuul.ignored-patterns &#x3002; &#x8BE5;&#x53C2;&#x6570;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x8BBE;&#x7F6E;&#x4E0D;&#x5E0C;&#x671B;&#x88AB; API &#x7F51;&#x5173;&#x8FDB;&#x884C;&#x8DEF;&#x7531;&#x7684; URL &#x8868;&#x8FBE;&#x5F0F;&#x3002;&#x8BE5;&#x53C2;&#x6570;&#x5728;&#x4F7F;&#x7528;&#x65F6;&#x8FD8;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x5B83;&#x7684;&#x8303;&#x56F4;&#x5E76;&#x4E0D;&#x662F;&#x5BF9;&#x67D0;&#x4E2A;&#x8DEF;&#x7531;&#xFF0C; &#x800C;&#x662F;&#x5BF9;&#x6240;&#x6709;&#x8DEF;&#x7531;&#x3002; &#x6240;
+&#x4EE5;&#x5728;&#x8BBE;&#x7F6E;&#x7684;&#x65F6;&#x5019;&#x9700;&#x8981;&#x5168;&#x9762;&#x8003;&#x8651; URL &#x89C4;&#x5219;&#xFF0C; &#x9632;&#x6B62;&#x5FFD;&#x7565;&#x4E86;&#x4E0D;&#x8BE5;&#x88AB;&#x5FFD;&#x7565;&#x7684; URL &#x8DEF;&#x5F84;</p>
+<p>&#x4E0D;&#x5E0C;&#x671B; /hello &#x63A5;&#x53E3;&#x88AB;&#x8DEF;&#x7531;</p>
+<pre><code class="lang-java">zuul.ignored-patterns = <span class="hljs-comment">/**/hello/**
+zuul.routes.api-a.path=/api-a/**
+zuul.routes.api-a.serviceid=hello-service
+</span></code></pre>
+<p>&#x901A;&#x8FC7;&#x7F51;&#x5173;&#x6765;&#x8BBF;&#x95F4; hello-service &#x7684; /hello &#x63A5;&#x53E3; <a href="http://localhost:5555/api-a/hello" target="_blank">http://localhost:5555/api-a/hello</a> &#x3002; &#x867D;&#x7136;&#x8BE5;&#x8BBF;&#x95EE;&#x8DEF;&#x5F84;&#x5B8C;&#x5168;&#x7B26;&#x5408; path &#x53C2;&#x6570;&#x5B9A;&#x4E49;&#x7684;/api-a/** &#x89C4;&#x5219;&#xFF0C;&#x4F46;&#x662F;&#x7531;&#x4E8E;&#x8BE5;&#x8DEF;&#x5F84;&#x7B26;&#x5408; zuul.ignored-patterns &#x53C2;&#x6570;&#x5B9A;&#x4E49;&#x7684;&#x89C4;&#x5219;&#xFF0C;&#x6240;&#x4EE5;&#x4E0D;&#x4F1A;&#x88AB;&#x6B63;&#x786E;&#x8DEF;&#x7531;&#x3002; &#x540C;&#x65F6;&#xFF0C;&#x6211;&#x4EEC;&#x5728;&#x63A7;&#x5236;&#x53F0;&#x6216;&#x65E5;&#x5FD7;&#x4E2D;&#x8FD8;&#x80FD;&#x770B;&#x5230;&#x6CA1;&#x6709;&#x5339;&#x914D;&#x8DEF;&#x7531;&#x7684;&#x8F93;&#x51FA;&#x4FE1;&#x606F;</p>
+<pre><code class="lang-java">o.s.c.n.z.f.pre.PreDecorationFilter  : No route found <span class="hljs-keyword">for</span> uri: /api-a/hello\
+</code></pre>
+<h3 id="&#x8DEF;&#x7531;&#x524D;&#x7F00;"><a name="&#x8DEF;&#x7531;&#x524D;&#x7F00;" class="anchor-navigation-ex-anchor" href="#&#x8DEF;&#x7531;&#x524D;&#x7F00;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x8DEF;&#x7531;&#x524D;&#x7F00;</h3>
+<p>&#x65B9;&#x4FBF;&#x5168;&#x5C40;&#x5730;&#x4E3A;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x589E;&#x52A0;&#x524D;&#x7F00;&#x4FE1;&#x606F;&#xFF0C; Zuul &#x63D0;&#x4F9B;&#x4E86; zuul.prefix &#x53C2;&#x6570;&#x6765;&#x8FDB;&#x884C;&#x8BBE;&#x7F6E;&#x3002;&#x6BD4;&#x5982;&#xFF0C;&#x5E0C;&#x671B;&#x4E3A;&#x7F51;&#x5173;&#x4E0A;&#x7684;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x90FD;&#x589E;&#x52A0; /api &#x524D;&#x7F00;&#xFF0C;&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x589E;&#x52A0;&#x914D;&#x7F6E;&#xFF1A; zuul.prefix = /api &#x3002; &#x53E6;&#x5916;&#xFF0C; &#x5BF9;&#x4E8E;&#x4EE3;&#x7406;&#x524D;&#x7F00;&#x4F1A;&#x9ED8;&#x8BA4;&#x4ECE;&#x8DEF;&#x5F84;&#x4E2D;&#x79FB;&#x9664;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E;zuul.stripPrefix = false &#x6765;&#x5173;&#x95ED;&#x8BE5;&#x79FB;&#x9664;&#x4EE3;&#x7406;&#x524D;&#x7F00;&#x7684;&#x52A8;&#x4F5C;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; zuul.routes.</p>
+<p><route>.strip-prefix = true &#x6765;&#x5BF9;&#x6307;&#x5B9A;&#x8DEF;&#x7531;&#x5173;&#x95ED;&#x79FB;&#x9664;&#x4EE3;&#x7406;&#x524D;&#x7F00;&#x7684;&#x52A8;&#x4F5C;&#x3002;</route></p>
+<p><strong><em>&#x6CE8;&#x610F;&#xFF0C; &#x5728;&#x4F7F;&#x7528; zuul.prefix &#x53C2;&#x6570;&#x7684;&#x65F6;&#x5019;&#xFF0C; &#x76EE;&#x524D;&#x7248;&#x672C;&#x7684;&#x5B9E;&#x73B0;&#x8FD8;&#x5B58;&#x5728;&#x4E00;&#x4E9B; Bug, &#x6240;&#x4EE5;&#x8BF7;&#x8C28;&#x614E;&#x4F7F;&#x7528;&#xFF0C; &#x6216;&#x662F;&#x907F;&#x5F00;&#x4F1A;&#x5F15;&#x53D1; Bug &#x7684;&#x914D;&#x7F6E;&#x89C4;&#x5219;&#x3002; &#x5177;&#x4F53;&#x4F1A;&#x5F15;&#x53D1; Bug &#x7684;&#x89C4;&#x5219;&#x5982;&#x4E0B;</em></strong></p>
+<ul>
+<li>&#x5047;&#x8BBE;&#x6211;&#x4EEC;&#x8BBE;&#x7F6E; zuul.prefix = /api, &#x5F53;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x7684; path &#x8868;&#x8FBE;&#x5F0F;&#x4EE5; /api &#x5F00;&#x5934;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5C06;&#x4F1A;&#x4EA7;&#x751F;&#x9519;&#x8BEF;&#x7684;&#x6620;&#x5C04;&#x5173;&#x7CFB;.&#x52A1;&#x5FC5;&#x907F;&#x514D;&#x8BA9;&#x8DEF;&#x7531;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x8D77;&#x59CB;&#x5B57;&#x7B26;&#x4E32;&#x4E0E; zuul.prefix &#x53C2;&#x6570;&#x76F8;&#x540C;</li>
+</ul>
+<h3 id="&#x672C;&#x5730;&#x8DF3;&#x8F6C;"><a name="&#x672C;&#x5730;&#x8DF3;&#x8F6C;" class="anchor-navigation-ex-anchor" href="#&#x672C;&#x5730;&#x8DF3;&#x8F6C;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x672C;&#x5730;&#x8DF3;&#x8F6C;</h3>
+<p>&#x5728; Zuul &#x5B9E;&#x73B0;&#x7684; API &#x7F51;&#x5173;&#x8DEF;&#x7531;&#x529F;&#x80FD;&#x4E2D;&#xFF0C; &#x8FD8;&#x652F;&#x6301; forward &#x5F62;&#x5F0F;&#x7684;&#x670D;&#x52A1;&#x7AEF;&#x8DF3;&#x8F6C;&#x914D;&#x7F6E;&#x3002; &#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#x975E;&#x5E38;&#x7B80;&#x5355;&#xFF0C;&#x53EA;&#x9700;&#x901A;&#x8FC7;&#x4F7F;&#x7528; path &#x4E0E; url &#x7684;&#x914D;&#x7F6E;&#x65B9;&#x5F0F;&#x5C31;&#x80FD;&#x5B8C;&#x6210;&#xFF0C;&#x901A;&#x8FC7; url &#x4E2D;&#x4F7F;&#x7528; forward&#x6765;&#x6307;&#x5B9A;&#x9700;&#x8981;&#x8DF3;&#x8F6C;&#x7684;&#x670D;&#x52A1;&#x5668;&#x8D44;&#x6E90;&#x8DEF;&#x5F84;.</p>
+<pre><code class="lang-java">zuul.routes.api-b.path=/api-b<span class="hljs-comment">/**
+zuul.routes.api-b.url=forward:/local
+</span></code></pre>
+<p> &#x5F53; API &#x7F51;&#x5173;&#x63A5;&#x6536;&#x5230;&#x8BF7;&#x6C42; /api-b/hello, &#x5B83;&#x7B26;&#x5408; api-b &#x7684;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#xFF0C;&#x6240;&#x4EE5;&#x8BE5;&#x8BF7;&#x6C42;&#x4F1A;&#x88AB; API &#x7F51;&#x5173;&#x8F6C;&#x53D1;&#x5230;&#x7F51;&#x5173;&#x7684; /local/hello &#x8BF7;&#x6C42;&#x4E0A;&#x8FDB;&#x884C;&#x672C;&#x5730;&#x5904;&#x7406;&#x3002;</p>
+<p><strong>&#x6CE8;&#x610F;</strong>&#xFF0C; &#x7531;&#x4E8E;&#x9700;&#x8981;&#x5728; API &#x7F51;&#x5173;&#x4E0A;&#x5B9E;&#x73B0;&#x672C;&#x5730;&#x8DF3;&#x8F6C;&#xFF0C;&#x6240;&#x4EE5;&#x76F8;&#x5E94;&#x7684;&#x6211;&#x4EEC;&#x4E5F;&#x9700;&#x8981;&#x4E3A;&#x672C;&#x5730;&#x8DF3;&#x8F6C;&#x5B9E;&#x73B0;&#x5BF9;&#x5E94;&#x7684;&#x8BF7;&#x6C42;&#x63A5;&#x53E3;&#x3002; &#x6309;&#x7167;&#x4E0A;&#x9762;&#x7684;&#x4F8B;&#x5B50;&#xFF0C; &#x5728; API &#x7F51;&#x5173;&#x4E0A;&#x8FD8;&#x9700;&#x8981;&#x589E;&#x52A0; &#x4E00; &#x4E2A;/ local/hello&#x7684;&#x63A5;&#x53E3;&#x5B9E;&#x73B0;&#x624D;&#x80FD;&#x8BA9; api-b &#x8DEF;&#x7531;&#x89C4;&#x5219;&#x751F;&#x6548;&#xFF0C; &#x6BD4;&#x5982;&#x4E0B;&#x9762;&#x7684;&#x5B9E;&#x73B0;&#x3002;&#x5426;&#x5219; Zuul &#x5728;&#x8FDB;&#x884C; forward &#x8F6C;&#x53D1;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x56E0;&#x4E3A;&#x627E;&#x4E0D;&#x5230;&#x8BE5;&#x8BF7;&#x6C42;&#x800C;&#x8FD4;&#x56DE;404&#x9519;&#x8BEF;&#x3002;</p>
+<pre><code class="lang-java"><span class="hljs-meta">@RestController</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HelloController</span> </span>{
+    <span class="hljs-meta">@RequestMapping</span> (<span class="hljs-string">&quot;/local /hello&quot;</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">hello</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Hello World Local&quot;</span>;
+    }
+}
+</code></pre>
+<h3 id="cookie&#x548C;&#x5934;&#x4FE1;&#x606F;"><a name="cookie&#x548C;&#x5934;&#x4FE1;&#x606F;" class="anchor-navigation-ex-anchor" href="#cookie&#x548C;&#x5934;&#x4FE1;&#x606F;"><i class="fa fa-link" aria-hidden="true"></i></a>Cookie&#x548C;&#x5934;&#x4FE1;&#x606F;</h3>
+<p>&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C; SpringCloud Zuul&#x5728;&#x8BF7;&#x6C42;&#x8DEF;&#x7531;&#x65F6;&#xFF0C; &#x4F1A;&#x8FC7;&#x6EE4;&#x6389;HTTP&#x8BF7;&#x6C42;&#x5934;&#x4FE1;&#x606F;&#x4E2D;&#x7684;&#x4E00; &#x4E9B;&#x654F;&#x611F; &#x4FE1; &#x606F;&#xFF0C; &#x9632;&#x6B62;&#x5B83;&#x4EEC;&#x88AB;&#x4F20; &#x9012;&#x5230;&#x4E0B;&#x6E38;&#x7684;&#x5916;&#x90E8;&#x670D; &#x52A1;&#x5668;&#x3002; &#x9ED8; &#x8BA4;&#x7684; &#x654F;&#x611F; &#x5934; &#x4FE1; &#x606F; &#x901A; &#x8FC7;zuul.sensitiveHeaders&#x53C2;&#x6570;&#x5B9A;&#x4E49;&#xFF0C;&#x5305;&#x62EC;Cookie&#x3001;Set-Cookie&#x3001;Authorization&#x4E09;&#x4E2A;&#x5C5E;&#x6027;&#x3002;</p>
+<p>&#x901A;&#x8FC7;&#x6307;&#x5B9A;&#x8DEF;&#x7531;&#x7684;&#x53C2;&#x6570;&#x6765;&#x914D;&#x7F6E;&#xFF0C; &#x65B9;&#x6CD5;&#x6709;&#x4E0B;&#x9762;&#x4E24;&#x79CD;&#x3002;</p>
+<pre><code class="lang-java">&#xFF03;&#x65B9;&#x6CD5;&#x4E00;&#xFF1A;&#x5BF9;&#x6307;&#x5B9A;&#x8DEF;&#x7531;&#x5F00;&#x542F;&#x81EA;&#x5B9A;&#x4E49;&#x654F;&#x611F;&#x5934;
+zuul.routes.&lt;router&gt;.customSensitiveHeaders = <span class="hljs-keyword">true</span>
+&#xFF03;&#x65B9;&#x6CD5;&#x4E8C;&#xFF1A;&#x5C06;&#x6307;&#x5B9A;&#x8DEF;&#x7531;&#x7684;&#x654F;&#x611F;&#x5934;&#x8BBE;&#x7F6E;&#x4E3A;&#x7A7A;
+zuul.routes.&lt;router&gt;.sensitiveHeaders =
+</code></pre>
+<p>&#x4EC5;&#x5BF9;&#x6307;&#x5B9A;&#x7684;Web&#x5E94;&#x7528;&#x5F00;&#x542F;&#x5BF9;&#x654F;&#x611F;&#x4FE1;&#x606F;&#x7684;&#x4F20;&#x9012;&#xFF0C;&#x5F71;&#x54CD;&#x8303;&#x56F4;&#x5C0F;&#xFF0C; &#x4E0D;&#x81F3;&#x4E8E;&#x5F15;&#x8D77;&#x5176;&#x4ED6;&#x670D;&#x52A1;&#x7684;&#x4FE1;&#x606F;&#x6CC4;&#x9732;&#x95F4;&#x9898;&#x3002;</p>
+<p><strong><em>&#x91CD;&#x5B9A;&#x5411;&#x95EE;&#x9898;</em></strong></p>
+<p>&#x867D;&#x7136;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x7F51;&#x5173;&#x8BBF;&#x95EE;&#x767B;&#x5F55;&#x9875;&#x9762;&#x5E76;&#x53D1;&#x8D77;&#x767B;&#x5F55;&#x8BF7;&#x6C42;&#xFF0C; &#x4F46;&#x662F;&#x767B;&#x5F55;&#x6210;&#x529F;&#x4E4B;&#x540E;&#xFF0C; &#x6211;&#x4EEC;&#x8DF3;&#x8F6C;&#x5230;&#x7684;&#x9875;&#x9762;URL&#x5374;&#x662F;&#x5177;&#x4F53;Web&#x5E94;&#x7528;&#x5B9E;&#x4F8B;&#x7684;&#x5730;&#x5740;&#xFF0C; &#x800C;&#x4E0D;&#x662F;&#x901A;&#x8FC7;&#x7F51;&#x5173;&#x7684;&#x8DEF;&#x7531;&#x5730;&#x5740;&#x3002; &#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x975E;&#x5E38;&#x4E25;&#x91CD;&#xFF0C; &#x56E0;&#x4E3A;&#x4F7F;&#x7528;API&#x7F51;&#x5173;&#x7684;&#x4E00;&#x4E2A;&#x91CD;&#x8981;&#x539F;&#x56E0;&#x5C31;&#x662F;&#x8981;&#x5C06;&#x7F51;&#x5173;&#x4F5C;&#x4E3A;&#x7EDF;&#x4E00;&#x5165;&#x53E3;&#xFF0C;&#x4ECE;&#x800C;&#x4E0D;&#x66B4;&#x9732;&#x6240;&#x6709;&#x7684;&#x5185;&#x90E8;&#x670D;&#x52A1;&#x7EC6;&#x8282;&#x3002;</p>
+<p>&#x5F15;&#x8D77;&#x95EE;&#x9898;&#x7684;&#x5927;&#x81F4;&#x539F;&#x56E0;&#x662F;&#x7531;&#x4E8E;SpringSecurity&#x6216;Shiro&#x5728;&#x767B;&#x5F55;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#xFF0C;&#x901A;&#x8FC7;&#x91CD;&#x5B9A;&#x5411;&#x7684;&#x65B9;&#x5F0F;&#x8DF3;&#x8F6C;&#x5230;&#x767B;&#x5F55;&#x540E;&#x7684;&#x9875;&#x9762;&#xFF0C;&#x6B64;&#x65F6;&#x767B;&#x5F55;&#x540E;&#x7684;&#x8BF7;&#x6C42;&#x7ED3;&#x679C;&#x72B6;&#x6001;&#x7801;&#x4E3A;302, &#x8BF7;&#x6C42;&#x54CD;&#x5E94;&#x5934;&#x4FE1;&#x606F;&#x4E2D;&#x7684; Location&#x6307;&#x5411;&#x4E86;&#x5177;&#x4F53;&#x7684;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x5730;&#x5740;&#xFF0C; &#x800C;&#x8BF7;&#x6C42;&#x5934;&#x4FE1;&#x606F;&#x4E2D;&#x7684;Host&#x4E5F;&#x6307;&#x5411;&#x4E86;&#x5177;&#x4F53;&#x7684;&#x670D;&#x52A1;&#x5B9E;&#x4F8B; IP&#x5730;&#x5740;&#x548C;&#x7AEF;&#x53E3;&#x3002; &#x6240;&#x4EE5;&#xFF0C;&#x8BE5;&#x95EE;&#x9898;&#x7684;&#x6839;&#x672C;&#x539F;&#x56E0;&#x5728;&#x4E8E;Spring Cloud Zuul&#x5728;&#x8DEF;&#x7531;&#x8BF7;&#x6C42;&#x65F6;&#xFF0C;&#x5E76;&#x6CA1;&#x6709;&#x5C06;&#x6700;&#x521D;&#x7684;Host&#x4FE1;&#x606F;&#x8BBE;&#x7F6E;&#x6B63;&#x786E;&#x3002;</p>
+<h2 id="&#x8FC7;&#x6EE4;&#x5668;&#x8BE6;&#x89E3;"><a name="&#x8FC7;&#x6EE4;&#x5668;&#x8BE6;&#x89E3;" class="anchor-navigation-ex-anchor" href="#&#x8FC7;&#x6EE4;&#x5668;&#x8BE6;&#x89E3;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x8FC7;&#x6EE4;&#x5668;&#x8BE6;&#x89E3;</h2>
+<h3 id="&#x8FC7;&#x6EE4;&#x5668;"><a name="&#x8FC7;&#x6EE4;&#x5668;" class="anchor-navigation-ex-anchor" href="#&#x8FC7;&#x6EE4;&#x5668;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x8FC7;&#x6EE4;&#x5668;</h3>
+<p>Zuul&#x5305;&#x542B;&#x4E86;&#x5BF9;&#x8BF7;&#x6C42;&#x7684;&#x8DEF;&#x7531;&#x548C;&#x8FC7;&#x6EE4;&#x4E24;&#x4E2A;&#x529F;&#x80FD;&#xFF0C;&#x5176;&#x4E2D;&#x8DEF;&#x7531;&#x529F;&#x80FD;&#x8D1F;&#x8D23;&#x5C06;&#x5916;&#x90E8;&#x8BF7;&#x6C42;&#x8F6C;&#x53D1;&#x5230;&#x5177;&#x4F53;&#x7684;&#x5FAE;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x4E0A;&#xFF0C;&#x662F;&#x5B9E;&#x73B0;&#x5916;
+&#x90E8;&#x8BBF;&#x95EE;&#x7EDF;&#x4E00;&#x5165;&#x53E3;&#x7684;&#x57FA;&#x7840;&#xFF1B;&#x800C;&#x8FC7;&#x6EE4;&#x5668;&#x529F;&#x80FD;&#x5219;&#x8D1F;&#x8D23;&#x5BF9;&#x8BF7;&#x6C42;&#x7684;&#x5904;&#x7406;&#x8FC7;&#x7A0B;&#x8FDB;&#x884C;&#x5E72;&#x9884;&#xFF0C;&#x662F;&#x5B9E;&#x73B0;&#x8BF7;&#x6C42;&#x6821;&#x9A8C;&#x3001; &#x670D;&#x52A1;&#x805A;&#x5408;&#x7B49;&#x529F;&#x80FD;&#x7684;&#x57FA;&#x7840;&#x3002; &#x7136;&#x800C;&#x5B9E;&#x9645;&#x4E0A;&#xFF0C;&#x8DEF;&#x7531;&#x529F;&#x80FD;&#x5728;&#x771F;&#x6B63;&#x8FD0;&#x884C;&#x65F6;&#xFF0C;&#x5B83;&#x7684;&#x8DEF;&#x7531;&#x6620;&#x5C04;&#x548C;&#x8BF7;&#x6C42;&#x8F6C;&#x53D1;&#x90FD;&#x662F;&#x7531;&#x51E0;&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x8FC7;&#x6EE4;&#x5668;&#x5B8C;&#x6210;&#x7684;&#x3002; &#x5176;&#x4E2D;&#xFF0C;&#x8DEF;&#x7531;&#x6620;&#x5C04;&#x4E3B;&#x8981;&#x901A;&#x8FC7;pre&#x7C7B;&#x578B;&#x7684;&#x8FC7;&#x6EE4;&#x5668;&#x5B8C;&#x6210;&#xFF0C;&#x5B83;&#x5C06;&#x8BF7;&#x6C42;&#x8DEF;&#x5F84;&#x4E0E;&#x914D;&#x7F6E;&#x7684;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x8FDB;&#x884C;&#x5339;&#x914D;&#xFF0C;&#x4EE5;&#x627E;&#x5230;&#x9700;&#x8981;&#x8F6C;&#x53D1;&#x7684;&#x76EE;&#x6807;&#x5730;&#x5740;&#xFF1B;&#x800C;&#x8BF7;&#x6C42;&#x8F6C;&#x53D1;&#x7684;&#x90E8;&#x5206;&#x5219;&#x662F;&#x7531;route&#x7C7B;&#x578B;&#x7684;&#x8FC7;&#x6EE4;&#x5668;&#x6765;&#x5B8C;&#x6210;&#xFF0C;&#x5BF9;pre&#x7C7B;&#x578B;&#x8FC7;&#x6EE4;&#x5668;&#x83B7;&#x5F97;&#x7684;&#x8DEF;&#x7531;&#x5730;&#x5740;&#x8FDB;&#x884C;&#x8F6C;&#x53D1;&#x3002; &#x6240;&#x4EE5;&#xFF0C;&#x8FC7;&#x6EE4;&#x5668;&#x53EF;&#x4EE5;&#x8BF4;&#x662F;Zuul&#x5B9E;&#x73B0;API&#x7F51;&#x5173;&#x529F;&#x80FD;&#x6700;&#x4E3A;&#x6838;&#x5FC3;&#x7684;&#x90E8;&#x4EF6;&#xFF0C;&#x6BCF; &#x4E00; &#x4E2A;&#x8FDB;&#x5165;Zuul&#x7684;HTTP&#x8BF7;&#x6C42;&#x90FD;&#x4F1A;&#x7ECF;&#x8FC7; &#x4E00; &#x7CFB;&#x5217;&#x7684;&#x8FC7;&#x6EE4;&#x5668;&#x5904;&#x7406;&#x94FE;&#x5F97;&#x5230;&#x8BF7;&#x6C42;&#x54CD;&#x5E94;&#x5E76;&#x8FD4;&#x56DE;&#x7ED9;&#x5BA2;&#x6237;&#x7AEF;&#x3002;</p>
+<p>&#x5728;Spring Cloud Zuul&#x4E2D;&#x5B9E;&#x73B0;&#x7684;&#x8FC7;&#x6EE4;&#x5668;&#x5FC5;&#x987B;&#x5305;&#x542B;<strong><em>4&#x4E2A;&#x57FA;&#x672C;&#x7279;&#x5F81;&#xFF1A; &#x8FC7;&#x6EE4;&#x7C7B;&#x578B;&#x3001; &#x6267;&#x884C;&#x987A;&#x5E8F;&#x3001;&#x6267;&#x884C;&#x6761;&#x4EF6;&#x3001; &#x5177;&#x4F53;&#x64CD;&#x4F5C;</em></strong></p>
+<h3 id="&#x8BF7;&#x6C42;&#x751F;&#x547D;&#x5468;&#x671F;"><a name="&#x8BF7;&#x6C42;&#x751F;&#x547D;&#x5468;&#x671F;" class="anchor-navigation-ex-anchor" href="#&#x8BF7;&#x6C42;&#x751F;&#x547D;&#x5468;&#x671F;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x8BF7;&#x6C42;&#x751F;&#x547D;&#x5468;&#x671F;</h3>
+<p><img src="images/zuul-01.png" alt="01"></p>
+<h3 id="&#x6838;&#x5FC3;&#x8FC7;&#x6EE4;&#x5668;"><a name="&#x6838;&#x5FC3;&#x8FC7;&#x6EE4;&#x5668;" class="anchor-navigation-ex-anchor" href="#&#x6838;&#x5FC3;&#x8FC7;&#x6EE4;&#x5668;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x6838;&#x5FC3;&#x8FC7;&#x6EE4;&#x5668;</h3>
+<p><img src="images/zuul-02.png" alt="02"></p>
+<h3 id="&#x5F02;&#x5E38;&#x5904;&#x7406;"><a name="&#x5F02;&#x5E38;&#x5904;&#x7406;" class="anchor-navigation-ex-anchor" href="#&#x5F02;&#x5E38;&#x5904;&#x7406;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x5F02;&#x5E38;&#x5904;&#x7406;</h3>
+<ul>
+<li><strong>SendErrorFilter &#x662F;&#x7528;&#x6765;&#x5904;&#x7406;&#x5F02;&#x5E38;&#x4FE1;&#x606F;</strong></li>
+</ul>
+<p>error.status_code &#x53C2;&#x6570;&#x5C31;&#x662F; SendErrorFilter &#x8FC7;&#x6EE4;&#x5668;&#x7528;&#x6765;&#x5224;&#x65AD;&#x662F;&#x5426;&#x9700;&#x8981;&#x6267;&#x884C;&#x7684;&#x91CD;&#x8981;&#x53C2;&#x6570;</p>
+<ul>
+<li><strong>&#x5BF9;&#x4E8E;&#x610F;&#x5916;&#x629B;&#x51FA;&#x7684;&#x5F02;&#x5E38;&#x53C8;&#x4F1A;&#x5BFC;&#x81F4;&#x6CA1;&#x6709;&#x63A7;&#x5236;&#x53F0;&#x8F93;&#x51FA;&#x4E5F;&#x6CA1;&#x6709;&#x4EFB;&#x4F55;&#x54CD;&#x5E94;&#x4FE1;&#x606F;&#x7684;&#x60C5;&#x51B5;&#x51FA;&#x73B0;</strong>,<strong>&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x521B;&#x5EFA; &#x4E00; &#x4E2A; error &#x7C7B;&#x578B;&#x7684;&#x8FC7;&#x6EE4;&#x5668;&#x6765;&#x6355;&#x83B7;&#x8FD9;&#x4E9B;&#x5F02;&#x5E38;&#x4FE1;&#x606F;&#xFF0C;&#x5E76;&#x6839;&#x636E;&#x8FD9;&#x4E9B;&#x5F02;&#x5E38;&#x4FE1;&#x606F;&#x5728;&#x8BF7;&#x6C42;&#x4E0A;&#x4E0B;&#x6587;&#x4E2D;&#x6CE8;&#x5165;&#x9700;&#x8981;&#x8FD4;&#x56DE;&#x7ED9;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x9519;&#x8BEF;&#x63CF;&#x8FF0;</strong></li>
+</ul>
+<h3 id="&#x7981;&#x7528;&#x8FC7;&#x6EE4;&#x5668;"><a name="&#x7981;&#x7528;&#x8FC7;&#x6EE4;&#x5668;" class="anchor-navigation-ex-anchor" href="#&#x7981;&#x7528;&#x8FC7;&#x6EE4;&#x5668;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x7981;&#x7528;&#x8FC7;&#x6EE4;&#x5668;</h3>
+<p>&#x4E0D;&#x8BBA;&#x662F;&#x6838;&#x5FC3;&#x8FC7;&#x6EE4;&#x5668;&#x8FD8;&#x662F;&#x81EA;&#x5B9A;&#x4E49;&#x8FC7;&#x6EE4;&#x5668;&#xFF0C; &#x53EA;&#x8981;&#x5728;API&#x7F51;&#x5173;&#x5E94;&#x7528;&#x4E2D;&#x4E3A;&#x5B83;&#x4EEC;&#x521B;&#x5EFA;&#x4E86;&#x5B9E;&#x4F8B;&#xFF0C; &#x90A3;&#x4E48;&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C; &#x5B83;&#x4EEC;&#x90FD;&#x662F;&#x542F;&#x7528;&#x72B6;&#x6001;&#x7684;&#x3002; &#x90A3;&#x4E48;&#x5982;&#x679C;&#x6709;&#x4E9B;&#x8FC7;&#x6EE4;&#x5668;&#x6211;&#x4EEC;&#x4E0D;&#x60F3;&#x4F7F;&#x7528;&#x4E86;&#xFF0C; &#x5982;&#x4F55;&#x7981;&#x7528;&#x5B83;&#x4EEC;&#x5462;&#xFF1F;&#x5927;&#x591A;&#x60C5;&#x51B5;&#x4E0B;&#x521D;&#x8BC6;Zuul&#x7684;&#x4F7F;&#x7528;&#x8005;&#x7B2C; &#x4E00; &#x53CD;&#x5E94;&#x5C31;&#x662F;&#x901A;&#x8FC7;&#x91CD;&#x5199;shouldFilter&#x903B;&#x8F91;&#xFF0C; &#x8BA9;&#x5B83;&#x8FD4;&#x56DE;false, &#x8FD9;&#x6837;&#x8BE5;&#x8FC7;&#x6EE4;&#x5668;&#x5BF9;&#x4E8E;&#x4EFB;&#x4F55;&#x8BF7;&#x6C42;&#x90FD;&#x4E0D;&#x4F1A;&#x88AB;&#x6267;&#x884C;&#xFF0C; &#x57FA;&#x672C;&#x5B9E;&#x73B0;&#x4E86;&#x5BF9;&#x8FC7;&#x6EE4;&#x5668;&#x7684;&#x7981;&#x7528;&#x3002; &#x4F46;&#x662F;&#xFF0C; &#x5BF9;&#x4E8E;&#x81EA;&#x5B9A;&#x4E49;&#x8FC7;&#x6EE4;&#x5668;&#x6765;&#x8BF4;&#x4F3C;&#x4E4E;&#x662F;&#x5B9E;&#x73B0;&#x4E86;&#x8FC7;&#x6EE4;&#x5668;&#x4E0D;&#x751F;&#x6548;&#x7684;&#x529F;&#x80FD;&#xFF0C; &#x4F46;&#x662F;&#x8FD9;&#x6837;&#x7684;&#x505A;&#x6CD5;&#x7F3A;&#x4E4F;&#x7075;&#x6D3B;&#x6027;&#x3002; &#x7531;&#x4E8E;&#x76F4;&#x63A5;&#x8981;&#x4FEE;&#x6539;&#x8FC7;&#x65C3;&#x5668;&#x903B;&#x8F91;&#xFF0C; &#x6211;&#x4EEC;&#x4E0D;&#x5F97;&#x4E0D;&#x91CD;&#x65B0;&#x7F16;&#x8BD1;&#x7A0B;&#x5E8F;&#xFF0C; &#x5E76;&#x4E14;&#x5982;&#x679C;&#x8BE5;&#x8FC7;&#x6EE4;&#x5668;&#x5728;&#x672A;&#x6765;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#x8FD8;&#x6709;&#x53EF;&#x80FD;&#x88AB;&#x542F;&#x7528;&#x7684;&#x65F6;&#x5019;&#xFF0C; &#x90A3;&#x4E48;&#x5C31;&#x53C8;&#x5F97;&#x4FEE;&#x6539;&#x4EE3;&#x7801;&#x5E76;&#x7F16;&#x8BD1;&#x7A0B;&#x5E8F;&#x3002; &#x540C;&#x65F6;&#xFF0C; &#x5BF9;&#x4E8E;&#x6838;&#x5FC3;&#x8FC7;&#x6EE4;&#x5668;&#x6765;&#x8BF4;&#xFF0C; &#x5C31;&#x66F4;&#x4E3A;&#x9EBB;&#x70E6;&#xFF0C; &#x6211;&#x4EEC;&#x4E0D;&#x5F97;&#x4E0D;&#x83B7;&#x53D6;&#x6E90;&#x7801;&#x6765;&#x8FDB;&#x884C;&#x4FEE;&#x6539;&#x548C;&#x7F16;&#x8BD1;&#x3002;</p>
+<p>Zuul&#x4E2D;&#x7279;&#x522B;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#x6765;&#x7981;&#x7528;&#x6307;&#x5B9A;&#x7684;&#x8FC7;&#x6EE4;&#x5668;</p>
+<pre><code class="lang-java">zuul.&lt;SimpleClassName&gt;.&lt;filterType&gt;.disable = <span class="hljs-keyword">true</span>
+</code></pre>
+<p> <simpleclassname>&#x4EE3;&#x8868;&#x8FC7;&#x6EE4;&#x5668;&#x7684;&#x7C7B;&#x540D;&#xFF0C; &#x6BD4;&#x5982;&#x5FEB;&#x901F;&#x5165;&#x95E8;&#x793A;&#x4F8B;&#x4E2D;&#x7684;AccessFilter;&#xFF1C;filterType&gt;&#x4EE3;&#x8868;&#x8FC7;&#x6EE4;&#x5668;&#x7C7B;&#x578B;&#xFF0C; &#x6BD4;&#x5982;&#x5FEB;&#x901F;&#x5165;&#x95E8;&#x793A;&#x4F8B;&#x4E2D; AccessFilter &#x7684;&#x8FC7;&#x6EE4;&#x5668;&#x7C7B;&#x578B;pre&#x3002; &#x6240;&#x4EE5;&#xFF0C; &#x5982;&#x679C;&#x6211;&#x4EEC;&#x60F3;&#x8981;&#x7981;&#x7528;&#x5FEB;&#x901F;&#x5165;&#x95E8;&#x793A;&#x4F8B;&#x4E2D;&#x7684; AccessFilter &#x8FC7;&#x6EE4;&#x5668;&#xFF0C; &#x53EA;&#x9700;&#x8981;&#x5728;application.properties &#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x589E;&#x52A0;&#x5982;&#x4E0B;&#x914D;&#x7F6E;&#x5373;&#x53EF;&#xFF1A;</simpleclassname></p>
+<pre><code class="lang-java">zuul.AccessFilter.pre.disable = <span class="hljs-keyword">true</span>
+</code></pre>
+<p>&#x8BE5;&#x53C2;&#x6570;&#x914D;&#x7F6E;&#x9664;&#x4E86;&#x53EF;&#x4EE5;&#x5BF9;&#x81EA;&#x5B9A;&#x4E49;&#x7684;&#x8FC7;&#x6EE4;&#x5668;&#x8FDB;&#x884C;&#x7981;&#x7528;&#x914D;&#x7F6E;&#x4E4B;&#x5916;&#xFF0C; &#x5F88;&#x591A;&#x65F6;&#x5019;&#x53EF;&#x4EE5;&#x7528;&#x5B83;&#x6765;&#x7981;&#x7528;Spring Cloud Zuul&#x4E2D;&#x9ED8;&#x8BA4;&#x5B9A;&#x4E49;&#x7684;&#x6838;&#x5FC3;&#x8FC7;&#x6EE4;&#x5668;&#x3002; &#x8FD9;&#x6837;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x629B;&#x5F00;Spring Cloud Zuul&#x81EA;&#x5E26;&#x7684;&#x90A3;&#x5957;&#x6838;&#x5FC3;&#x8FC7;&#x6EE4;&#x5668;&#xFF0C; &#x5B9E;&#x73B0; &#x4E00; &#x5957;&#x66F4;&#x7B26;&#x5408;&#x6211;&#x4EEC;&#x5B9E;&#x9645;&#x9700;&#x6C42;&#x7684;&#x5904;&#x7406;&#x673A;&#x5236;&#x3002;</p>
+<h2 id="&#x52A8;&#x6001;&#x52A0;&#x8F7D;"><a name="&#x52A8;&#x6001;&#x52A0;&#x8F7D;" class="anchor-navigation-ex-anchor" href="#&#x52A8;&#x6001;&#x52A0;&#x8F7D;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x52A8;&#x6001;&#x52A0;&#x8F7D;</h2>
+<p>&#x5728;&#x5FAE;&#x670D;&#x52A1;&#x67B6;&#x6784;&#x4E2D;&#xFF0C; &#x7531;&#x4E8E;API&#x7F51;&#x5173;&#x670D;&#x52A1;&#x62C5;&#x8D1F;&#x7740;&#x5916;&#x90E8;&#x8BBF;&#x95EE;&#x7EDF;&#x4E00;&#x5165;&#x53E3;&#x7684;&#x91CD;&#x4EFB;&#xFF0C; &#x5B83;&#x540C;&#x5176;&#x4ED6;&#x5E94;&#x7528;&#x4E0D;&#x540C;&#xFF0C; &#x4EFB;&#x4F55;&#x5173;&#x95ED;&#x5E94;&#x7528;&#x548C;&#x91CD;&#x542F;&#x5E94;&#x7528;&#x7684;&#x64CD;&#x4F5C;&#x90FD;&#x4F1A;&#x4F7F;&#x7CFB;&#x7EDF;&#x5BF9;&#x5916;&#x670D;&#x52A1;&#x505C;&#x6B62;&#xFF0C; &#x5BF9;&#x4E8E;&#x5F88;&#x591A;7 X  24&#x5C0F;&#x65F6;&#x670D;&#x52A1;&#x7684;&#x7CFB;&#x7EDF;&#x6765;&#x8BF4;&#xFF0C; &#x8FD9;&#x6837;&#x7684;&#x60C5;&#x51B5;&#x662F;&#x7EDD;&#x5BF9;&#x4E0D;&#x88AB;&#x5141;&#x8BB8;&#x7684;&#x3002; &#x6240;&#x4EE5;&#xFF0C; &#x4F5C;&#x4E3A;&#x6700;&#x5916;&#x90E8;&#x7684;&#x7F51;&#x5173;&#xFF0C; &#x5B83;&#x5FC5;&#x987B;&#x5177;&#x5907;&#x52A8;&#x6001;&#x66F4;&#x65B0;&#x5185;&#x90E8;&#x903B;&#x8F91;&#x7684;&#x80FD;&#x529B;&#xFF0C; &#x6BD4;&#x5982;&#x52A8;&#x6001;&#x4FEE;&#x6539;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x3001; &#x52A8;&#x6001;&#x6DFB;&#x52A0;&#xFF0F;&#x5220;&#x9664;&#x8FC7;&#x6EE4;&#x5668;&#x7B49;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728;&#x4E0D;&#x91CD;&#x542F; API&#x7F51;&#x5173;&#x670D;&#x52A1;&#x7684;&#x524D;&#x63D0;&#x4E0B;&#xFF0C; &#x4E3A;&#x5176;&#x52A8;&#x6001;&#x4FEE;&#x6539;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x548C;&#x6DFB;&#x52A0;&#x6216;&#x5220;&#x9664;&#x8FC7;&#x6EE4;&#x5668;&#x3002; &#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x5206;&#x522B;&#x6765;&#x770B;&#x770B;&#x5982;&#x4F55;&#x901A;&#x8FC7;Zuul&#x6765;&#x5B9E;&#x73B0;&#x52A8;&#x6001;API&#x7F51;&#x5173;&#x670D;&#x52A1;&#x3002;</p>
+<h3 id="&#x52A8;&#x6001;&#x8DEF;&#x7531;"><a name="&#x52A8;&#x6001;&#x8DEF;&#x7531;" class="anchor-navigation-ex-anchor" href="#&#x52A8;&#x6001;&#x8DEF;&#x7531;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x52A8;&#x6001;&#x8DEF;&#x7531;</h3>
+<p>&#x53EA;&#x9700;&#x5C06;API&#x7F51;&#x5173;&#x670D;&#x52A1;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x901A;&#x8FC7;Spring Cloud Config&#x8FDE;&#x63A5;&#x7684;Git&#x4ED3;&#x5E93;&#x5B58;&#x50A8;&#x548C;&#x7BA1;&#x7406;&#xFF0C; &#x6211;&#x4EEC;&#x5C31;&#x80FD;&#x8F7B;&#x677E;&#x5B9E;&#x73B0;&#x52A8;&#x6001;&#x5237;&#x65B0;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x7684;&#x529F;&#x80FD;&#x3002;</p>
+<h3 id="&#x52A8;&#x6001;&#x8FC7;&#x6EE4;&#x5668;"><a name="&#x52A8;&#x6001;&#x8FC7;&#x6EE4;&#x5668;" class="anchor-navigation-ex-anchor" href="#&#x52A8;&#x6001;&#x8FC7;&#x6EE4;&#x5668;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x52A8;&#x6001;&#x8FC7;&#x6EE4;&#x5668;</h3>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <em>Dazzle Lin</em> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2019-07-02 22:53:03 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../Chapter4/Spring Cloud Feign.html" class="navigation navigation-prev " aria-label="Previous page: Spring Cloud Feign">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Spring Cloud Config.html" class="navigation navigation-next " aria-label="Next page: Spring Cloud Config">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Spring Cloud Zuul","level":"1.6","depth":1,"next":{"title":"Spring Cloud Config","level":"1.7","depth":1,"path":"Chapter5/Spring Cloud Config.md","ref":"Chapter5/Spring Cloud Config.md","articles":[]},"previous":{"title":"Spring Cloud Feign","level":"1.5","depth":1,"path":"Chapter4/Spring Cloud Feign.md","ref":"Chapter4/Spring Cloud Feign.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","search-pro","github","chapter-fold","code","copy-code-button","splitter","page-footer-ex","simple-page-toc","anchor-navigation-ex","livereload"],"root":".","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"chapter-fold":{},"github":{"url":"https://github.com/linqinye"},"livereload":{},"simple-page-toc":{"maxDepth":3,"skipFirstH1":true},"page-footer-ex":{"copyright":"By <em>Dazzle Lin</em>","markdown":false,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{"cutWordLib":"nodejieba","defineWord":["Gitbook Use"]},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"fa fa-hand-o-right","level2Icon":"fa fa-hand-o-right","level3Icon":"fa fa-hand-o-right","showLevelIcon":true},"mode":"float","multipleH1":false,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":false},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Dazzle","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"编写docker学习笔记","language":"zh-hans","gitbook":"*","description":"编写docker学习笔记"},"file":{"path":"Chapter5/Spring Cloud Zuul.md","mtime":"2019-07-02T14:53:03.236Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-07-03T04:28:46.241Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-chapter-fold/chapter-fold.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

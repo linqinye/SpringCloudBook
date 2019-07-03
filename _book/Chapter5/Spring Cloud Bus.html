@@ -1,0 +1,377 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Spring Cloud Bus · 编写docker学习笔记</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="Dazzle">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-chapter-fold/chapter-fold.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="Spring Cloud Config.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    前言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../Chapter1/Spring Cloud Eureka.html">
+            
+                <a href="../Chapter1/Spring Cloud Eureka.html">
+            
+                    
+                    Spring Cloud Eureka
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../Chapter2/Spring cloud Ribbon.html">
+            
+                <a href="../Chapter2/Spring cloud Ribbon.html">
+            
+                    
+                    Spring cloud Ribbon
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../Chapter3/Spring Cloud Hystrix.html">
+            
+                <a href="../Chapter3/Spring Cloud Hystrix.html">
+            
+                    
+                    Spring Cloud Hystrix
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../Chapter4/Spring Cloud Feign.html">
+            
+                <a href="../Chapter4/Spring Cloud Feign.html">
+            
+                    
+                    Spring Cloud Feign
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Spring Cloud Zuul.html">
+            
+                <a href="Spring Cloud Zuul.html">
+            
+                    
+                    Spring Cloud Zuul
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Spring Cloud Config.html">
+            
+                <a href="Spring Cloud Config.html">
+            
+                    
+                    Spring Cloud Config
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.8" data-path="Spring Cloud Bus.html">
+            
+                <a href="Spring Cloud Bus.html">
+            
+                    
+                    Spring Cloud Bus
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Spring Cloud Bus</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#spring-cloud-bus&#x6D88;&#x606F;&#x603B;&#x7EBF;"><b></b>Spring Cloud Bus(&#x6D88;&#x606F;&#x603B;&#x7EBF;)</a></li><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#rabbitmq&#x57FA;&#x7840;&#x6982;&#x5FF5;"><b></b>RabbitMQ&#x57FA;&#x7840;&#x6982;&#x5FF5;</a></li></ul></ul></div><a href="#spring-cloud-bus&#x6D88;&#x606F;&#x603B;&#x7EBF;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="spring-cloud-bus&#x6D88;&#x606F;&#x603B;&#x7EBF;"><a name="spring-cloud-bus&#x6D88;&#x606F;&#x603B;&#x7EBF;" class="anchor-navigation-ex-anchor" href="#spring-cloud-bus&#x6D88;&#x606F;&#x603B;&#x7EBF;"><i class="fa fa-link" aria-hidden="true"></i></a>Spring Cloud Bus(&#x6D88;&#x606F;&#x603B;&#x7EBF;)</h1>
+<h2 id="rabbitmq&#x57FA;&#x7840;&#x6982;&#x5FF5;"><a name="rabbitmq&#x57FA;&#x7840;&#x6982;&#x5FF5;" class="anchor-navigation-ex-anchor" href="#rabbitmq&#x57FA;&#x7840;&#x6982;&#x5FF5;"><i class="fa fa-link" aria-hidden="true"></i></a>RabbitMQ&#x57FA;&#x7840;&#x6982;&#x5FF5;</h2>
+<ul>
+<li>Broker: &#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;&#x6D88;&#x606F;&#x961F;&#x5217;&#x670D;&#x52A1;&#x5668;&#x7684;&#x5B9E;&#x4F53;&#xFF0C; &#x5B83;&#x662F;&#x4E00;&#x4E2A;&#x4E2D;&#x95F4;&#x4EF6;&#x5E94;&#x7528;&#xFF0C; &#x8D1F;&#x8D23;&#x63A5;&#x6536;&#x6D88;&#x606F;&#x751F;&#x4EA7;&#x8005;&#x7684;&#x6D88;&#x606F;&#xFF0C; &#x7136;&#x540E;&#x5C06;&#x6D88;&#x606F;&#x53D1;&#x9001;&#x81F3;&#x6D88;&#x606F;&#x63A5;&#x6536;&#x8005;&#x6216;&#x8005;&#x5176;&#x4ED6;&#x7684;Broker&#x3002;</li>
+<li>Exchange: &#x6D88;&#x606F;&#x4EA4;&#x6362;&#x673A;&#xFF0C;&#x662F;&#x6D88;&#x606F;&#x7B2C;&#x4E00;&#x4E2A;&#x5230;&#x8FBE;&#x7684;&#x5730;&#x65B9;&#xFF0C;&#x6D88;&#x606F;&#x901A;&#x8FC7;&#x5B83;&#x6307;&#x5B9A;&#x7684;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#xFF0C;&#x5206;&#x53D1;&#x5230;&#x4E0D;&#x540C;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x4E2D;&#x53BB;&#x3002;</li>
+<li>Queue: &#x6D88;&#x606F;&#x961F;&#x5217;&#xFF0C; &#x6D88;&#x606F;&#x901A;&#x8FC7;&#x53D1;&#x9001;&#x548C;&#x8DEF;&#x7531;&#x4E4B;&#x540E;&#x6700;&#x7EC8;&#x5230;&#x8FBE;&#x7684;&#x5730;&#x65B9;&#xFF0C; &#x5230;&#x8FBE;Queue&#x7684;&#x6D88;&#x606F;&#x5373;&#x8FDB;&#x5165;&#x903B;&#x8F91;&#x4E0A;&#x7B49;&#x5F85;&#x6D88;&#x8D39;&#x7684;&#x72B6;&#x6001;&#x3002; &#x6BCF;&#x4E2A;&#x6D88;&#x606F;&#x90FD;&#x4F1A;&#x88AB;&#x53D1;&#x9001;&#x5230;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A;&#x961F;&#x5217; &#x3002;</li>
+<li>Binding: &#x7ED1;&#x5B9A;&#xFF0C;&#x5B83;&#x7684;&#x4F5C;&#x7528;&#x5C31;&#x662F;&#x628A;Exchange&#x548C;Queue&#x6309;&#x7167;&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x7ED1;&#x5B9A;&#x8D77;&#x6765;&#xFF0C; &#x4E5F;&#x5C31;&#x662F;Exchange&#x548C;Queue&#x4E4B;&#x95F4;&#x7684;&#x865A;&#x62DF;&#x8FDE;&#x63A5; &#x3002;</li>
+<li>Routing Key: &#x8DEF;&#x7531;&#x5173;&#x952E;&#x5B57;&#xFF0C;Exchange&#x6839;&#x636E;&#x8FD9;&#x4E2A;&#x5173;&#x952E;&#x5B57;&#x8FDB;&#x884C;&#x6D88;&#x606F;&#x6295;&#x9012;&#x3002;</li>
+<li>Virtual host: &#x865A;&#x62DF;&#x4E3B;&#x673A;&#xFF0C; &#x5B83;&#x662F;&#x5BF9;Broker&#x7684;&#x865A;&#x62DF;&#x5212;&#x5206;&#xFF0C; &#x5C06;&#x6D88;&#x8D39;&#x8005;&#x3001; &#x751F;&#x4EA7;&#x8005;&#x548C;&#x5B83;&#x4EEC;&#x4F9D;&#x8D56;&#x7684;AMQP&#x76F8;&#x5173;&#x7ED3;&#x6784;&#x8FDB;&#x884C;&#x9694;&#x79BB;&#xFF0C;&#x4E00;&#x822C;&#x90FD;&#x662F;&#x4E3A;&#x4E86;&#x5B89;&#x5168;&#x8003;&#x865A;&#x3002;&#x6BD4;&#x5982;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728;&#x4E00;&#x4E2A;Broker&#x4E2D;&#x8BBE;&#x7F6E;&#x591A;&#x4E2A;&#x865A;&#x62DF;&#x4E3B;&#x673A;&#xFF0C; &#x5BF9;&#x4E0D;&#x540C;&#x7528;&#x6237;&#x8FDB;&#x884C;&#x6743;&#x9650;&#x7684;&#x5206;&#x79BB; &#x3002;</li>
+<li>Connection: &#x8FDE;&#x63A5;&#xFF0C; &#x4EE3;&#x8868;&#x751F;&#x4EA7;&#x8005;&#x3001; &#x6D88;&#x8D39;&#x8005;&#x3001; Broker&#x4E4B;&#x95F4;&#x8FDB;&#x884C;&#x901A;&#x4FE1;&#x7684;&#x7269;&#x7406;&#x7F51;&#x7EDC;&#x3002;</li>
+<li>Channel: &#x6D88;&#x606F;&#x901A;&#x9053;&#xFF0C;&#x7528;&#x5343;&#x8FDE;&#x63A5;&#x751F;&#x4EA7;&#x8005;&#x548C;&#x6D88;&#x8D39;&#x8005;&#x7684;&#x903B;&#x8F91;&#x7ED3;&#x6784; &#x3002;&#x5728;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x6BCF;&#x4E2A;&#x8FDE;&#x63A5;&#x91CC;&#xFF0C;&#x53EF;&#x5EFA;&#x7ACB;&#x591A;&#x4E2A;Channel, &#x6BCF;&#x4E2A;Channel&#x4EE3;&#x8868;&#x4E00;&#x4E2A;&#x4F1A;&#x8BDD;&#x4EFB;&#x52A1;&#xFF0C; &#x901A;&#x8FC7;Channel&#x53EF;&#x4EE5;&#x9694;&#x79BB;&#x540C;&#x4E00;&#x8FDE;&#x63A5;&#x4E2D;&#x7684;&#x4E0D;&#x540C;&#x4EA4;&#x4E92;&#x5185;&#x5BB9;&#x3002;</li>
+<li>Producer: &#x6D88;&#x606F;&#x751F;&#x4EA7;&#x8005;&#xFF0C; &#x5236;&#x9020;&#x6D88;&#x606F;&#x5E76;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x7684;&#x7A0B;&#x5E8F;&#x3002;</li>
+<li>Consumer: &#x6D88;&#x606F;&#x6D88;&#x8D39;&#x8005;&#xFF0C; &#x63A5;&#x6536;&#x6D88;&#x606F;&#x5E76;&#x5904;&#x7406;&#x6D88;&#x606F;&#x7684;&#x7A0B;&#x5E8F;</li>
+</ul>
+<p><img src="images/bus-01.png" alt="01"></p>
+<ol>
+<li>&#x5728;ConfigServer&#x4E2D;&#x4E5F;&#x5F15;&#x5165;SpringCloud Bus, &#x5C06;&#x914D;&#x7F6E;&#x670D;&#x52A1;&#x7AEF;&#x4E5F;&#x52A0;&#x5165;&#x5230;&#x6D88;&#x606F;&#x603B;&#x7EBF;&#x4E2D;&#x6765;&#x3002;</li>
+<li>/actuator/bus-refresh&#x8BF7;&#x6C42;&#x4E0D;&#x518D;&#x53D1;&#x9001;&#x5230;&#x5177;&#x4F53;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x4E0A;&#xFF0C; &#x800C;&#x662F;&#x53D1;&#x9001;&#x7ED9;Config Server, &#x5E76;&#x901A;&#x8FC7;destination&#x53C2;&#x6570;&#x6765;&#x6307;&#x5B9A;&#x9700;&#x8981;&#x66F4;&#x65B0;&#x914D;&#x7F6E;&#x7684;&#x670D;&#x52A1;&#x6216;&#x5B9E;&#x4F8B;&#x3002;&#x901A;&#x8FC7;&#x4E0A;&#x9762;&#x7684;&#x6539;&#x52A8;&#xFF0C;&#x6211;&#x4EEC;&#x7684;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x4E0D;&#x9700;&#x8981;&#x518D;&#x627F;&#x62C5;&#x89E6;&#x53D1;&#x914D;&#x7F6E;&#x66F4;&#x65B0;&#x7684;&#x804C;&#x8D23;&#x3002; &#x540C;&#x65F6;&#xFF0C;&#x5BF9;&#x4E8E;Git&#x7684;&#x89E6;&#x53D1;&#x7B49;&#x914D;&#x7F6E;&#x90FD;&#x53EA;&#x9700;&#x8981;&#x9488;&#x5BF9;ConfigServer&#x5373;&#x53EF;&#xFF0C; &#x4ECE;&#x800C;&#x7B80;&#x5316;&#x4E86;&#x96C6;&#x7FA4;&#x4E0A;&#x7684; &#x4E00; &#x4E9B;&#x7EF4;&#x62A4;&#x5DE5;&#x4F5C;&#x3002;</li>
+</ol>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <em>Dazzle Lin</em> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2019-07-02 22:57:24 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Spring Cloud Config.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Spring Cloud Config">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Spring Cloud Bus","level":"1.8","depth":1,"previous":{"title":"Spring Cloud Config","level":"1.7","depth":1,"path":"Chapter5/Spring Cloud Config.md","ref":"Chapter5/Spring Cloud Config.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","search-pro","github","chapter-fold","code","copy-code-button","splitter","page-footer-ex","simple-page-toc","anchor-navigation-ex","livereload"],"root":".","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"chapter-fold":{},"github":{"url":"https://github.com/linqinye"},"livereload":{},"simple-page-toc":{"maxDepth":3,"skipFirstH1":true},"page-footer-ex":{"copyright":"By <em>Dazzle Lin</em>","markdown":false,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{"cutWordLib":"nodejieba","defineWord":["Gitbook Use"]},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"fa fa-hand-o-right","level2Icon":"fa fa-hand-o-right","level3Icon":"fa fa-hand-o-right","showLevelIcon":true},"mode":"float","multipleH1":false,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":false},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Dazzle","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"编写docker学习笔记","language":"zh-hans","gitbook":"*","description":"编写docker学习笔记"},"file":{"path":"Chapter5/Spring Cloud Bus.md","mtime":"2019-07-02T14:57:24.681Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-07-03T04:28:46.241Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-chapter-fold/chapter-fold.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

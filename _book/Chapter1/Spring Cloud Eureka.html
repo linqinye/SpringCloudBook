@@ -1,0 +1,629 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Spring Cloud Eureka · 编写docker学习笔记</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="Dazzle">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-chapter-fold/chapter-fold.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../Chapter2/Spring cloud Ribbon.html" />
+    
+    
+    <link rel="prev" href="../" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    前言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2" data-path="Spring Cloud Eureka.html">
+            
+                <a href="Spring Cloud Eureka.html">
+            
+                    
+                    Spring Cloud Eureka
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../Chapter2/Spring cloud Ribbon.html">
+            
+                <a href="../Chapter2/Spring cloud Ribbon.html">
+            
+                    
+                    Spring cloud Ribbon
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../Chapter3/Spring Cloud Hystrix.html">
+            
+                <a href="../Chapter3/Spring Cloud Hystrix.html">
+            
+                    
+                    Spring Cloud Hystrix
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../Chapter4/Spring Cloud Feign.html">
+            
+                <a href="../Chapter4/Spring Cloud Feign.html">
+            
+                    
+                    Spring Cloud Feign
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../Chapter5/Spring Cloud Zuul.html">
+            
+                <a href="../Chapter5/Spring Cloud Zuul.html">
+            
+                    
+                    Spring Cloud Zuul
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../Chapter5/Spring Cloud Config.html">
+            
+                <a href="../Chapter5/Spring Cloud Config.html">
+            
+                    
+                    Spring Cloud Config
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../Chapter5/Spring Cloud Bus.html">
+            
+                <a href="../Chapter5/Spring Cloud Bus.html">
+            
+                    
+                    Spring Cloud Bus
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Spring Cloud Eureka</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#spring-cloud-eureka"><b></b>Spring Cloud Eureka</a></li><ul><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x4EA7;&#x751F;&#x80CC;&#x666F;"><b></b>&#x4EA7;&#x751F;&#x80CC;&#x666F;</a></li></ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x670D;&#x52A1;&#x6CBB;&#x7406;&#x7684;&#x57FA;&#x672C;&#x6982;&#x5FF5;"><b></b>&#x670D;&#x52A1;&#x6CBB;&#x7406;&#x7684;&#x57FA;&#x672C;&#x6982;&#x5FF5;</a></li><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#netflix-eureka"><b></b>Netflix Eureka</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x642D;&#x5EFA;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;"><b></b>&#x642D;&#x5EFA;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x6CE8;&#x518C;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x8005;"><b></b>&#x6CE8;&#x518C;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x8005;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x9AD8;&#x53EF;&#x7528;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;"><b></b>&#x9AD8;&#x53EF;&#x7528;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x670D;&#x52A1;&#x53D1;&#x73B0;&#x4E0E;&#x6D88;&#x8D39;"><b></b>&#x670D;&#x52A1;&#x53D1;&#x73B0;&#x4E0E;&#x6D88;&#x8D39;</a></li></ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#eureka&#x8BE6;&#x89E3;"><b></b>Eureka&#x8BE6;&#x89E3;</a></li><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x57FA;&#x7840;&#x67B6;&#x6784;"><b></b>&#x57FA;&#x7840;&#x67B6;&#x6784;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x670D;&#x52A1;&#x6CBB;&#x7406;&#x673A;&#x5236;"><b></b>&#x670D;&#x52A1;&#x6CBB;&#x7406;&#x673A;&#x5236;</a></li></ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x914D;&#x7F6E;&#x8BE6;&#x89E3;"><b></b>&#x914D;&#x7F6E;&#x8BE6;&#x89E3;</a></li><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x7C7B;&#x914D;&#x7F6E;"><b></b>&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x7C7B;&#x914D;&#x7F6E;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x7C7B;&#x914D;&#x7F6E;"><b></b>&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x7C7B;&#x914D;&#x7F6E;</a></li></ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x8DE8;&#x5E73;&#x53F0;&#x652F;&#x6301;"><b></b>&#x8DE8;&#x5E73;&#x53F0;&#x652F;&#x6301;</a></li></ul></ul></div><a href="#spring-cloud-eureka" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="spring-cloud-eureka"><a name="spring-cloud-eureka" class="anchor-navigation-ex-anchor" href="#spring-cloud-eureka"><i class="fa fa-link" aria-hidden="true"></i></a>Spring Cloud Eureka</h1>
+<h3 id="&#x4EA7;&#x751F;&#x80CC;&#x666F;"><a name="&#x4EA7;&#x751F;&#x80CC;&#x666F;" class="anchor-navigation-ex-anchor" href="#&#x4EA7;&#x751F;&#x80CC;&#x666F;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x4EA7;&#x751F;&#x80CC;&#x666F;</h3>
+<p>&#x670D;&#x52A1;&#x6CBB;&#x7406;&#x53EF;&#x4EE5;&#x8BF4;&#x662F;&#x5FAE;&#x670D;&#x52A1;&#x67B6;&#x6784;&#x4E2D;&#x6700;&#x4E3A;&#x6838;&#x5FC3;&#x548C;&#x57FA;&#x7840;&#x7684;&#x6A21;&#x5757;&#xFF0C; &#x5B83;&#x4E3B;&#x8981;&#x7528;&#x6765;&#x5B9E;&#x73B0;&#x5404;&#x4E2A;&#x5FAE;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x7684;&#x81EA;&#x52A8;&#x5316;&#x6CE8;&#x518C;&#x4E0E;&#x53D1;&#x73B0;&#x3002;&#x968F;&#x7740;&#x4E1A;&#x52A1;&#x7684;&#x53D1;&#x5C55;&#xFF0C; &#x7CFB;&#x7EDF;&#x529F;&#x80FD;&#x8D8A;&#x6765;&#x8D8A;&#x590D;&#x6742;&#xFF0C; &#x76F8;&#x5E94;&#x7684;&#x5FAE;&#x670D;&#x52A1;&#x5E94;&#x7528;&#x4E5F;&#x4E0D;&#x65AD;&#x589E;&#x52A0;&#xFF0C; &#x6211;&#x4EEC;&#x7684;&#x9759;&#x6001;&#x914D;&#x7F6E;&#x5C31;&#x4F1A;&#x53D8;&#x5F97;&#x8D8A;&#x6765;&#x8D8A;&#x96BE;&#x4EE5;&#x7EF4;&#x62A4;&#x3002; &#x5E76;&#x4E14;&#x9762;&#x5BF9;&#x4E0D;&#x65AD;&#x53D1;&#x5C55;&#x7684;&#x4E1A;&#x52A1;&#xFF0C; &#x6211;&#x4EEC;&#x7684;&#x96C6;&#x7FA4;&#x89C4;&#x6A21;&#x3001; &#x670D;&#x52A1;&#x7684;&#x4F4D;&#x7F6E; &#x3001; &#x670D;&#x52A1;&#x7684;&#x547D;&#x540D;&#x7B49;&#x90FD;&#x6709;&#x53EF;&#x80FD;&#x53D1;&#x751F;&#x53D8;&#x5316;&#xFF0C; &#x5982;&#x679C;&#x8FD8;&#x662F;&#x901A;&#x8FC7;&#x624B;&#x5DE5;&#x7EF4;&#x62A4;&#x7684;&#x65B9;&#x5F0F;&#xFF0C; &#x90A3;&#x4E48;&#x6781;&#x6613;&#x53D1;&#x751F;&#x9519;&#x8BEF;&#x6216;&#x662F;&#x547D;&#x540D;&#x51B2;&#x7A81;&#x7B49;&#x95EE;&#x9898;&#x3002; &#x540C;&#x65F6;&#xFF0C; &#x5BF9;&#x4E8E;&#x8FD9;&#x7C7B;&#x9759;&#x6001;&#x5185;&#x5BB9;&#x7684;&#x7EF4;&#x62A4;&#x4E5F;&#x5FC5;&#x5C06;&#x6D88;&#x8017;&#x5927;&#x91CF;&#x7684;&#x4EBA;&#x529B;&#x3002;&#x4E3A;&#x4E86;&#x89E3;&#x51B3;&#x5FAE;&#x670D;&#x52A1;&#x67B6;&#x6784;&#x4E2D;&#x7684;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x7EF4;&#x62A4;&#x95EE;&#x9898;&#xFF0C; &#x4EA7;&#x751F;&#x4E86;&#x5927;&#x91CF;&#x7684;&#x670D;&#x52A1;&#x6CBB;&#x7406;&#x6846;&#x67B6;&#x548C;&#x4EA7;&#x54C1;</p>
+<h2 id="&#x670D;&#x52A1;&#x6CBB;&#x7406;&#x7684;&#x57FA;&#x672C;&#x6982;&#x5FF5;"><a name="&#x670D;&#x52A1;&#x6CBB;&#x7406;&#x7684;&#x57FA;&#x672C;&#x6982;&#x5FF5;" class="anchor-navigation-ex-anchor" href="#&#x670D;&#x52A1;&#x6CBB;&#x7406;&#x7684;&#x57FA;&#x672C;&#x6982;&#x5FF5;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x670D;&#x52A1;&#x6CBB;&#x7406;&#x7684;&#x57FA;&#x672C;&#x6982;&#x5FF5;</h2>
+<p><strong>&#x670D;&#x52A1;&#x6CE8;&#x518C;&#xFF1A;</strong>&#x5728;&#x670D;&#x52A1;&#x6CBB;&#x7406;&#x6846;&#x67B6;&#x4E2D;&#xFF0C; &#x901A;&#x5E38;&#x90FD;&#x4F1A;&#x6784;&#x5EFA; &#x4E00; &#x4E2A;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#xFF0C; &#x6BCF;&#x4E2A;&#x670D;&#x52A1;&#x5355;&#x5143;&#x5411;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x767B;&#x8BB0;&#x81EA;&#x5DF1;&#x63D0;&#x4F9B;&#x7684;&#x670D;&#x52A1;&#xFF0C; &#x5C06;&#x4E3B;&#x673A;&#x4E0E;&#x7AEF;&#x53E3;&#x53F7;&#x3001; &#x7248;&#x672C;&#x53F7;&#x3001; &#x901A;&#x4FE1;&#x534F;&#x8BAE;&#x7B49;&#x4E00;&#x4E9B;&#x9644;&#x52A0;&#x4FE1;&#x606F;&#x544A;&#x77E5;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#xFF0C; &#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x6309;&#x670D;&#x52A1;&#x540D;&#x5206;&#x7C7B;&#x7EC4;&#x7EC7;&#x670D;&#x52A1;&#x6E05;&#x5355;&#x3002;</p>
+<p><img src="images/eureka1.png" alt="00"></p>
+<p><strong>&#x670D;&#x52A1;&#x53D1;&#x73B0;&#xFF1A;</strong>&#x7531;&#x4E8E;&#x5728;&#x670D;&#x52A1;&#x6CBB;&#x7406;&#x6846;&#x67B6;&#x4E0B;&#x8FD0;&#x4F5C;&#xFF0C; &#x670D;&#x52A1;&#x95F4;&#x7684;&#x8C03;&#x7528;&#x4E0D;&#x518D;&#x901A;&#x8FC7;&#x6307;&#x5B9A;&#x5177;&#x4F53;&#x7684;&#x5B9E;&#x4F8B;&#x5730;&#x5740;&#x6765;&#x5B9E;&#x73B0;&#xFF0C; &#x800C;&#x662F;&#x901A;&#x8FC7;&#x5411;&#x670D;&#x52A1;&#x540D;&#x53D1;&#x8D77;&#x8BF7;&#x6C42;&#x8C03;&#x7528;&#x5B9E;&#x73B0;&#x3002; &#x6240;&#x4EE5;&#xFF0C; &#x670D;&#x52A1;&#x8C03;&#x7528;&#x65B9;&#x5728;&#x8C03;&#x7528;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x65B9;&#x63A5;&#x53E3;&#x7684;&#x65F6;&#x5019;&#xFF0C; &#x5E76;&#x4E0D;&#x77E5;&#x9053;&#x5177;&#x4F53;&#x7684;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x4F4D;&#x7F6E;&#x3002; &#x56E0;&#x6B64;&#xFF0C; &#x8C03;&#x7528;&#x65B9;&#x9700;&#x8981;&#x5411;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x54A8;&#x8BE2;&#x670D;&#x52A1;&#xFF0C; &#x5E76;&#x83B7;&#x53D6;&#x6240;&#x6709;&#x670D;&#x52A1;&#x7684;&#x5B9E;&#x4F8B;&#x6E05;&#x5355;&#xFF0C; &#x4EE5;&#x5B9E;&#x73B0;&#x5BF9;&#x5177;&#x4F53;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x7684;&#x8BBF;&#x95EE;&#x3002;</p>
+<h3 id="netflix-eureka"><a name="netflix-eureka" class="anchor-navigation-ex-anchor" href="#netflix-eureka"><i class="fa fa-link" aria-hidden="true"></i></a>Netflix Eureka</h3>
+<p><strong>Spring Cloud Eureka</strong>, &#x4F7F;&#x7528;Netflix Eureka&#x6765;&#x5B9E;&#x73B0;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E0E;&#x53D1;&#x73B0;&#xFF0C; &#x5B83;&#x65E2;&#x5305;&#x542B;&#x4E86;&#x670D;&#x52A1;&#x7AEF;&#x7EC4;&#x4EF6;&#xFF0C;&#x4E5F;&#x5305;&#x542B;&#x4E86;&#x5BA2;&#x6237;&#x7AEF;&#x7EC4;&#x4EF6;&#xFF0C;&#x5E76;&#x4E14;&#x670D;&#x52A1;&#x7AEF;&#x4E0E;&#x5BA2;&#x6237;&#x7AEF;&#x5747;&#x91C7;&#x7528;Java&#x7F16;&#x5199;&#xFF0C;&#x6240;&#x4EE5;Eureka&#x4E3B;&#x8981;&#x9002;&#x7528;&#x4E8E;&#x901A;&#x8FC7;Java&#x5B9E;&#x73B0;&#x7684;&#x5206;&#x5E03;&#x5F0F;&#x7CFB;&#x7EDF;&#xFF0C;&#x6216;&#x662F;&#x4E0E;JVM&#x517C;&#x5BB9;&#x8BED;&#x8A00;&#x6784;&#x5EFA;&#x7684;&#x7CFB;&#x7EDF;&#x3002;&#x4F46;&#x662F;&#xFF0C; &#x7531;&#x4E8E;Eureka&#x670D;&#x52A1;&#x7AEF;&#x7684;&#x670D;&#x52A1;&#x6CBB;&#x7406;&#x673A;&#x5236;&#x63D0;&#x4F9B;&#x4E86;&#x5B8C;&#x5907;&#x7684;RESTful API&#xFF0C;&#x6240;&#x4EE5;&#x5B83;&#x4E5F;&#x652F;&#x6301;&#x5C06;&#x975E;Java&#x8BED;&#x8A00;&#x6784;&#x5EFA;&#x7684;&#x5FAE;&#x670D;&#x52A1;&#x5E94;&#x7528;&#x7EB3;&#x5165;Eureka&#x7684;&#x670D;&#x52A1;&#x6CBB;&#x7406;&#x4F53;&#x7CFB;&#x4E2D;&#x6765;&#x3002;&#x53EA;&#x662F;&#x5728;&#x4F7F;&#x7528;&#x5176;&#x4ED6;&#x8BED;&#x8A00;&#x5E73;&#x53F0;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x9700;&#x8981;&#x81EA;&#x5DF1;&#x6765;&#x5B9E;&#x73B0;Eureka&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x7A0B;&#x5E8F;&#x3002;&#x4E0D;&#x8FC7;&#x5E86;&#x5E78;&#x7684;&#x662F;&#xFF0C;&#x5728;&#x76EE;&#x524D;&#x51E0;&#x4E2A;&#x8F83;&#x4E3A;&#x6D41;&#x884C;&#x7684;&#x5F00;&#x53D1;&#x5E73;&#x53F0;&#x4E0A;&#xFF0C;&#x90FD;&#x5DF2;&#x7ECF;&#x6709;&#x4E86;&#x4E00; &#x4E9B;&#x9488;&#x5BF9;Eureka &#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x5B9E;&#x73B0;&#x6846;&#x67B6;.</p>
+<p><strong>Eureka&#x670D;&#x52A1;&#x7AEF;</strong>&#xFF0C;&#x6211;&#x4EEC;&#x4E5F;&#x79F0;&#x4E3A;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x3002;&#x5B83;&#x540C;&#x5176;&#x4ED6;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3; &#x4E00; &#x6837;&#xFF0C;&#x652F;&#x6301;&#x9AD8;&#x53EF;&#x7528;&#x914D;&#x7F6E;&#x3002;&#x5B83;&#x4F9D;&#x6258;&#x4E8E;&#x5F3A; &#x4E00; &#x81F4;&#x6027;&#x63D0;&#x4F9B;&#x826F;&#x597D;&#x7684;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x53EF;&#x7528;&#x6027;&#xFF0C;&#x53EF;&#x4EE5;&#x5E94;&#x5BF9;&#x591A;&#x79CD;&#x4E0D;&#x540C;&#x7684;&#x6545;&#x969C;&#x573A;&#x666F;&#x3002;&#x5982;&#x679C;Eureka&#x4EE5;&#x96C6;&#x7FA4;&#x6A21;&#x5F0F;&#x90E8;&#x7F72;&#xFF0C;&#x5F53;&#x96C6;&#x7FA4;&#x4E2D;&#x6709;&#x5206;&#x7247;&#x51FA;&#x73B0;&#x6545;&#x969C;&#x65F6;&#xFF0C;&#x90A3;&#x4E48;Eureka&#x5C31;&#x8F6C;&#x5165;&#x81EA;&#x6211;&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;&#x3002;&#x5B83;&#x5141;&#x8BB8;&#x5728;&#x5206;&#x7247;&#x6545;&#x969C;&#x671F;&#x95F4;&#x7EE7;&#x7EED;&#x63D0;&#x4F9B;&#x670D;&#x52A1;&#x7684;&#x53D1;&#x73B0;&#x548C;&#x6CE8;&#x518C;&#xFF0C;&#x5F53;&#x6545;&#x969C;&#x5206;&#x7247;&#x6062;&#x590D;&#x8FD0;&#x884C;&#x65F6;&#xFF0C;&#x96C6;&#x7FA4;&#x4E2D;&#x7684;&#x5176;&#x4ED6;&#x5206;&#x7247;&#x4F1A;&#x628A;&#x5B83;&#x4EEC;&#x7684;&#x72B6;&#x6001;&#x518D;&#x6B21;&#x540C;&#x6B65;&#x56DE;&#x6765;&#x3002;&#x4EE5;&#x5728;AWS &#x4E0A;&#x7684;&#x5B9E;&#x8DF5;&#x4E3A;&#x4F8B;&#xFF0C;Netflix&#x63A8;&#x8350;&#x6BCF;&#x4E2A;&#x53EF;&#x7528;&#x7684;&#x533A;&#x57DF;&#x8FD0;&#x884C; &#x4E00; &#x4E2A;Eureka&#x670D;&#x52A1;&#x7AEF;&#xFF0C;&#x901A;&#x8FC7;&#x5B83;&#x6765;&#x5F62;&#x6210;&#x96C6;&#x7FA4;&#x3002;&#x4E0D;&#x540C;&#x53EF;&#x7528;&#x533A;&#x57DF;&#x7684;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x901A;&#x8FC7;&#x5F02;&#x6B65;&#x6A21;&#x5F0F;&#x4E92;&#x76F8;&#x590D;&#x5236;&#x5404;&#x81EA;&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x8FD9;&#x610F;&#x5473;&#x7740;&#x5728;&#x4EFB;&#x610F;&#x7ED9;&#x5B9A;&#x7684;&#x65F6;&#x95F4;&#x70B9;&#x6BCF;&#x4E2A;&#x5B9E;&#x4F8B;&#x5173;&#x4E8E;&#x6240;&#x6709;&#x670D;&#x52A1;&#x7684;&#x72B6;&#x6001;&#x662F;&#x6709;&#x7EC6;&#x5FAE;&#x5DEE;&#x522B;&#x7684;&#x3002;</p>
+<p><strong>Eureka&#x5BA2;&#x6237;&#x7AEF;</strong>&#xFF0C;&#x4E3B;&#x8981;&#x5904;&#x7406;&#x670D;&#x52A1;&#x7684;&#x6CE8;&#x518C;&#x4E0E;&#x53D1;&#x73B0;&#x3002;&#x5BA2;&#x6237;&#x7AEF;&#x670D;&#x52A1;&#x901A;&#x8FC7;&#x6CE8;&#x89E3;&#x548C;&#x53C2;&#x6570;&#x914D;&#x7F6E;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x5D4C;&#x5165;&#x5728;&#x5BA2;&#x6237;&#x7AEF;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x7684;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x5728;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#x65F6;&#xFF0C;Eureka&#x5BA2;&#x6237;&#x7AEF;&#x5411;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x6CE8;&#x518C;&#x81EA;&#x8EAB;&#x63D0;&#x4F9B;&#x7684;&#x670D;&#x52A1;&#x5E76;&#x5468;&#x671F;&#x6027;&#x5730;&#x53D1;&#x9001;&#x5FC3;&#x8DF3;&#x6765;&#x66F4;&#x65B0;&#x5B83;&#x7684;&#x670D;&#x52A1;&#x79DF;&#x7EA6;&#x3002;&#x540C;&#x65F6;&#xFF0C;&#x5B83;&#x4E5F;&#x80FD;&#x4ECE;&#x670D;&#x52A1;&#x7AEF;&#x67E5;&#x8BE2;&#x5F53;&#x524D;&#x6CE8;&#x518C;&#x7684;&#x670D;&#x52A1;&#x4FE1;&#x606F;&#x5E76;&#x628A;&#x5B83;&#x4EEC;&#x7F13;&#x5B58;&#x5230;&#x672C;&#x5730;&#x5E76;&#x5468;&#x671F;&#x6027;&#x5730;&#x5237;&#x65B0;&#x670D;&#x52A1;&#x72B6;&#x6001;&#x3002;</p>
+<h3 id="&#x642D;&#x5EFA;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;"><a name="&#x642D;&#x5EFA;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;" class="anchor-navigation-ex-anchor" href="#&#x642D;&#x5EFA;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x642D;&#x5EFA;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;</h3>
+<pre><code class="lang-java">&lt;parent&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
+        &lt;version&gt;2.1.3.RELEASE&lt;/version&gt;
+        &lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;
+&lt;/parent&gt;
+
+&lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-server&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>&#x901A;&#x8FC7; @EnableEurekaServer &#x6CE8;&#x89E3;&#x542F;&#x52A8; &#x4E00; &#x4E2A;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x63D0;&#x4F9B;&#x7ED9;&#x5176;&#x4ED6;&#x5E94;&#x7528;&#x8FDB;&#x884C;&#x5BF9;&#x8BDD;</p>
+<pre><code class="lang-java"><span class="hljs-meta">@EnableEurekaServer</span>
+<span class="hljs-meta">@SpringBootApplication</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EurekaServerApplication</span> </span>{
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        SpringApplication.run(EurekaServerApplication.class, args);
+    }
+}
+</code></pre>
+<p>&#x5728;&#x9ED8;&#x8BA4;&#x8BBE;&#x7F6E;&#x4E0B;&#xFF0C; &#x8BE5;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x4E5F;&#x4F1A;&#x5C06;&#x81EA;&#x5DF1;&#x4F5C;&#x4E3A;&#x5BA2;&#x6237;&#x7AEF;&#x6765;&#x5C1D;&#x8BD5;&#x6CE8;&#x518C;&#x81EA;&#x5DF1;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x7981;&#x7528;&#x5B83;&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x6CE8;&#x518C;&#x884C;&#x4E3A;</p>
+<pre><code class="lang-java">server.port=<span class="hljs-number">8080</span>
+spring.application.name=eureka-server
+eureka.instance.hostname=localhost
+eureka.client.register-with-eureka=<span class="hljs-keyword">false</span>
+eureka.client.fetch-registry=<span class="hljs-keyword">false</span>
+eureka.client.serviceUrl.defaultZone=http:<span class="hljs-comment">//${eureka.instance.hostname}:${server.port}/eureka/</span>
+</code></pre>
+<p><code>eureka.client.register-with-eureka: &#x7531;&#x4E8E;&#x8BE5;&#x5E94;&#x7528;&#x4E3A;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#xFF0C;&#x6240;&#x4EE5;&#x8BBE;&#x7F6E;&#x4E3A; false, &#x4EE3;&#x8868;&#x4E0D;&#x5411;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x6CE8;&#x518C;&#x81EA;&#x5DF1;&#x3002;</code></p>
+<p><code>eureka.client.fetch-registry: &#x7531;&#x4E8E;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x7684;&#x804C;&#x8D23;&#x5C31;&#x662F;&#x7EF4;&#x62A4;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#xFF0C;&#x5B83;&#x5E76;&#x4E0D;&#x9700;&#x8981;&#x53BB;&#x68C0;&#x7D22;&#x670D;&#x52A1;&#xFF0C; &#x6240;&#x4EE5;&#x4E5F;&#x8BBE;&#x7F6E;&#x4E3A; false</code></p>
+<p>&#x8BBF;&#x95EE; <a href="http://localhost" target="_blank">http://localhost</a>: 8080/ </p>
+<h3 id="&#x6CE8;&#x518C;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x8005;"><a name="&#x6CE8;&#x518C;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x8005;" class="anchor-navigation-ex-anchor" href="#&#x6CE8;&#x518C;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x8005;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x6CE8;&#x518C;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x8005;</h3>
+<pre><code class="lang-java">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-client&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>&#x5728;&#x4E3B;&#x7C7B;&#x4E2D;&#x901A;&#x8FC7;&#x52A0;&#x4E0A; @EnableEurekaClient &#x6CE8;&#x89E3;&#xFF0C; &#x6FC0;&#x6D3B; Eureka &#x4E2D;&#x7684;DiscoveryClient &#x5B9E;&#x73B0;&#xFF08;&#x81EA;&#x52A8;&#x5316;&#x914D;&#x7F6E;&#xFF0C; &#x521B;&#x5EFA; DiscoveryClient &#x63A5;&#x53E3;&#x9488;&#x5BF9; Eureka &#x5BA2;&#x6237;&#x7AEF;&#x7684; EurekaDiscoveryClient &#x5B9E;&#x4F8B;&#xFF09;</p>
+<pre><code class="lang-java"><span class="hljs-meta">@EnableEurekaClient</span>
+<span class="hljs-meta">@SpringBootApplication</span>
+<span class="hljs-meta">@RestController</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HelloServerApplication</span> </span>{
+
+    <span class="hljs-meta">@RequestMapping</span>(<span class="hljs-string">&quot;/&quot;</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">home</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Hello world&quot;</span>;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        SpringApplication.run(HelloServerApplication.class, args);
+    }
+
+}
+</code></pre>
+<p>&#x5728; &#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#xFF0C; &#x901A;&#x8FC7; spring.application.name&#x5C5E;&#x6027;&#x6765;&#x4E3A;&#x670D;&#x52A1;&#x547D;&#x540D;&#xFF0C; &#x6BD4;&#x5982;&#x547D;&#x540D;&#x4E3A; hello-service&#x3002; &#x518D;&#x901A;&#x8FC7;eureka.client.serviceUrl.defaultZone&#x5C5E;&#x6027;&#x6765;&#x6307;&#x5B9A;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x7684;&#x5730;&#x5740;&#xFF0C; &#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x6307;&#x5B9A;&#x4E3A;&#x4E4B;&#x524D;&#x6784;&#x5EFA;&#x7684;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x5730;&#x5740;</p>
+<pre><code class="lang-java">server.port=<span class="hljs-number">9090</span>
+spring.application.name=hello-service
+eureka.client.serviceUrl.defaultZone=http:<span class="hljs-comment">//127.0.0.1:8080/eureka/</span>
+</code></pre>
+<p><img src="images/eureka2.png" alt="02"></p>
+<p>&#x5728;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x7684;&#x63A7;&#x5236;&#x53F0;&#x4E2D;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x7C7B;&#x4F3C;&#x4E0B;&#x9762;&#x7684;&#x8F93;&#x51FA;&#xFF0C;&#x540D;&#x4E3A;hello-service&#x7684;&#x670D;&#x52A1;&#x88AB;&#x6CE8;&#x518C;&#x6210;&#x529F;&#x4E86;</p>
+<p><img src="images/eureka3.png" alt="03"></p>
+<h3 id="&#x9AD8;&#x53EF;&#x7528;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;"><a name="&#x9AD8;&#x53EF;&#x7528;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;" class="anchor-navigation-ex-anchor" href="#&#x9AD8;&#x53EF;&#x7528;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x9AD8;&#x53EF;&#x7528;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;</h3>
+<p>Eurek a Server&#x7684;&#x9AD8;&#x53EF;&#x7528;&#x5B9E;&#x9645;&#x4E0A;&#x5C31;&#x662F;&#x5C06;&#x81EA;&#x5DF1;&#x4F5C;&#x4E3A;&#x670D;&#x52A1;&#x5411;&#x5176;&#x4ED6;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x6CE8;&#x518C;&#x81EA;&#x5DF1;&#xFF0C; &#x8FD9;&#x6837;&#x5C31;&#x53EF;&#x4EE5;&#x5F62;&#x6210; &#x4E00; &#x7EC4;&#x4E92;&#x76F8;&#x6CE8;&#x518C;&#x7684;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#xFF0C; &#x4EE5;&#x5B9E;&#x73B0;&#x670D;&#x52A1;&#x6E05;&#x5355;&#x7684;&#x4E92;&#x76F8;&#x540C;&#x6B65;&#xFF0C; &#x8FBE;&#x5230;&#x9AD8;&#x53EF;&#x7528;&#x7684;&#x6548;&#x679C;&#x3002;</p>
+<p>application-peer1.properties</p>
+<pre><code class="lang-java">server.port=<span class="hljs-number">8080</span>
+spring.application.name=eureka-server
+eureka.instance.hostname=peer1
+eureka.client.serviceUrl.defaultZone=http:<span class="hljs-comment">//peer2:8081/eureka/</span>
+</code></pre>
+<p>application-peer2.properties</p>
+<pre><code class="lang-java">server.port=<span class="hljs-number">8081</span>
+spring.application.name=eureka-server
+eureka.instance.hostname=peer2
+eureka.client.serviceUrl.defaultZone=http:<span class="hljs-comment">//peer1:8080/eureka/</span>
+</code></pre>
+<p>&#x5728;etc/hosts&#x6587;&#x4EF6;&#x4E2D;&#x6DFB;&#x52A0;&#x5BF9;peer1 &#x548C; peer2&#x7684;&#x8F6C;&#x6362;&#xFF0C; &#x8BA9;&#x4E0A;&#x9762;&#x914D;&#x7F6E;&#x7684;host&#x5F62;&#x5F0F;&#x7684;serviceUrl&#x80FD;&#x5728;&#x672C;&#x5730;&#x6B63;&#x786E;&#x8BBF;&#x95F4;&#x5230;&#xFF1B; Windows&#x7CFB;&#x7EDF;&#x8DEF;&#x5F84;&#x4E3A;C:\Windows\System32\drivers\etc\hosts&#x3002;</p>
+<pre><code class="lang-java"><span class="hljs-number">127.0</span>.0.1         peer1
+<span class="hljs-number">127.0</span>.0.1        peer2
+</code></pre>
+<p>&#x901A;&#x8FC7;spring.profiles.active&#x5C5E;&#x6027;&#x6765;&#x5206;&#x522B;&#x542F;&#x52A8;peer1&#x548C;peer2</p>
+<pre><code class="lang-java">java -jar eureka-server-<span class="hljs-number">0.0</span>.1-SNAPSHOT.jar --spring.profiles.active = peerl
+java -jar eureka-server-<span class="hljs-number">0.0</span>.1-SNAPSHOT.jar --spring.profiles.active = peer2
+</code></pre>
+<p>&#x4FEE;&#x6539;hello-service</p>
+<pre><code class="lang-java">eureka.client.serviceUrl.defaultZone=http:<span class="hljs-comment">//127.0.0.1:11112/eureka/,http://127.0.0.1:11111/eureka/</span>
+</code></pre>
+<p>&#x5982;&#x6211;&#x4EEC;&#x4E0D;&#x60F3;&#x4F7F;&#x7528;&#x4E3B;&#x673A;&#x540D;&#x6765;&#x5B9A;&#x4E49;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x7684;&#x5730;&#x5740;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;IP&#x5730;&#x5740;&#x7684;&#x5F62;&#x5F0F;&#xFF0C;&#x4F46;&#x662F;&#x9700;&#x8981;&#x5728;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x589E;&#x52A0;&#x914D;&#x7F6E;&#x53C2;&#x6570;eureka.instance.prefer-ip-address = true, &#x8BE5;&#x503C;&#x9ED8;&#x8BA4;&#x4E3A;false</p>
+<h3 id="&#x670D;&#x52A1;&#x53D1;&#x73B0;&#x4E0E;&#x6D88;&#x8D39;"><a name="&#x670D;&#x52A1;&#x53D1;&#x73B0;&#x4E0E;&#x6D88;&#x8D39;" class="anchor-navigation-ex-anchor" href="#&#x670D;&#x52A1;&#x53D1;&#x73B0;&#x4E0E;&#x6D88;&#x8D39;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x670D;&#x52A1;&#x53D1;&#x73B0;&#x4E0E;&#x6D88;&#x8D39;</h3>
+<p>&#x670D;&#x52A1;&#x6D88;&#x8D39;&#x8005;&#x4E3B;&#x8981;&#x5B8C;&#x6210;&#x4E24;&#x4E2A;&#x76EE;&#x6807;&#xFF0C;&#x53D1;&#x73B0;&#x670D;&#x52A1;&#x4EE5;&#x53CA;&#x6D88;&#x8D39;&#x670D;&#x52A1; &#x3002;</p>
+<p>&#x5176;&#x4E2D;&#xFF0C;&#x670D;&#x52A1;&#x53D1;&#x73B0;&#x7684;&#x4EFB;&#x52A1;&#x7531;Eureka&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x5B8C;&#x6210;&#xFF0C;&#x800C;&#x670D;&#x52A1;&#x6D88;&#x8D39;&#x7684;&#x4EFB;&#x52A1;&#x7531;Ribbon&#x5B8C;&#x6210; &#x3002;</p>
+<p>Ribbon&#x662F;&#x4E00;&#x4E2A;&#x57FA;&#x4E8E;HTTP&#x548C;TCP&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x5668;&#xFF0C;&#x5B83;&#x53EF;&#x4EE5;&#x5728;&#x901A;&#x8FC7;&#x5BA2;&#x6237;&#x7AEF;&#x4E2D;&#x914D;&#x7F6E;&#x7684; ribbonServerList&#x670D;&#x52A1;&#x7AEF;&#x5217;&#x8868;&#x53BB;&#x8F6E;&#x8BE2;&#x8BBF;&#x95EE;&#x4EE5;&#x8FBE;&#x5230;&#x5747;&#x8861;&#x8D1F;&#x8F7D;&#x7684;&#x4F5C;&#x7528;&#x3002; &#x5F53;Ribbon&#x4E0E;Eureka&#x8054;&#x5408;&#x4F7F;&#x7528;&#x65F6;&#xFF0C;Ribbon&#x7684;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x6E05;&#x5355;RibbonServerList&#x4F1A;&#x88AB;DiscoveryEnabledNIWSServerList&#x91CD;&#x5199;&#xFF0C; &#x6269;&#x5C55;&#x6210;&#x4ECE;Eureka&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x4E2D;&#x83B7;&#x53D6;&#x670D;&#x52A1;&#x7AEF;&#x5217;&#x8868;&#x3002; &#x540C;&#x65F6;&#x5B83;&#x4E5F;&#x4F1A;&#x7528; NIWSDiscoveryPing&#x6765;&#x53D6;&#x4EE3;IPing, &#x5B83;&#x5C06;&#x804C;&#x8D23;&#x59D4;&#x6258;&#x7ED9;Eureka &#x6765;&#x786E;&#x5B9A;&#x670D;&#x52A1;&#x7AEF;&#x662F;&#x5426;&#x5DF2;&#x7ECF;&#x542F;&#x52A8;&#x3002;&#x5B83;&#x5728;Eureka&#x670D;&#x52A1;&#x53D1;&#x73B0;&#x7684;&#x57FA;&#x7840;&#x4E0A;&#xFF0C;&#x5B9E;&#x73B0;&#x4E86;&#x4E00;&#x5957;&#x5BF9;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x7684;&#x9009;&#x62E9;&#x7B56;&#x7565;&#xFF0C;&#x4ECE;&#x800C;&#x5B9E;&#x73B0;&#x5BF9;&#x670D;&#x52A1;&#x7684;&#x6D88;&#x8D39;&#x3002;</p>
+<p><strong>1.&#x4E3A;&#x4E86;&#x5B9E;&#x9A8C;Ribbon&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x529F;&#x80FD;&#xFF0C; &#x6211;&#x4EEC;&#x901A;&#x8FC7; java-jar&#x547D;&#x4EE4;&#x884C;&#x7684;&#x65B9;&#x5F0F;&#x6765;&#x542F;&#x52A8;&#x4E24;&#x4E2A;&#x4E0D;&#x540C;&#x7AEF;&#x53E3;&#x7684;hello-service</strong></p>
+<p><strong>2.&#x521B;&#x5EFA; &#x4E00; &#x4E2A; Spring Boot &#x7684;&#x57FA;&#x7840;&#x5DE5;&#x7A0B;&#x6765;&#x5B9E;&#x73B0;&#x670D;&#x52A1;&#x6D88;&#x8D39;&#x8005;&#xFF0C; &#x53D6;&#x540D;&#x4E3A; ribbon-consumer&#xFF0C;&#x5BFC;&#x5165; spring-cloud-starter-ribbon&#x4F9D;&#x8D56;</strong></p>
+<p><strong>3.&#x521B;&#x5EFA;&#x5E94;&#x7528;&#x4E3B;&#x7C7B; ConsumerApplication, &#x901A;&#x8FC7; @EnableDiscoveryClient&#x6CE8;&#x89E3;&#x8BA9;&#x8BE5;&#x5E94;&#x7528;&#x6CE8;&#x518C;&#x4E3A; Eureka &#x5BA2;&#x6237;&#x7AEF;&#x5E94;&#x7528;&#xFF0C; &#x4EE5;&#x83B7;&#x5F97;&#x670D;&#x52A1;&#x53D1;&#x73B0;&#x7684;&#x80FD;&#x529B;&#x3002; &#x540C;&#x65F6;&#xFF0C; &#x5728;&#x8BE5;&#x4E3B;&#x7C7B;&#x4E2D;&#x521B;&#x5EFA; RestTemplate &#x7684; Spring Bean &#x5B9E;&#x4F8B;&#xFF0C;&#x5E76;&#x901A;&#x8FC7; @LoadBalanced &#x6CE8;&#x89E3;&#x5F00;&#x542F;&#x5BA2;&#x6237;&#x7AEF;&#x8D1F;&#x8F7D;&#x5747;&#x8861;</strong></p>
+<p><strong>4.&#x521B;&#x5EFA;ConsumerController&#x7C7B;&#x5E76;&#x5B9E;&#x73B0;&#xFF0F;ribbon-consumer&#x63A5;&#x53E3;&#x3002; &#x5728;&#x8BE5;&#x63A5;&#x53E3;&#x4E2D;&#xFF0C;&#x901A;&#x8FC7;&#x5728;&#x4E0A;&#x9762;&#x521B;&#x5EFA;&#x7684;RestTemplate &#x6765;&#x5B9E;&#x73B0;&#x5BF9; HELLO -SERVICE&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x7684;/hello&#x63A5;&#x53E3;&#x8FDB;&#x884C;&#x8C03;&#x7528;&#x3002; &#x53EF;&#x4EE5;&#x770B;&#x5230;&#x8FD9;&#x91CC;&#x8BBF;&#x95EE;&#x7684;&#x5730;&#x5740;&#x662F;&#x670D;&#x52A1;&#x540D;HELLO-SERVICE, &#x800C;&#x4E0D;&#x662F;&#x4E00;&#x4E2A;&#x5177;&#x4F53;&#x7684;&#x5730;&#x5740;&#x3002;&#x5728;&#x670D;&#x52A1;&#x6CBB;&#x7406;&#x6846;&#x67B6;&#x4E2D;&#xFF0C;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x975E;&#x5E38;&#x91CD;&#x8981;&#x7684;&#x7279;&#x6027;&#x3002;</strong></p>
+<p><strong>5.&#x5728;application.properties&#x4E2D;&#x914D;&#x7F6E;Eureka&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x7684;&#x4F4D;&#x7F6E;, &#x9700;&#x8981;&#x4E0E;&#x4E4B;&#x524D;&#x7684;HELLO-SERVICE&#x4E00;&#x6837;&#xFF0C;&#x4E0D;&#x7136;&#x662F;&#x53D1;&#x73B0;&#x4E0D;&#x4E86;&#x8BE5;&#x670D;&#x52A1;&#x7684;&#xFF0C;&#x540C;&#x65F6;&#x8BBE;&#x7F6E;&#x8BE5;&#x6D88;&#x8D39;&#x8005;&#x7684;&#x7AEF;&#x53E3;&#x4E0D;&#x80FD;&#x4E0E;&#x4E4B;&#x524D;&#x542F;&#x52A8;&#x7684;&#x5E94;&#x7528;&#x7AEF;&#x53E3;&#x51B2;&#x7A81;.</strong></p>
+<p><strong>6.&#x901A;&#x8FC7;&#x5411; <a href="http://localhost:9000/ribbon-consumer" target="_blank">http://localhost:9000/ribbon-consumer</a> &#x53D1;&#x8D77; GET &#x8BF7;&#x6C42;&#xFF0C; &#x6210;&#x529F;&#x8FD4;&#x56DE;&#x4E86; &quot;Hello World&quot; &#x3002; &#x6B64;&#x65F6;&#xFF0C; &#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728; ribbon-consumer &#x5E94;&#x7528;&#x7684;&#x63A7;&#x5236;&#x53F0;&#x4E2D;&#x770B;&#x5230;Ribbon&#x8F93;&#x51FA;&#x4E86;&#x5F53;&#x524D;&#x5BA2;&#x6237;&#x7AEF;&#x7EF4;&#x62A4;&#x7684; HELLO-SERVICE &#x7684;&#x670D;&#x52A1;&#x5217;&#x8868;&#x60C5;&#x51B5;&#x3002;&#x5176;&#x4E2D;&#x5305;&#x542B;&#x4E86;&#x5404;&#x4E2A;&#x5B9E;&#x4F8B;&#x7684;&#x4F4D;&#x7F6E;,Ribbon&#x5C31;&#x662F;&#x6309;&#x7167;&#x6B64;&#x4FE1;&#x606F;&#x8FDB;&#x884C;&#x8F6E;&#x8BE2;&#x8BBF;&#x95EE;&#xFF0C;&#x4EE5;&#x5B9E;&#x73B0;&#x57FA;&#x4E8E;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x3002; &#x53E6;&#x5916;&#x8FD8;&#x8F93;&#x51FA;&#x4E86; &#x4E00; &#x4E9B;&#x5176;&#x4ED6;&#x975E;&#x5E38;&#x6709;&#x7528;&#x7684;&#x4FE1;&#x606F;&#xFF0C; &#x5982;&#x5BF9;&#x5404;&#x4E2A;&#x5B9E;&#x4F8B;&#x7684;&#x8BF7;&#x6C42;&#x603B;&#x6570;&#x91CF;&#x3001;&#x7B2C;&#x4E00; &#x6B21;&#x8FDE;&#x63A5;&#x4FE1;&#x606F;&#x3001;&#x4E0A;&#x4E00;&#x6B21;&#x8FDE;&#x63A5;&#x4FE1;&#x606F;&#x3001;&#x603B;&#x7684;&#x8BF7;&#x6C42;&#x5931;&#x8D25;&#x6570;&#x91CF;&#x7B49;</strong></p>
+<p><strong>7.&#x518D;&#x5C1D;&#x8BD5;&#x53D1;&#x9001;&#x51E0;&#x6B21;&#x8BF7;&#x6C42;&#xFF0C; &#x5E76;&#x89C2;&#x5BDF;&#x542F;&#x52A8;&#x7684;&#x4E24;&#x4E2A; HELLO-SERVICE &#x7684;&#x63A7;&#x5236;&#x53F0;&#xFF0C; &#x53EF;&#x4EE5;&#x770B;&#x5230;&#x4E24;&#x4E2A;&#x63A7;&#x5236;&#x53F0;&#x4F1A;&#x4EA4;&#x66FF;&#x6253;&#x5370;&#x65E5;&#x5FD7;&#xFF0C; &#x8FD9;&#x662F;&#x6211;&#x4EEC;&#x4E4B;&#x524D;&#x5728; HelloController &#x4E2D;&#x5B9E;&#x73B0;&#x7684;&#x5BF9;&#x670D;&#x52A1;&#x4FE1;&#x606F;&#x7684;&#x8F93;&#x51FA;&#xFF0C; &#x53EF;&#x4EE5;&#x7528;&#x6765;&#x5224;&#x65AD;&#x5F53;&#x524D;Ribbon-consumer &#x5BF9; HELLO-SERVICE &#x7684;&#x8C03;&#x7528;&#x662F;&#x5426;&#x662F;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x7684;&#x3002;</strong></p>
+<h2 id="eureka&#x8BE6;&#x89E3;"><a name="eureka&#x8BE6;&#x89E3;" class="anchor-navigation-ex-anchor" href="#eureka&#x8BE6;&#x89E3;"><i class="fa fa-link" aria-hidden="true"></i></a>Eureka&#x8BE6;&#x89E3;</h2>
+<h3 id="&#x57FA;&#x7840;&#x67B6;&#x6784;"><a name="&#x57FA;&#x7840;&#x67B6;&#x6784;" class="anchor-navigation-ex-anchor" href="#&#x57FA;&#x7840;&#x67B6;&#x6784;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x57FA;&#x7840;&#x67B6;&#x6784;</h3>
+<p>Eureka&#x670D;&#x52A1;&#x6CBB;&#x7406;&#x4F53;&#x7CFB;&#x7684;&#x4E09;&#x4E2A;&#x6838;&#x5FC3;&#x89D2;&#x8272;&#xFF1A; </p>
+<p><strong>&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;</strong>&#xFF1A; Eureka&#x63D0;&#x4F9B;&#x7684;&#x670D;&#x52A1;&#x7AEF;&#xFF0C; &#x63D0;&#x4F9B;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E0E;&#x53D1;&#x73B0;&#x7684;&#x529F;&#x80FD;&#x3002;</p>
+<p><strong>&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x8005;</strong>&#xFF1A;&#x63D0;&#x4F9B;&#x670D;&#x52A1;&#x7684;&#x5E94;&#x7528;&#xFF0C; &#x53EF;&#x4EE5;&#x662F; Spring Boot &#x5E94;&#x7528;&#xFF0C; &#x4E5F;&#x53EF;&#x4EE5;&#x662F;&#x5176;&#x4ED6;&#x6280;&#x672F;&#x5E73;&#x53F0;&#x4E14;&#x9075;&#x5FAA; Eureka&#x901A;&#x4FE1;&#x673A;&#x5236;&#x7684;&#x5E94;&#x7528;&#x3002;&#x5B83;&#x5C06;&#x81EA;&#x5DF1;&#x63D0;&#x4F9B;&#x7684;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x5230; Eureka, &#x4EE5;&#x4F9B;&#x5176;&#x4ED6;&#x5E94;&#x7528;&#x53D1;&#x73B0;&#x3002;</p>
+<p><strong>&#x670D;&#x52A1;&#x6D88;&#x8D39;&#x8005;</strong>&#xFF1A;&#x6D88;&#x8D39;&#x8005;&#x5E94;&#x7528;&#x4ECE;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x83B7;&#x53D6;&#x670D;&#x52A1;&#x5217;&#x8868;&#xFF0C; &#x4ECE;&#x800C;&#x4F7F;&#x6D88;&#x8D39;&#x8005;&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#x53BB;&#x4F55;&#x5904;&#x8C03;&#x7528;&#x5176;&#x6240;&#x9700;&#x8981;&#x7684;&#x670D;&#x52A1;&#xFF0C;&#x5305;&#x62EC;Feign&#x7684;&#x6D88;&#x8D39;&#x3002;</p>
+<p><strong>&#x5F88;&#x591A;&#x65F6;&#x5019;&#xFF0C; &#x5BA2;&#x6237;&#x7AEF;&#x65E2;&#x662F;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x8005;&#x4E5F;&#x662F;&#x670D;&#x52A1;&#x6D88;&#x8D39;&#x8005;&#x3002;</strong></p>
+<h3 id="&#x670D;&#x52A1;&#x6CBB;&#x7406;&#x673A;&#x5236;"><a name="&#x670D;&#x52A1;&#x6CBB;&#x7406;&#x673A;&#x5236;" class="anchor-navigation-ex-anchor" href="#&#x670D;&#x52A1;&#x6CBB;&#x7406;&#x673A;&#x5236;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x670D;&#x52A1;&#x6CBB;&#x7406;&#x673A;&#x5236;</h3>
+<ul>
+<li>&quot;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;-1&quot; &#x548C;&#x201C; &#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;-2&quot;, &#x5B83;&#x4EEC;&#x4E92;&#x76F8;&#x6CE8;&#x518C;&#x7EC4;&#x6210;&#x4E86;&#x9AD8;&#x53EF;&#x7528;&#x96C6;&#x7FA4;&#x3002;</li>
+<li>&quot;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x8005;&#x201D;&#x542F;&#x52A8;&#x4E86;&#x4E24;&#x4E2A;&#x5B9E;&#x4F8B;&#xFF0C;&#x4E00;&#x4E2A;&#x6CE8;&#x518C;&#x5230; &#x201C; &#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;-1&quot;&#x4E0A;&#xFF0C;&#x53E6;&#x5916;&#x4E00;&#x4E2A;&#x6CE8;&#x518C;&#x5230;&#x201C; &#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;-2&quot; &#x4E0A;&#x3002;</li>
+<li>&#x8FD8;&#x6709;&#x4E24;&#x4E2A;&#x201C; &#x670D;&#x52A1;&#x6D88;&#x8D39;&#x8005; &#x201C; &#xFF0C;&#x5B83;&#x4EEC;&#x4E5F;&#x90FD;&#x5206;&#x522B;&#x53EA;&#x6307;&#x5411;&#x4E86;&#x4E00;&#x4E2A;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x3002;</li>
+</ul>
+<p><img src="images/cloud-01.png" alt="01"></p>
+<ul>
+<li><p><strong>&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x8005;</strong></p>
+<p><strong>&#x670D;&#x52A1;&#x6CE8;&#x518C;</strong>&#xFF1A;&#x201C;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x8005;&#x201D;&#x5728;&#x542F;&#x52A8;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x901A;&#x8FC7;&#x53D1;&#x9001;REST&#x8BF7;&#x6C42;&#x7684;&#x65B9;&#x5F0F;&#x5C06;&#x81EA;&#x5DF1;&#x6CE8;&#x518C;&#x5230;EurekaServer&#x4E0A;&#xFF0C; &#x540C;&#x65F6;&#x5E26;&#x4E0A;&#x4E86;&#x81EA;&#x8EAB;&#x670D;&#x52A1;&#x7684; &#x4E00; &#x4E9B;&#x5143;&#x6570;&#x636E;&#x4FE1;&#x606F;&#x3002;Eureka Server&#x63A5;&#x6536;&#x5230;&#x8FD9;&#x4E2A;REST&#x8BF7;&#x6C42;&#x4E4B;&#x540E;&#xFF0C;&#x5C06;&#x5143;&#x6570;&#x636E;&#x4FE1;&#x606F;&#x5B58;&#x50A8;&#x5728;&#x4E00;&#x4E2A;&#x53CC;&#x5C42;&#x7ED3;&#x6784;Map&#x4E2D;&#xFF0C; &#x5176;&#x4E2D;&#x7B2C;&#x4E00;&#x5C42;&#x7684;key&#x662F;&#x670D;&#x52A1;&#x540D;&#xFF0C; &#x7B2C;&#x4E8C;&#x5C42;&#x7684;key&#x662F;&#x5177;&#x4F53;&#x670D;&#x52A1;&#x7684;&#x5B9E;&#x4F8B;&#x540D;&#x3002;</p>
+<p>&#x5728;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x65F6;&#xFF0C; &#x9700;&#x8981;&#x786E;&#x8BA4; &#x4E00; &#x4E0B; eureka.client.register-with-eureka = true&#x53C2;&#x6570;&#x662F;&#x5426;&#x6B63;&#x786E;&#xFF0C; &#x8BE5;&#x503C;&#x9ED8;&#x8BA4;&#x4E3A;true&#x3002; &#x82E5;&#x8BBE;&#x7F6E;&#x4E3A;false&#x5C06;&#x4E0D;&#x4F1A;&#x542F;&#x52A8;&#x6CE8;&#x518C;&#x64CD;&#x4F5C;&#x3002;</p>
+<p><strong>&#x670D;&#x52A1;&#x540C;&#x6B65;</strong>&#xFF1A;&#x5982;&#x67B6;&#x6784;&#x56FE;&#x4E2D;&#x6240;&#x793A;&#xFF0C; &#x8FD9;&#x91CC;&#x7684;&#x4E24;&#x4E2A;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x8005;&#x5206;&#x522B;&#x6CE8;&#x518C;&#x5230;&#x4E86;&#x4E24;&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x4E0A;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#xFF0C;&#x5B83;&#x4EEC;&#x7684;&#x4FE1;&#x606F;&#x5206;&#x522B;&#x88AB;&#x4E24;&#x4E2A;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x6240;&#x7EF4;&#x62A4;&#x3002; &#x6B64;&#x65F6;&#xFF0C; &#x7531;&#x4E8E;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x4E4B;&#x95F4;&#x56E0;&#x4E92;&#x76F8;&#x6CE8;&#x518C;&#x4E3A;&#x670D;&#x52A1;&#xFF0C; &#x5F53;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x8005;&#x53D1;&#x9001;&#x6CE8;&#x518C;&#x8BF7;&#x6C42;&#x5230; &#x4E00; &#x4E2A;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x65F6;&#xFF0C; &#x5B83;&#x4F1A;&#x5C06;&#x8BE5;&#x8BF7;&#x6C42;&#x8F6C;&#x53D1;&#x7ED9;&#x96C6;&#x7FA4;&#x4E2D;&#x76F8;&#x8FDE;&#x7684;&#x5176;&#x4ED6;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#xFF0C;&#x4ECE;&#x800C;&#x5B9E;&#x73B0;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x4E4B;&#x95F4;&#x7684;&#x670D;&#x52A1;&#x540C;&#x6B65; &#x3002; &#x901A;&#x8FC7;&#x670D;&#x52A1;&#x540C;&#x6B65;&#xFF0C;&#x4E24;&#x4E2A;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x8005;&#x7684;&#x670D;&#x52A1;&#x4FE1;&#x606F;&#x5C31;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8FD9;&#x4E24;&#x53F0;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x4E2D;&#x7684;&#x4EFB;&#x610F; &#x4E00; &#x53F0;&#x83B7;&#x53D6;&#x5230;&#x3002;</p>
+<p><strong>&#x670D;&#x52A1;&#x7EED;&#x7EA6;</strong>&#xFF1A;&#x5728;&#x6CE8;&#x518C;&#x5B8C;&#x670D;&#x52A1;&#x4E4B;&#x540E;&#xFF0C;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x8005;&#x4F1A;&#x7EF4;&#x62A4;&#x4E00;&#x4E2A;&#x5FC3;&#x8DF3;&#x7528;&#x6765;&#x6301;&#x7EED;&#x544A;&#x8BC9;EurekaSe1-ver: &quot;&#x6211;&#x8FD8;&#x6D3B;&#x7740;&#x201D; &#xFF0C; &#x4EE5;&#x9632;Eureka Server&#x7684; &#x201C;&#x5254;&#x9664;&#x4EFB;&#x52A1;&#x201D;&#x5C06;&#x8BE5;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x4ECE;&#x670D;&#x52A1;&#x5217;&#x8868;&#x4E2D;&#x6392;&#x9664;&#x51FA;&#x53BB;&#xFF0C;&#x6211;&#x4EEC;&#x79F0;&#x8BE5;&#x64CD;&#x4F5C;&#x4E3A;&#x670D;&#x52A1;&#x7EED;&#x7EA6;(Renew)</p>
+</li>
+</ul>
+<p>&#x670D;&#x52A1;&#x7EED;&#x7EA6;&#x6709;&#x4E24;&#x4E2A;&#x91CD;&#x8981;&#x5C5E;&#x6027;&#xFF1A;</p>
+<pre><code class="lang-java">eureka.instance.lease-renewal-interval-in-seconds=<span class="hljs-number">30</span>
+</code></pre>
+<p>&#x5B9A;&#x4E49;&#x670D;&#x52A1;&#x7EED;&#x7EA6;&#x4EFB;&#x52A1;&#x7684;&#x8C03;&#x7528;&#x95F4;&#x9694;&#x65F6;&#x95F4;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;30&#x79D2;.</p>
+<pre><code class="lang-java">eureka.instance.lease-expiration-duration-in-seconds=<span class="hljs-number">90</span>
+</code></pre>
+<p>&#x5B9A;&#x4E49;&#x670D;&#x52A1;&#x5931;&#x6548;&#x7684;&#x65F6;&#x95F4;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;90&#x79D2;.</p>
+<ul>
+<li><p><strong>&#x670D;&#x52A1;&#x6D88;&#x8D39;&#x8005;</strong></p>
+<p><strong>&#x83B7;&#x53D6;&#x670D;&#x52A1;</strong>&#xFF1A;&#x5F53;&#x6211;&#x4EEC;&#x542F;&#x52A8;&#x670D;&#x52A1;&#x6D88;&#x8D39;&#x8005;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5B83;&#x4F1A;&#x53D1;&#x9001;&#x4E00;&#x4E2A;REST&#x8BF7;&#x6C42;&#x7ED9;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#xFF0C;&#x6765;&#x83B7;&#x53D6;&#x4E0A;&#x9762;&#x6CE8;&#x518C;&#x7684;&#x670D;&#x52A1;&#x6E05;&#x5355; &#x3002;&#x4E3A;&#x4E86;&#x6027;&#x80FD;&#x8003;&#x8651;&#xFF0C;EurekaServer&#x4F1A;&#x7EF4;&#x62A4; &#x4E00; &#x4EFD;&#x53EA;&#x8BFB;&#x7684;&#x670D;&#x52A1;&#x6E05;&#x5355;&#x6765;&#x8FD4;&#x56DE;&#x7ED9;&#x5BA2;&#x6237;&#x7AEF;&#xFF0C;&#x540C;&#x65F6;&#x8BE5;&#x7F13;&#x5B58;&#x6E05;&#x5355;&#x4F1A;&#x6BCF;&#x9694;30&#x79D2;&#x66F4;&#x65B0;&#x4E00; &#x6B21;&#x3002;</p>
+<p>&#x83B7;&#x53D6;&#x670D;&#x52A1;&#x662F;&#x670D;&#x52A1;&#x6D88;&#x8D39;&#x8005;&#x7684;&#x57FA;&#x7840;</p>
+<pre><code class="lang-java">eureka.client.fetch-registry=<span class="hljs-keyword">true</span>
+</code></pre>
+<p>  &#x8BE5;&#x503C;&#x9ED8;&#x8BA4;&#x4E3A;true&#x3002;</p>
+<p>  &#x82E5;&#x5E0C;&#x671B;&#x4FEE;&#x6539;&#x7F13;&#x5B58;&#x6E05;&#x5355;&#x7684;&#x66F4;&#x65B0;&#x65F6;&#x95F4;</p>
+<pre><code class="lang-java">eureka.client.registry-fetch-interval-seconds = <span class="hljs-number">30</span>
+</code></pre>
+<pre><code>&#x8BE5;&#x53C2;&#x6570;&#x9ED8;&#x8BA4;&#x503C;&#x4E3A;30, &#x5355;&#x4F4D;&#x4E3A;&#x79D2;.
+</code></pre></li>
+</ul>
+<p>&#x200B;    <strong>&#x670D;&#x52A1;&#x8C03;&#x7528;&#xFF1A;</strong>&#x670D;&#x52A1;&#x6D88;&#x8D39;&#x8005;&#x5728;&#x83B7;&#x53D6;&#x670D;&#x52A1;&#x6E05;&#x5355;&#x540E;&#xFF0C;&#x901A;&#x8FC7;&#x670D;&#x52A1;&#x540D;&#x53EF;&#x4EE5;&#x83B7;&#x5F97;&#x5177;&#x4F53;&#x63D0;&#x4F9B;&#x670D;&#x52A1;&#x7684;&#x5B9E;&#x4F8B;&#x540D;&#x548C;&#x8BE5;&#x5B9E;&#x4F8B;&#x7684;&#x5143;&#x6570;&#x636E;&#x4FE1;&#x606F;&#x3002; &#x56E0;&#x4E3A;&#x6709;&#x8FD9;&#x4E9B;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x7684;&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;&#xFF0C; &#x6240;&#x4EE5;&#x5BA2;&#x6237;&#x7AEF;&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x81EA;&#x5DF1;&#x7684;&#x9700;&#x8981;&#x51B3;&#x5B9A;&#x5177;&#x4F53;&#x8C03;&#x7528;&#x54EA;&#x4E2A;&#x5B9E;&#x4F8B;&#xFF0C;&#x5728;Ribbon&#x4E2D;&#x4F1A;&#x9ED8;&#x8BA4;&#x91C7;&#x7528;&#x8F6E;&#x8BE2;&#x7684;&#x65B9;&#x5F0F;&#x8FDB;&#x884C;&#x8C03;&#x7528;&#xFF0C;&#x4ECE;&#x800C;&#x5B9E;&#x73B0;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x8D1F;&#x8F7D;&#x5747;&#x8861;.</p>
+<p>&#x200B;    &#x5BF9;&#x4E8E;&#x8BBF;&#x95EE;&#x5B9E;&#x4F8B;&#x7684;&#x9009;&#x62E9;&#xFF0C;Eureka&#x4E2D;&#x6709;Region&#x548C;Zone&#x7684;&#x6982;&#x5FF5;&#xFF0C;&#x4E00;&#x4E2A;Region&#x4E2D;&#x53EF;&#x4EE5;&#x5305;&#x542B;&#x591A;&#x4E2A;Zone, &#x6BCF;&#x4E2A;&#x670D;&#x52A1;&#x5BA2;&#x6237;&#x7AEF;&#x9700;&#x8981;&#x88AB;&#x6CE8;&#x518C;&#x5230;&#x4E00;&#x4E2A;Zone&#x4E2D;&#xFF0C; &#x6240;&#x4EE5;&#x6BCF;&#x4E2A;&#x5BA2;&#x6237;&#x7AEF;&#x5BF9;&#x5E94;&#x4E00;&#x4E2A;Region&#x548C;&#x4E00;&#x4E2A;Zone&#x3002; &#x5728;&#x8FDB;&#x884C;&#x670D;&#x52A1;&#x8C03;&#x7528;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4F18;&#x5148;&#x8BBF;&#x95EE;&#x540C;&#x5904;&#x4E00;&#x4E2A;Zone&#x4E2D;&#x7684;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x65B9;&#xFF0C; &#x82E5;&#x8BBF;&#x95EE;&#x4E0D;&#x5230;&#xFF0C;&#x5C31;&#x8BBF;&#x95EE;&#x5176;&#x4ED6;&#x7684;Zone&#x3002;</p>
+<p>&#x200B;    <strong>&#x670D;&#x52A1;&#x4E0B;&#x7EBF;</strong>&#xFF1A;&#x5728;&#x7CFB;&#x7EDF;&#x8FD0;&#x884C;&#x8FC7;&#x7A0B;&#x4E2D;&#x5FC5;&#x7136;&#x4F1A;&#x9762;&#x4E34;&#x5173;&#x95ED;&#x6216;&#x91CD;&#x542F;&#x670D;&#x52A1;&#x7684;&#x67D0;&#x4E2A;&#x5B9E;&#x4F8B;&#x7684;&#x60C5;&#x51B5;&#xFF0C; &#x5728;&#x670D;&#x52A1;&#x5173;&#x95ED;&#x671F;&#x95F4;&#xFF0C;&#x6211;&#x4EEC;&#x81EA;&#x7136;&#x4E0D;&#x5E0C;&#x671B;&#x5BA2;&#x6237;&#x7AEF;&#x4F1A;&#x7EE7;&#x7EED;&#x8C03;&#x7528;&#x5173;&#x95ED;&#x4E86;&#x7684;&#x5B9E;&#x4F8B;&#x3002; &#x6240;&#x4EE5;&#x5728;&#x5BA2;&#x6237;&#x7AEF;&#x7A0B;&#x5E8F;&#x4E2D;&#xFF0C; &#x5F53;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x8FDB;&#x884C;&#x6B63;&#x5E38;&#x7684;&#x5173;&#x95ED;&#x64CD;&#x4F5C;&#x65F6;&#xFF0C; &#x5B83;&#x4F1A;&#x89E6;&#x53D1;&#x4E00;&#x4E2A;&#x670D;&#x52A1;&#x4E0B;&#x7EBF;&#x7684;REST&#x8BF7;&#x6C42;&#x7ED9;Eureka Server, &#x544A;&#x8BC9;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#xFF1A;&#x201C;&#x6211;&#x8981;&#x4E0B;&#x7EBF;&#x4E86;&#x201D; &#x3002; &#x670D;&#x52A1;&#x7AEF;&#x5728;&#x63A5;&#x6536;&#x5230;&#x8BF7;&#x6C42;&#x4E4B;&#x540E;&#xFF0C; &#x5C06;&#x8BE5;&#x670D;&#x52A1;&#x72B6;&#x6001;&#x7F6E;&#x4E3A;&#x4E0B;&#x7EBF;(DOWN), &#x5E76;&#x628A;&#x8BE5;&#x4E0B;&#x7EBF;&#x4E8B;&#x4EF6;&#x4F20;&#x64AD;&#x51FA;&#x53BB;&#x3002;</p>
+<ul>
+<li><p><strong>&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;</strong></p>
+<p><strong>&#x5931;&#x6548;&#x5254;&#x9664;</strong>&#xFF1A;&#x6709;&#x4E9B;&#x65F6;&#x5019;&#xFF0C; &#x6211;&#x4EEC;&#x7684;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x5E76;&#x4E0D;&#x4E00;&#x5B9A;&#x4F1A;&#x6B63;&#x5E38;&#x4E0B;&#x7EBF;&#xFF0C; &#x53EF;&#x80FD;&#x7531;&#x4E8E;&#x5185;&#x5B58;&#x6EA2;&#x51FA;&#x3001; &#x7F51;&#x7EDC;&#x6545;&#x969C;&#x7B49;&#x539F;&#x56E0;&#x4F7F;&#x5F97;&#x670D;&#x52A1;&#x4E0D;&#x80FD;&#x6B63;&#x5E38;&#x5DE5;&#x4F5C;&#xFF0C; &#x800C;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x5E76;&#x672A;&#x6536;&#x5230;&#x201C; &#x670D;&#x52A1;&#x4E0B;&#x7EBF; &#x201D;&#x7684;&#x8BF7;&#x6C42;&#x3002; &#x4E3A;&#x4E86;&#x4ECE;&#x670D;&#x52A1;&#x5217;&#x8868;&#x4E2D;&#x5C06;&#x8FD9;&#x4E9B;&#x65E0;&#x6CD5;&#x63D0;&#x4F9B;&#x670D;&#x52A1;&#x7684;&#x5B9E;&#x4F8B;&#x5254;&#x9664;&#xFF0C; EurekaServer&#x5728;&#x542F;&#x52A8;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x521B;&#x5EFA; &#x4E00; &#x4E2A;&#x5B9A;&#x65F6;&#x4EFB;&#x52A1;&#xFF0C;&#x9ED8;&#x8BA4;&#x6BCF;&#x9694;&#x4E00; &#x6BB5;&#x65F6;&#x95F4;&#xFF08;&#x9ED8;&#x8BA4;&#x4E3A;60&#x79D2;&#xFF09;&#x5C06;&#x5F53;&#x524D;&#x6E05;&#x5355;&#x4E2D;&#x8D85;&#x65F6;&#xFF08;&#x9ED8;&#x8BA4;&#x4E3A;90&#x79D2;&#xFF09;&#x6CA1;&#x6709;&#x7EED;&#x7EA6;&#x7684;&#x670D;&#x52A1;&#x5254;&#x9664;&#x51FA;&#x53BB;&#x3002;</p>
+<p><strong>&#x81EA;&#x6211;&#x4FDD;&#x62A4;</strong>:&#x5F53;&#x6211;&#x4EEC;&#x5728;&#x672C;&#x5730;&#x8C03;&#x8BD5;&#x57FA;&#x4E8E;Eureka&#x7684;&#x7A0B;&#x5E8F;&#x65F6;&#xFF0C;&#x57FA;&#x672C;&#x4E0A;&#x90FD;&#x4F1A;&#x78B0;&#x5230;&#x8FD9;&#x6837;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#xFF0C; &#x5728;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x7684;&#x4FE1;&#x606F;&#x9762;&#x677F;&#x4E2D;&#x51FA;&#x73B0;&#x7C7B;&#x4F3C;&#x4E0B;&#x9762;&#x7684;&#x7EA2;&#x8272;&#x8B66;&#x544A;&#x4FE1;&#x606F;:</p>
+<p><img src="images/eureka4.png" alt="04"></p>
+<p>&#x5B9E;&#x9645;&#x4E0A;&#xFF0C; &#x8BE5;&#x8B66;&#x544A;&#x5C31;&#x662F;&#x89E6;&#x53D1;&#x4E86;EurekaServer&#x7684;&#x81EA;&#x6211;&#x4FDD;&#x62A4;&#x673A;&#x5236;&#x3002; &#x4E4B;&#x524D;&#x6211;&#x4EEC;&#x4ECB;&#x7ECD;&#x8FC7;&#xFF0C; &#x670D;&#x52A1;&#x6CE8;&#x518C;&#x5230;EurekaServer&#x4E4B;&#x540E;&#xFF0C;&#x4F1A;&#x7EF4;&#x62A4;&#x4E00;&#x4E2A;&#x5FC3;&#x8DF3;&#x8FDE;&#x63A5;&#xFF0C;&#x544A;&#x8BC9;EurekaServer&#x81EA;&#x5DF1;&#x8FD8;&#x6D3B;&#x7740;&#x3002;EurekaServer&#x5728;&#x8FD0;&#x884C;&#x671F;&#x95F4;&#xFF0C;&#x4F1A;&#x7EDF;&#x8BA1;&#x5FC3;&#x8DF3;&#x5931;&#x8D25;&#x7684;&#x6BD4;&#x4F8B;&#x5728;15&#x5206;&#x949F;&#x4E4B;&#x5185;&#x662F;&#x5426;&#x4F4E;&#x4E8E;85%, &#x5982;&#x679C;&#x51FA;&#x73B0;&#x4F4E;&#x4E8E;&#x7684;&#x60C5;&#x51B5;&#xFF08;&#x5728;&#x5355;&#x673A;&#x8C03;&#x8BD5;&#x7684;&#x65F6;&#x5019;&#x5F88;&#x5BB9;&#x6613;&#x6EE1;&#x8DB3;&#xFF0C; &#x5B9E;&#x9645;&#x5728;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x4E0A;&#x901A;&#x5E38;&#x662F;&#x7531;&#x4E8E;&#x7F51;&#x7EDC;&#x4E0D;&#x7A33;&#x5B9A;&#x5BFC;&#x81F4;&#xFF09;&#xFF0C; EurekaServer&#x4F1A;&#x5C06;&#x5F53;&#x524D;&#x7684;&#x5B9E;&#x4F8B;&#x6CE8;&#x518C;&#x4FE1;&#x606F;&#x4FDD;&#x62A4;&#x8D77;&#x6765;&#xFF0C; &#x8BA9;&#x8FD9;&#x4E9B;&#x5B9E;&#x4F8B;&#x4E0D;&#x4F1A;&#x8FC7;&#x671F;&#xFF0C; &#x5C3D;&#x53EF;&#x80FD;&#x4FDD;&#x62A4;&#x8FD9;&#x4E9B;&#x6CE8;&#x518C;&#x4FE1;&#x606F;&#x3002; &#x4F46;&#x662F;&#xFF0C; &#x5728;&#x8FD9;&#x6BB5;&#x4FDD;&#x62A4;&#x671F;&#x95F4;&#x5185;&#x5B9E;&#x4F8B;&#x82E5;&#x51FA;&#x73B0;&#x95EE;&#x9898;&#xFF0C; &#x90A3;&#x4E48;&#x5BA2;&#x6237;&#x7AEF;&#x5F88;&#x5BB9;&#x6613;&#x62FF;&#x5230;&#x5B9E;&#x9645;&#x5DF2;&#x7ECF;&#x4E0D;&#x5B58;&#x5728;&#x7684;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#xFF0C; &#x4F1A;&#x51FA;&#x73B0;&#x8C03;&#x7528;&#x5931;&#x8D25;&#x7684;&#x6E05;&#x51B5;&#xFF0C; &#x6240;&#x4EE5;&#x5BA2;&#x6237;&#x7AEF;&#x5FC5;&#x987B;&#x8981;&#x6709;&#x5BB9;&#x9519;&#x673A;&#x5236;&#xFF0C; &#x6BD4;&#x5982;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x8BF7;&#x6C42;&#x91CD;&#x8BD5;&#x3001; &#x65AD;&#x8DEF;&#x5668;&#x7B49;&#x673A;&#x5236;&#x3002;
+&#x7531;&#x4E8E;&#x672C;&#x5730;&#x8C03;&#x8BD5;&#x5F88;&#x5BB9;&#x6613;&#x89E6;&#x53D1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x7684;&#x4FDD;&#x62A4;&#x673A;&#x5236;&#xFF0C; &#x8FD9;&#x4F1A;&#x4F7F;&#x5F97;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x7EF4;&#x62A4;&#x7684;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x4E0D;&#x90A3;&#x4E48;&#x51C6;&#x786E;&#x3002; &#x6240;&#x4EE5;&#xFF0C; &#x6211;&#x4EEC;&#x5728;&#x672C;&#x5730;&#x8FDB;&#x884C;&#x5F00;&#x53D1;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;eureka.server.enable&#xAD;self-preservation= false&#x53C2;&#x6570;&#x6765;&#x5173;&#x95ED;&#x4FDD;&#x62A4;&#x673A;&#x5236;&#xFF0C; &#x4EE5;&#x786E;&#x4FDD;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x53EF;&#x4EE5;&#x5C06;&#x4E0D;&#x53EF;&#x7528;&#x7684;&#x5B9E;&#x4F8B;&#x6B63;&#x786E;&#x5254;&#x9664;&#x3002;</p>
+</li>
+</ul>
+<h2 id="&#x914D;&#x7F6E;&#x8BE6;&#x89E3;"><a name="&#x914D;&#x7F6E;&#x8BE6;&#x89E3;" class="anchor-navigation-ex-anchor" href="#&#x914D;&#x7F6E;&#x8BE6;&#x89E3;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x914D;&#x7F6E;&#x8BE6;&#x89E3;</h2>
+<p>&#x5728;Eureka&#x7684;&#x670D;&#x52A1;&#x6CBB;&#x7406;&#x4F53;&#x7CFB;&#x4E2D;&#xFF0C; &#x4E3B;&#x8981;&#x5206;&#x4E3A;&#x670D;&#x52A1;&#x7AEF;&#x4E0E;&#x5BA2;&#x6237;&#x7AEF;&#x4E24;&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x89D2;&#x8272;&#xFF0C; &#x670D;&#x52A1;&#x7AEF;&#x4E3A;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#xFF0C; &#x800C;&#x5BA2;&#x6237;&#x7AEF;&#x4E3A;&#x5404;&#x4E2A;&#x63D0;&#x4F9B;&#x63A5;&#x53E3;&#x7684;&#x5FAE;&#x670D;&#x52A1;&#x5E94;&#x7528;&#x3002; &#x5F53;&#x6211;&#x4EEC;&#x6784;&#x5EFA;&#x4E86;&#x9AD8;&#x53EF;&#x7528;&#x7684;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x4E4B;&#x540E;&#xFF0C; &#x8BE5;&#x96C6;&#x7FA4;&#x4E2D;&#x6240;&#x6709;&#x7684;&#x5FAE;&#x670D;&#x52A1;&#x5E94;&#x7528;&#x548C;&#x57FA;&#x7840;&#x7C7B;&#x5E94;&#x7528;&#xFF08;&#x5982;&#x914D;&#x7F6E;&#x4E2D;&#x5FC3;&#x3001; API&#x7F51;&#x5173;&#x7B49;&#xFF09;&#x90FD;&#x53EF;&#x4EE5;&#x89C6;&#x4F5C;&#x8BE5;&#x4F53;&#x7CFB;&#x4E0B;&#x7684;&#x4E00;&#x4E2A;&#x5FAE;&#x670D;&#x52A1;(Eureka&#x5BA2;&#x6237;&#x7AEF;&#xFF09;&#x3002;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x4E5F; &#x4E00; &#x6837;&#xFF0C; &#x53EA;&#x662F;&#x9AD8;&#x53EF;&#x7528;&#x73AF;&#x5883;&#x4E0B;&#x7684;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x9664;&#x4E86;&#x4F5C;&#x4E3A;&#x5BA2;&#x6237;&#x7AEF;&#x4E4B;&#x5916;&#xFF0C; &#x8FD8;&#x4E3A;&#x96C6;&#x7FA4;&#x4E2D;&#x7684;&#x5176;&#x4ED6;&#x5BA2;&#x6237;&#x7AEF;&#x63D0;&#x4F9B;&#x4E86;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x7684;&#x7279;&#x6B8A;&#x529F;&#x80FD;&#x3002;</p>
+<p>Eureka&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x914D;&#x7F6E;&#x4E3B;&#x8981;&#x5206;&#x4E3A;&#x4EE5;&#x4E0B;&#x4E24;&#x4E2A;&#x65B9;&#x9762;&#xFF1A;</p>
+<ul>
+<li>&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x76F8;&#x5173;&#x7684;&#x914D;&#x7F6E;&#x4FE1;&#x606F;&#xFF0C; &#x5305;&#x62EC;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x7684;&#x5730;&#x5740;&#x3001; &#x670D;&#x52A1;&#x83B7;&#x53D6;&#x7684;&#x95F4;&#x9694;&#x65F6;&#x95F4;&#x3001; &#x53EF;&#x7528;&#x533A;&#x57DF;&#x7B49;&#x3002;</li>
+<li>&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x76F8;&#x5173;&#x7684;&#x914D;&#x7F6E;&#x4FE1;&#x606F;&#xFF0C; &#x5305;&#x62EC;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x7684;&#x540D;&#x79F0;&#x3001;IP&#x5730;&#x5740;&#x3001; &#x7AEF;&#x53E3;&#x53F7;&#x3001; &#x5065;&#x5EB7;&#x68C0;&#x67E5;&#x8DEF;&#x5F84;&#x7B49;&#x3002;</li>
+</ul>
+<h3 id="&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x7C7B;&#x914D;&#x7F6E;"><a name="&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x7C7B;&#x914D;&#x7F6E;" class="anchor-navigation-ex-anchor" href="#&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x7C7B;&#x914D;&#x7F6E;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x7C7B;&#x914D;&#x7F6E;</h3>
+<p>&#x914D;&#x7F6E;&#x4FE1;&#x606F;&#x90FD;&#x4EE5; eureka.client &#x4E3A;&#x524D;&#x7F00;</p>
+<ul>
+<li><p>&#x6307;&#x5B9A;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;</p>
+<p>&#x4E3A;&#x4E86;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x7684;&#x5B89;&#x5168;&#x8003;&#x8651;&#xFF0C; &#x5F88;&#x591A;&#x65F6;&#x5019;&#x6211;&#x4EEC;&#x90FD;&#x4F1A;&#x4E3A;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x52A0;&#x5165;&#x5B89;&#x5168;&#x6821;&#x9A8C;&#x3002; &#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#xFF0C; &#x5728;&#x914D;&#x7F6E; serviceUrl &#x65F6;&#xFF0C; &#x9700;&#x8981;&#x5728; value &#x503C;&#x7684; URL &#x4E2D;&#x52A0;&#x5165;&#x76F8;&#x5E94;&#x7684;&#x5B89;&#x5168;&#x6821;&#x9A8C;&#x4FE1;&#x606F;&#xFF0C; &#x6BD4;&#x5982; http://<username>:&lt;password&gt;@localhost:1111/eureka &#x3002; &#x5176;&#x4E2D;&#xFF0C;<username> &#x4E3A;&#x5B89;&#x5168;&#x6821;&#x9A8C;&#x4FE1;&#x606F;&#x7684;&#x7528;&#x6237;&#x540D;&#xFF0C; <password> &#x4E3A;&#x8BE5;&#x7528;&#x6237;&#x7684;&#x5BC6;&#x7801;.</password></username></username></p>
+</li>
+<li><p>&#x5176;&#x4ED6;&#x914D;&#x7F6E;</p>
+<p>| &#x53C2;&#x6570;&#x540D;                                        | &#x8BF4;&#x660E;                                                         | &#x9ED8;&#x8BA4;&#x503C; |
+| --------------------------------------------- | ------------------------------------------------------------ | ------ |
+| enabled                                       | &#x542F;&#x7528;Eureka&#x5BA2;&#x6237;&#x7AEF;                                             | true   |
+| registryFetchIntervalSeconds                  | &#x4ECE;Eureka&#x670D;&#x52A1;&#x7AEF;&#x83B7;&#x53D6;&#x6CE8;&#x518C;&#x4FE1;&#x606F;&#x7684;&#x95F4;&#x9694;&#x65F6;&#x95F4;&#xFF0C;&#x5355;&#x4F4D;&#x4E3A;&#x79D2;               | 30     |
+| instancelnfoReplicationlntervalSeconds        | &#x66F4;&#x65B0;&#x5B9E;&#x4F8B;&#x4FE1;&#x606F;&#x7684;&#x53D8;&#x5316;&#x5230;E&#x7530;eka&#x670D;&#x52A1;&#x7AEF;&#x7684;&#x95F4;&#x9694;&#x65F6;&#x95F4;&#xFF0C; &#x5355;&#x4F4D;&#x4E3A;&#x79D2;        | 30     |
+| initialInstanceInfoReplicationIntervalSeconds | &#x521D;&#x59CB;&#x5316; &#x5B9E;&#x4F8B;&#x4FE1;&#x606F;&#x5230;Eureka&#x670D;&#x52A1;&#x7AEF;&#x7684;&#x95F4;&#x9694;&#x65F6; &#x95F4;&#xFF0C;&#x5355;&#x4F4D;&#x4E3A;&#x79D2;           | 40     |
+| eurekaServiceUrlPollIntervalSeconds           | &#x8F6E;&#x8BE2;Eureka&#x670D;&#x52A1;&#x7AEF;&#x5730;&#x5740;&#x66F4;&#x6539;&#x7684;&#x95F4;&#x9694;&#x65F6;&#x95F4;&#xFF0C; &#x5355;&#x4F4D;&#x4E3A;&#x79D2;&#x3002; &#x5F53;&#x6211;&#x4EEC;&#x4E0E;Spring Cloud Config&#x914D;&#x5408;&#xFF0C;&#x52A8;&#x6001;&#x5237;&#x65B0;Eureka&#x7684;serv1ceURL&#x5730;&#x5740;&#x65F6;&#x9700;&#x8981;&#x5173;&#x6CE8;&#x8BE5;&#x53C2;&#x6570; | 300    |
+| eurekaServerReadTimeoutSeconds                | &#x8BFB;&#x53D6;Eureka Se1-ver&#x4FE1;&#x606F;&#x7684;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#xFF0C; &#x5355;&#x4F4D;&#x4E3A;&#x79D2;                  | 8      |
+| eurekaServerConnectTimeoutSeconds             | &#x8FDE;&#x63A5; Eureka Server&#x7684;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#xFF0C; &#x5355;&#x4F4D;&#x4E3A;&#x79D2;                      | 5      |</p>
+</li>
+</ul>
+<h3 id="&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x7C7B;&#x914D;&#x7F6E;"><a name="&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x7C7B;&#x914D;&#x7F6E;" class="anchor-navigation-ex-anchor" href="#&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x7C7B;&#x914D;&#x7F6E;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x7C7B;&#x914D;&#x7F6E;</h3>
+<ul>
+<li><p><strong>&#x5143;&#x6570;&#x636E;</strong></p>
+<p>Eureka&#x5BA2;&#x6237;&#x7AEF;&#x5728;&#x5411;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x53D1;&#x9001;&#x6CE8;&#x518C;&#x8BF7;&#x6C42;&#x65F6;,&#x7528;&#x6765;&#x63CF;&#x8FF0;&#x81EA;&#x8EAB;&#x670D;&#x52A1;&#x4FE1;&#x606F;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;&#x5176;&#x4E2D;&#x5305;&#x542B;&#x4E86;&#x4E00;&#x4E9B;&#x6807;&#x51C6;&#x5316;&#x7684;&#x5143;&#x6570;&#x636E;&#xFF0C;&#x6BD4;&#x5982;&#x670D;&#x52A1;&#x540D;&#x79F0;&#x3001;&#x5B9E;&#x4F8B;&#x540D;&#x79F0;&#x3001;&#x5B9E;&#x4F8B;IP&#x3001;&#x5B9E;&#x4F8B;&#x7AEF;&#x53E3;&#x7B49;&#x7528;&#x4E8E;&#x670D;&#x52A1;&#x6CBB;&#x7406;&#x7684;&#x91CD;&#x8981;&#x4FE1;&#x606F;&#xFF1B;&#x4EE5;&#x53CA;&#x4E00;&#x4E9B;&#x7528;&#x4E8E;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x7B56;&#x7565;&#x6216;&#x662F;&#x5176;&#x4ED6;&#x7279;&#x6B8A;&#x7528;&#x9014;&#x7684;&#x81EA;&#x5B9A;&#x4E49;&#x5143;&#x6570;&#x636E;&#x4FE1;&#x606F;&#x3002;</p>
+<p>&#x5728;&#x4F7F;&#x7528; Spring Cloud Eureka&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6240;&#x6709;&#x7684;&#x914D;&#x7F6E;&#x4FE1;&#x606F;&#x90FD;&#x901A;&#x8FC7;org.springframework.cloud.netflix.eureka.EurekalnstanceConfigBean&#x8FDB;&#x884C;&#x52A0;&#x8F7D;&#xFF0C;&#x4F46;&#x5728;&#x771F;&#x6B63;&#x8FDB;&#x884C;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x8FD8;&#x662F;&#x4F1A;&#x5305;&#x88C5;&#x6210;com.netflix.appinfo.Instancelnfo &#x5BF9;&#x8C61;&#x53D1;&#x9001;&#x7ED9;Eureka&#x670D;&#x52A1;&#x7AEF; &#x3002;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x67E5;&#x770B; com.netflix.appinfo.Instancelnfo&#x7C7B;&#x4E2D;&#x7684;&#x8BE6;&#x7EC6;&#x5B9A;&#x4E49;&#x6765;&#x4E86;&#x89E3;&#x539F;&#x751F;Eureka&#x5BF9;&#x5143;&#x6570;&#x636E;&#x7684;&#x5B9A;&#x4E49;&#x3002; &#x5176;&#x4E2D;&#xFF0C;
+Map<string, string=""> metadata= new ConcurrentHashMap<string, string=""> ()&#x662F;&#x81EA;&#x5B9A;&#x4E49;&#x7684;&#x5143;&#x6570;&#x636E;&#x4FE1;&#x606F;&#xFF0C; &#x800C;&#x5176;&#x4ED6;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x5219;&#x662F;&#x6807;&#x51C6;&#x5316;&#x7684;&#x5143;&#x6570;&#x636E;&#x4FE1;&#x606F;&#x3002;</string,></string,></p>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; eureka.instance.<properties>=<value>&#x7684;&#x683C;&#x5F0F;&#x5BF9;&#x6807;&#x51C6;&#x5316; &#x5143;&#x6570;&#x636E;&#x76F4;&#x63A5;&#x8FDB;&#x884C;&#x914D;&#x7F6E;,&#x5176;&#x4E2D;<properties>&#x5C31;&#x662F; EurekainstanceConfigBean&#x5BF9;&#x8C61; &#x4E2D;&#x7684;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x540D; &#x3002;&#x800C;&#x5BF9;&#x4E8E;&#x81EA;&#x5B9A;&#x4E49;&#x5143;&#x6570;&#x636E;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; eureka.instance.metadataMap.<key>=<value>&#x7684;&#x683C;&#x5F0F;&#x6765;&#x8FDB;&#x884C;&#x914D;&#x7F6E;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;</value></key></properties></value></properties></p>
+<pre><code class="lang-java">eureka.instance.metadataMap.zone=shanghai
+</code></pre>
+</li>
+<li><p><strong>&#x5B9E;&#x4F8B;&#x540D;&#x914D;&#x7F6E;</strong></p>
+<p>&#x5B9E;&#x4F8B;&#x540D;&#xFF0C;&#x5373;InstanceInfo &#x4E2D;&#x7684;instanceId&#x53C2;&#x6570;&#xFF0C; &#x5B83;&#x662F;&#x533A;&#x5206;&#x540C;&#x4E00;&#x670D;&#x52A1;&#x4E2D;&#x4E0D;&#x540C;&#x5B9E;&#x4F8B;&#x7684;&#x552F;&#x4E00;&#x6807;&#x8BC6;&#x3002;&#x5728;NetflixEureka&#x7684;&#x539F;&#x751F;&#x5B9E;&#x73B0;&#x4E2D;&#xFF0C;&#x5B9E;&#x4F8B;&#x540D;&#x91C7;&#x7528;&#x4E3B;&#x673A;&#x540D;&#x4F5C;&#x4E3A;&#x9ED8;&#x8BA4;&#x503C;&#xFF0C; &#x8FD9;&#x6837;&#x7684;&#x8BBE;&#x7F6E;&#x4F7F;&#x5F97;&#x5728;&#x540C;&#x4E00;&#x4E3B;&#x673A;&#x4E0A;&#x65E0;&#x6CD5;&#x542F;&#x52A8;&#x591A;&#x4E2A;&#x76F8;&#x540C;&#x7684;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x3002;&#x6240;&#x4EE5;&#xFF0C; &#x5728;Spring Cloud Eureka&#x7684;&#x914D;&#x7F6E;&#x4E2D;&#xFF0C;&#x9488;&#x5BF9;&#x540C;&#x4E00;&#x4E3B;&#x673A;&#x4E2D;&#x542F;&#x52A8;&#x591A;&#x5B9E;&#x4F8B;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x5BF9;&#x5B9E;&#x4F8B;&#x540D;&#x7684;&#x9ED8;&#x8BA4;&#x547D;&#x540D;&#x505A;&#x4E86;&#x66F4;&#x4E3A;&#x5408;&#x7406;&#x7684;&#x6269;&#x5C55;&#xFF0C; &#x5B83;&#x91C7;&#x7528;&#x4E86;&#x5982;&#x4E0B;&#x9ED8;&#x8BA4;&#x89C4;&#x5219;&#xFF1A;</p>
+<pre><code class="lang-java">${spring.cloud.client.hostname}:${spring.application.name}:${spring.application
+.instance&#x2014;id:$ {server.port}}
+</code></pre>
+<p>&#x5BF9;&#x5343;&#x5B9E;&#x4F8B;&#x540D;&#x7684;&#x547D;&#x540D;&#x89C4;&#x5219;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;eureka.instance.instanceId&#x53C2;&#x6570;&#x6765;&#x8FDB;&#x884C;&#x914D;&#x7F6E;&#x3002; &#x6BD4;&#x5982;&#xFF0C; &#x5728;&#x672C;&#x5730;&#x8FDB;&#x884C;&#x5BA2;&#x6237;&#x7AEF;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x8C03;&#x8BD5;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x542F;&#x52A8;&#x540C;&#x4E00;&#x670D;&#x52A1;&#x7684;&#x591A;&#x4E2A;&#x5B9E;&#x4F8B;&#xFF0C;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x76F4;&#x63A5;&#x542F;&#x52A8;&#x540C;&#x4E00;&#x4E2A;&#x5E94;&#x7528;&#x5FC5;&#x7136;&#x4F1A;&#x4EA7;&#x751F;&#x7AEF;&#x53E3;&#x51B2;&#x7A81;&#x3002; &#x867D;&#x7136;&#x53EF;&#x4EE5;&#x5728;&#x547D;&#x4EE4;&#x884C;&#x4E2D;&#x6307;&#x5B9A;&#x4E0D;&#x540C;&#x7684;server.port &#x6765;&#x542F;&#x52A8;&#xFF0C; &#x4F46;&#x662F;&#x8FD9;&#x6837;&#x8FD8;&#x662F;&#x7565;&#x663E;&#x9EBB;&#x70E6;&#x3002; &#x5B9E;&#x9645;&#x4E0A;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E;
+server.part=0 &#x6216;&#x8005;&#x4F7F;&#x7528;&#x968F;&#x673A;&#x6570; server.port=${randorn.int[10000,19999]} &#x6765;&#x8BA9;Tomcat &#x542F;&#x52A8;&#x7684;&#x65F6;&#x5019;&#x91C7;&#x7528;&#x968F;&#x673A;&#x7AEF;&#x53E3;&#x3002;&#x4F46;&#x662F;&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#x6211;&#x4EEC;&#x4F1A;&#x53D1;&#x73B0;&#x6CE8;&#x518C;&#x5230; Eureka Server &#x7684;&#x5B9E;&#x4F8B;&#x540D;&#x90FD;&#x662F;&#x76F8;&#x540C;&#x7684;&#xFF0C; &#x8FD9;&#x4F1A;&#x4F7F;&#x5F97;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x80FD;&#x591F;&#x6B63;&#x5E38;&#x63D0;&#x4F9B;&#x670D;&#x52A1;&#x3002; &#x5BF9;&#x4E8E;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#xFF0C; &#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E;&#x5B9E;&#x4F8B;&#x540D;&#x89C4;&#x5219;&#x6765;&#x8F7B;&#x677E;&#x89E3;&#x51B3;&#xFF1A;</p>
+<pre><code class="lang-java">eureka.instance.instanceid=${spring.application.name}:${random.<span class="hljs-keyword">int</span>}}
+</code></pre>
+<p>&#x5229;&#x7528;&#x5E94;&#x7528;&#x540D;&#x52A0;&#x968F;&#x673A;&#x6570;&#x7684;&#x65B9;&#x5F0F;&#x6765;&#x533A;&#x5206;&#x4E0D;&#x540C;&#x7684;&#x5B9E;&#x4F8B;&#xFF0C;&#x4ECE;&#x800C;&#x5B9E;&#x73B0;&#x5728;&#x540C;&#x4E00;&#x4E3B;&#x673A;&#x4E0A;&#xFF0C;&#x4E0D;&#x6307;&#x5B9A;&#x7AEF;&#x53E3;&#x5C31;&#x80FD;&#x8F7B;&#x677E;&#x542F;&#x52A8;&#x591A;&#x4E2A;&#x5B9E;&#x4F8B;&#x7684;&#x6548;&#x679C;&#x3002;</p>
+</li>
+<li><p><strong>&#x7AEF;&#x70B9;&#x914D;&#x7F6E;</strong></p>
+<p>&#x5728; Instanceinfo &#x4E2D;&#xFF0C; &#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230; &#x4E00; &#x4E9B; URL &#x7684;&#x914D;&#x7F6E;&#x4FE1;&#x606F;&#xFF0C; &#x6BD4;&#x5982; homePageUrl&#x3001;statusPageUrl&#x3001;healthCheckUrl, &#x5B83;&#x4EEC;&#x5206;&#x522B;&#x4EE3;&#x8868;&#x4E86;&#x5E94;&#x7528;&#x4E3B;&#x9875;&#x7684; URL&#x3001;&#x72B6;&#x6001;&#x9875;&#x7684; URL&#x3001;&#x5065;&#x5EB7;&#x68C0;&#x67E5;&#x7684; URL &#x3002;</p>
+<p>&#x5176;&#x4E2D;&#xFF0C;&#x72B6;&#x6001;&#x9875;&#x548C;&#x5065;&#x5EB7;&#x68C0;&#x67E5;&#x7684;URL&#x5728;Spring Cloud Eureka &#x4E2D;&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;&#x4E86;spring-boot-actuator &#x6A21;&#x5757;&#x63D0;&#x4F9B;&#x7684; /info &#x7AEF;&#x70B9;&#x548C; /health &#x7AEF;&#x70B9;&#x3002;</p>
+<p>&#x4E3A;&#x4E86;&#x670D;&#x52A1;&#x7684;&#x6B63;&#x5E38;&#x8FD0;&#x4F5C;&#xFF0C; &#x6211;&#x4EEC;&#x5FC5;&#x987B;&#x786E;&#x4FDD;Eureka &#x5BA2;&#x6237;&#x7AEF;&#x7684; /health &#x7AEF;&#x70B9;&#x5728;&#x53D1;&#x9001;&#x5143;&#x6570;&#x636E;&#x7684;&#x65F6;&#x5019;&#xFF0C; &#x662F;&#x4E00;&#x4E2A;&#x80FD;&#x591F;&#x88AB;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x8BBF;&#x95EE;&#x5230;&#x7684;&#x5730;&#x5740;&#xFF0C; &#x5426;&#x5219;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x4E0D;&#x4F1A;&#x6839;&#x636E;&#x5E94;&#x7528;&#x7684;&#x5065;&#x5EB7;&#x68C0;&#x67E5;&#x6765;&#x66F4;&#x6539;&#x72B6;&#x6001;&#xFF08;&#x4EC5;&#x5F53;&#x5F00;&#x542F;&#x4E86; healthcheck &#x529F;&#x80FD;&#x65F6;&#xFF0C; &#x4EE5;&#x8BE5;&#x7AEF;&#x70B9;&#x4FE1;&#x606F;&#x4F5C;&#x4E3A;&#x5065;&#x5EB7;&#x68C0;&#x67E5;&#x6807;&#x51C6;&#xFF09;&#x3002; &#x800C;/info &#x7AEF;&#x70B9;&#x5982;&#x679C;&#x4E0D;&#x6B63;&#x786E;&#x7684;&#x8BDD;&#xFF0C;&#x4F1A;&#x5BFC;&#x81F4;&#x5728; Eureka &#x9762;&#x677F;&#x4E2D;&#x5355;&#x51FB;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x65F6;&#xFF0C;&#x65E0;&#x6CD5;&#x8BBF;&#x95EE;&#x5230;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x63D0;&#x4F9B;&#x7684;&#x4FE1;&#x606F;&#x63A5;&#x53E3;&#x3002;</p>
+<ul>
+<li>&#x5927;&#x591A;&#x6570;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x6211;&#x4EEC;&#x5E76;&#x4E0D;&#x9700;&#x8981;&#x4FEE;&#x6539;&#x8FD9;&#x51E0;&#x4E2A; URL &#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x4F46;&#x662F;&#x5728; &#x4E00; &#x4E9B;&#x7279;&#x6B8A;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x6BD4;&#x5982;&#xFF0C;&#x4E3A;&#x5E94;&#x7528;&#x8BBE;&#x7F6E;&#x4E86; context-path, &#x8FD9;&#x65F6;&#xFF0C; &#x6240;&#x6709; spring-boot-actuator &#x6A21;&#x5757;&#x7684;&#x76D1;&#x63A7;&#x7AEF;&#x70B9;&#x90FD;&#x4F1A;&#x589E;&#x52A0;&#x4E00;&#x4E2A;&#x524D;&#x7F00;&#x3002;</li>
+</ul>
+<pre><code class="lang-java">management.context-path=/hello
+eureka.instance.statusPageUrlPath=${management.context-path}/info
+eureka.instance.healthCheckUrlPath=${management.context-path}/health
+</code></pre>
+<ul>
+<li><p>&#x4E3A;&#x4E86;&#x5B89;&#x5168;&#x8003;&#x8651;&#xFF0C; &#x4E5F;&#x6709;&#x53EF;&#x80FD;&#x4F1A;&#x4FEE;&#x6539; /info &#x548C; /health &#x7AEF;&#x70B9;&#x7684;&#x539F;&#x59CB;&#x8DEF;&#x5F84;</p>
+<pre><code class="lang-java">endpoints.info.path=/appinfo
+endpoints.health.path=/checkHealth
+eureka.instance.statusPageOrlPath=/${endpoints.info.path}
+eureka.instance.healthCheckOrlPath=/${endpoints.health.path}
+</code></pre>
+</li>
+<li><p>&#x4E0A;&#x8FF0;&#x4E24;&#x4E2A;&#x914D;&#x7F6E;&#x503C;&#x6709;&#x4E00;&#x4E2A;&#x5171;&#x540C;&#x7279;&#x70B9;&#xFF0C;&#x5B83;&#x4EEC;&#x90FD;&#x4F7F;&#x7528;&#x76F8;&#x5BF9;&#x8DEF;&#x5F84;&#x6765;&#x8FDB;&#x884C;&#x914D;&#x7F6E; &#x3002;&#x7531;&#x5343;Eureka&#x7684;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x9ED8;&#x8BA4;&#x4F1A;&#x4EE5;HTTP&#x7684;&#x65B9;&#x5F0F;&#x6765;&#x8BBF;&#x95EE;&#x548C;&#x66B4;&#x9732;&#x8FD9;&#x4E9B;&#x7AEF;&#x70B9;&#xFF0C;&#x56E0;&#x6B64;&#x5F53;&#x5BA2;&#x6237;&#x7AEF;&#x5E94;&#x7528;&#x4EE5;HTTPS&#x7684;&#x65B9;&#x5F0F;&#x6765; &#x66B4;&#x9732;&#x670D;&#x52A1;&#x548C;&#x76D1;&#x63A7;&#x7AEF;&#x70B9;&#x65F6;&#xFF0C;&#x76F8;&#x5BF9;&#x8DEF;&#x5F84;&#x7684;&#x914D;&#x7F6E;&#x65B9;&#x5F0F;&#x5C31;&#x65E0;&#x6CD5;&#x6EE1;&#x8DB3;&#x9700;&#x6C42;&#x4E86;&#x3002;&#x6240;&#x4EE5;&#xFF0C;Spring Cloud Eureka&#x8FD8;&#x63D0;&#x4F9B;&#x4E86;&#x7EDD;&#x5BF9;&#x8DEF;&#x5F84;&#x7684;&#x914D;&#x7F6E;&#x53C2;&#x6570;</p>
+<pre><code class="lang-java">eureka.instance.statusPageUrl=https:<span class="hljs-comment">//${eureka.instance.hostname}/info</span>
+eureka.instance.healthCheckUrl=https:<span class="hljs-comment">//${eureka.instance.hostname}/health</span>
+eureka.instance.homePageUrl=https:<span class="hljs-comment">//${eureka.instance.hostname}/</span>
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p><strong>&#x5065;&#x5EB7;&#x68C0;&#x6D4B;</strong></p>
+<p>&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;Eureka&#x4E2D;&#x5404;&#x4E2A;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x7684;&#x5065;&#x5EB7;&#x68C0;&#x6D4B;&#x5E76;&#x4E0D;&#x662F;&#x901A;&#x8FC7;spring-boot-actuator&#x6A21;&#x5757;&#x7684;/health &#x7AEF;&#x70B9;&#x6765;&#x5B9E;&#x73B0;&#x7684;&#xFF0C; &#x800C;&#x662F;&#x4F9D;&#x9760;&#x5BA2;&#x6237;&#x7AEF;&#x5FC3;&#x8DF3;&#x7684;&#x65B9;&#x5F0F;&#x6765;&#x4FDD;&#x6301;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x7684;&#x5B58;&#x6D3B;&#x3002; &#x5728;Eureka &#x7684;&#x670D;&#x52A1;&#x7EED;&#x7EA6;&#x4E0E;&#x5254;&#x9664;&#x673A;&#x5236;&#x4E0B;&#xFF0C; &#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x5065;&#x5EB7;&#x72B6;&#x6001;&#x4ECE;&#x6CE8;&#x518C;&#x5230;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x5F00;&#x59CB;&#x90FD;&#x4F1A;&#x5904;&#x4E8E;UP&#x72B6;&#x6001;&#xFF0C; &#x9664;&#x975E;&#x5FC3;&#x8DF3;&#x7EC8;&#x6B62; &#x4E00; &#x6BB5;&#x65F6;&#x95F4;&#x4E4B;&#x540E;&#xFF0C;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x5C06;&#x5176;&#x5254;&#x9664;&#x3002; &#x9ED8;&#x8BA4;&#x7684;&#x5FC3;&#x8DF3;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#x53EF;&#x4EE5;&#x6709;&#x6548;&#x68C0;&#x67E5;&#x5BA2;&#x6237;&#x7AEF;&#x8FDB;&#x7A0B;&#x662F;&#x5426;&#x6B63;&#x5E38;&#x8FD0;&#x4F5C;,&#x4F46;&#x5374;&#x65E0;&#x6CD5;&#x4FDD;&#x8BC1;&#x5BA2;&#x6237;&#x7AEF;&#x5E94;&#x7528;&#x80FD;&#x591F;&#x6B63;&#x5E38;&#x63D0;&#x4F9B;&#x670D;&#x52A1; &#x3002;&#x7531;&#x4E8E;&#x5927;&#x591A;&#x6570;&#x5FAE;&#x670D;&#x52A1;&#x5E94;&#x7528;&#x90FD;&#x4F1A;&#x6709; &#x4E00; &#x4E9B;&#x5176;&#x4ED6;&#x7684;&#x5916;&#x90E8;&#x8D44;&#x6E90;&#x4F9D;&#x8D56;&#xFF0C; &#x6BD4;&#x5982;&#x6570;&#x636E;&#x5E93;&#x3001; &#x7F13;&#x5B58;&#x3001; &#x6D88;&#x606F;&#x4EE3;&#x7406;&#x7B49;&#xFF0C;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x7684;&#x5E94;&#x7528;&#x4E0E;&#x8FD9;&#x4E9B;&#x5916;&#x90E8;&#x8D44;&#x6E90;&#x65E0;&#x6CD5;&#x8054;&#x901A;&#x7684;&#x65F6;&#x5019;&#xFF0C; &#x5B9E;&#x9645;&#x4E0A;&#x5DF2;&#x7ECF;&#x4E0D;&#x80FD;&#x63D0;&#x4F9B;&#x6B63;&#x5E38;&#x7684;&#x5BF9;&#x5916;&#x670D;&#x52A1;&#x4E86;&#xFF0C; &#x4F46;&#x662F;&#x56E0;&#x4E3A;&#x5BA2;&#x6237;&#x7AEF;&#x5FC3;&#x8DF3;&#x4F9D;&#x7136;&#x5728;&#x8FD0;&#x884C;&#xFF0C;&#x6240;&#x4EE5;&#x5B83;&#x8FD8;&#x662F;&#x4F1A;&#x88AB;&#x670D;&#x52A1;&#x6D88;&#x8D39;&#x8005;&#x8C03;&#x7528;&#xFF0C; &#x800C;&#x8FD9;&#x6837;&#x7684;&#x8C03;&#x7528;&#x5B9E;&#x9645;&#x4E0A;&#x5E76;&#x4E0D;&#x80FD;&#x83B7;&#x5F97;&#x9884;&#x671F;&#x7684;&#x7ED3;&#x679C;.</p>
+<p>&#x901A;&#x8FC7;&#x7B80;&#x5355;&#x7684;&#x914D;&#x7F6E;&#xFF0C; &#x628A;Eureka&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x5065;&#x5EB7;&#x68C0;&#x6D4B;&#x4EA4;&#x7ED9;spring-boot-actuator&#x6A21;&#x5757;&#x7684;/health&#x7AEF;&#x70B9;&#xFF0C; &#x4EE5;&#x5B9E;&#x73B0;&#x66F4;&#x52A0;&#x5168;&#x9762;&#x7684;&#x5065;&#x5EB7;&#x72B6;&#x6001;&#x7EF4;&#x62A4;&#x3002;</p>
+<ul>
+<li>&#x5728;pom.xml&#x4E2D;&#x5F15;&#x5165;spring-boot-starter-actuator&#x6A21;&#x5757;&#x7684;&#x4F9D;&#x8D56;&#x3002;</li>
+<li>&#x5728;application.properties&#x4E2D;&#x589E;&#x52A0;&#x53C2;&#x6570;&#x914D;&#x7F6E; eureka.client.healthcheck.enabled=true&#x3002;</li>
+<li>&#x5982;&#x679C;&#x5BA2;&#x6237;&#x7AEF;&#x7684;/health&#x7AEF;&#x70B9;&#x8DEF;&#x5F84;&#x505A;&#x4E86;&#x4E00;&#x4E9B;&#x7279;&#x6B8A;&#x5904;&#x7406;&#xFF0C;&#x8BF7;&#x53C2;&#x8003;&#x524D;&#x6587;&#x4ECB;&#x7ECD;&#x7AEF;&#x70B9;&#x914D;&#x7F6E;&#x65F6;&#x7684;&#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x914D;&#x7F6E;&#xFF0C; &#x8BA9;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x53EF;&#x4EE5;&#x6B63;&#x786E;&#x8BBF;&#x95EE;&#x5230;&#x5065;&#x5EB7;&#x68C0;&#x6D4B;&#x7AEF;&#x70B9;&#x3002;</li>
+</ul>
+</li>
+<li><p><strong>&#x5176;&#x4ED6;&#x914D;&#x7F6E;</strong></p>
+<p>&#x53C2;&#x6570;&#x5747;&#x4EE5; eureka.instance&#x4E3A;&#x524D;&#x7F00;</p>
+<p>| &#x53C2;&#x6570;&#x540D;                           | &#x8BF4;&#x660E;                                                         | &#x9ED8;&#x8BA4;&#x503C; |
+| -------------------------------- | ------------------------------------------------------------ | ------ |
+| preferIpAddress                  | &#x662F;&#x5426;&#x4F18;&#x5148;&#x4F7F;&#x7528;IP&#x5730;&#x5740;&#x4F5C;&#x4E3A;&#x4E3B;&#x673A;&#x540D;&#x7684;&#x6807;&#x8BC6;                           | false  |
+| leaseRenewalIntervalInSeconds    | Eureka&#x5BA2;&#x6237;&#x7AEF;&#x5411;&#x670D;&#x52A1;&#x7AEF;&#x53D1;&#x9001;&#x5FC3;&#x8DF3;&#x7684;&#x65F6;&#x95F4;&#x95F4;&#x9694;&#xFF0C; &#x5355;&#x4F4D;&#x4E3A;&#x79D2;            | 30     |
+| leaseExpirationDurationInSeconds | Eureka&#x670D;&#x52A1;&#x7AEF;&#x5728;&#x6536;&#x5230;&#x6700;&#x540E;&#x4E00; &#x6B21;&#x5FC3;&#x8DF3;&#x4E4B;&#x540E;&#x7B49;&#x5F85;&#x7684;&#x65F6;&#x95F4;&#x4E0A;&#x9650;&#xFF0C;&#x5355;&#x4F4D;&#x4E3A;&#x79D2;&#x3002; &#x8D85;&#x8FC7;&#x8BE5;&#x65F6;&#x95F4;&#x4E4B;&#x540E;&#x670D;&#x52A1;&#x7AEF;&#x4F1A;&#x5C06;&#x8BE5;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x4ECE;&#x670D;&#x52A1;&#x6D88;&#x5355;&#x4E2D;&#x5254;&#x9664;&#xFF0C; &#x4ECE;&#x800C;&#x7981;&#x6B62;&#x670D;&#x52A1;&#x8C03;&#x7528;&#x8BF7;&#x6C42;&#x88AB;&#x53D1;&#x9001;&#x5230;&#x8BE5;&#x5B9E;&#x4F8B;&#x4E0A; | 90     |
+| nonSecurePort                    | &#x975E;&#x5B89;&#x5168;&#x7684;&#x901A;&#x4FE1;&#x7AEF;&#x53E3;&#x53F7;                                           | 80     |
+| securePort                       | &#x5B89;&#x5168;&#x7684;&#x901A;&#x4FE1;&#x7AEF;&#x53E3;&#x53F7;                                             | 443    |
+| nonSecurePortEnabled             | &#x662F;&#x5426;&#x542F;&#x7528;&#x975E;&#x5B89;&#x5168;&#x7684;&#x901A;&#x4FE1;&#x7AEF;&#x53E3;&#x53F7;                                   | true   |
+| securePortEnabled                | &#x662F;&#x5426;&#x542F;&#x7528;&#x5B89;&#x5168;&#x7684;&#x901A;&#x4FE1;&#x7AEF;&#x53E3;&#x53F7;                                     |        |
+| hostname                         | &#x4E3B;&#x673A;&#x540D;&#xFF0C; &#x4E0D;&#x914D;&#x7F6E;&#x7684;&#x65F6;&#x5019;&#x5C06;&#x6839;&#x636E;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x7684;&#x4E3B;&#x673A;&#x540D;&#x6765;&#x83B7;&#x53D6;            |        |
+| appname                          | &#x670D;&#x52A1;&#x540D;&#xFF0C;&#x9ED8;&#x8BA4;&#x53D6;spring.application.name&#x7684;&#x914D;&#x7F6E;&#x503C;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x5219;&#x4E3A;unknown |        |</p>
+</li>
+</ul>
+<h2 id="&#x8DE8;&#x5E73;&#x53F0;&#x652F;&#x6301;"><a name="&#x8DE8;&#x5E73;&#x53F0;&#x652F;&#x6301;" class="anchor-navigation-ex-anchor" href="#&#x8DE8;&#x5E73;&#x53F0;&#x652F;&#x6301;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x8DE8;&#x5E73;&#x53F0;&#x652F;&#x6301;</h2>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <em>Dazzle Lin</em> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2019-07-02 22:46:26 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../" class="navigation navigation-prev " aria-label="Previous page: 前言">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../Chapter2/Spring cloud Ribbon.html" class="navigation navigation-next " aria-label="Next page: Spring cloud Ribbon">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Spring Cloud Eureka","level":"1.2","depth":1,"next":{"title":"Spring cloud Ribbon","level":"1.3","depth":1,"path":"Chapter2/Spring cloud Ribbon.md","ref":"Chapter2/Spring cloud Ribbon.md","articles":[]},"previous":{"title":"前言","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","search-pro","github","chapter-fold","code","copy-code-button","splitter","page-footer-ex","simple-page-toc","anchor-navigation-ex","livereload"],"root":".","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"chapter-fold":{},"github":{"url":"https://github.com/linqinye"},"livereload":{},"simple-page-toc":{"maxDepth":3,"skipFirstH1":true},"page-footer-ex":{"copyright":"By <em>Dazzle Lin</em>","markdown":false,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{"cutWordLib":"nodejieba","defineWord":["Gitbook Use"]},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"fa fa-hand-o-right","level2Icon":"fa fa-hand-o-right","level3Icon":"fa fa-hand-o-right","showLevelIcon":true},"mode":"float","multipleH1":false,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":false},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Dazzle","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"编写docker学习笔记","language":"zh-hans","gitbook":"*","description":"编写docker学习笔记"},"file":{"path":"Chapter1/Spring Cloud Eureka.md","mtime":"2019-07-02T14:46:26.856Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-07-03T04:28:46.241Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-chapter-fold/chapter-fold.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

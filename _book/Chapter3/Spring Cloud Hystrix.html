@@ -1,0 +1,524 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Spring Cloud Hystrix · 编写docker学习笔记</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="Dazzle">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-chapter-fold/chapter-fold.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../Chapter4/Spring Cloud Feign.html" />
+    
+    
+    <link rel="prev" href="../Chapter2/Spring cloud Ribbon.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    前言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../Chapter1/Spring Cloud Eureka.html">
+            
+                <a href="../Chapter1/Spring Cloud Eureka.html">
+            
+                    
+                    Spring Cloud Eureka
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../Chapter2/Spring cloud Ribbon.html">
+            
+                <a href="../Chapter2/Spring cloud Ribbon.html">
+            
+                    
+                    Spring cloud Ribbon
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4" data-path="Spring Cloud Hystrix.html">
+            
+                <a href="Spring Cloud Hystrix.html">
+            
+                    
+                    Spring Cloud Hystrix
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../Chapter4/Spring Cloud Feign.html">
+            
+                <a href="../Chapter4/Spring Cloud Feign.html">
+            
+                    
+                    Spring Cloud Feign
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../Chapter5/Spring Cloud Zuul.html">
+            
+                <a href="../Chapter5/Spring Cloud Zuul.html">
+            
+                    
+                    Spring Cloud Zuul
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../Chapter5/Spring Cloud Config.html">
+            
+                <a href="../Chapter5/Spring Cloud Config.html">
+            
+                    
+                    Spring Cloud Config
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../Chapter5/Spring Cloud Bus.html">
+            
+                <a href="../Chapter5/Spring Cloud Bus.html">
+            
+                    
+                    Spring Cloud Bus
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Spring Cloud Hystrix</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#spring-cloud-hystrix"><b></b>Spring Cloud Hystrix</a></li><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x5FEB;&#x901F;&#x5165;&#x95E8;"><b></b>&#x5FEB;&#x901F;&#x5165;&#x95E8;</a></li><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x542F;&#x52A8;&#x5DE5;&#x7A0B;&#x5982;&#x4E0B;"><b></b>&#x542F;&#x52A8;&#x5DE5;&#x7A0B;&#x5982;&#x4E0B;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x4E0B;&#x9762;&#x5F00;&#x59CB;&#x5F15;&#x5165;hystrix"><b></b>&#x4E0B;&#x9762;&#x5F00;&#x59CB;&#x5F15;&#x5165;hystrix</a></li></ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#hystrix&#x4EEA;&#x8868;&#x76D8;"><b></b>Hystrix&#x4EEA;&#x8868;&#x76D8;</a></li></ul></ul></div><a href="#spring-cloud-hystrix" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="spring-cloud-hystrix"><a name="spring-cloud-hystrix" class="anchor-navigation-ex-anchor" href="#spring-cloud-hystrix"><i class="fa fa-link" aria-hidden="true"></i></a>Spring Cloud Hystrix</h1>
+<p>&#x5728;&#x5FAE;&#x670D;&#x52A1;&#x67B6;&#x6784;&#x4E2D;&#xFF0C; &#x6211;&#x4EEC;&#x5C06;&#x7CFB;&#x7EDF;&#x62C6;&#x5206;&#x6210;&#x4E86;&#x5F88;&#x591A;&#x670D;&#x52A1;&#x5355;&#x5143;&#xFF0C; &#x5404;&#x5355;&#x5143;&#x7684;&#x5E94;&#x7528;&#x95F4;&#x901A;&#x8FC7;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E0E;&#x8BA2;&#x9605;&#x7684;&#x65B9;&#x5F0F;&#x4E92;&#x76F8;&#x4F9D;&#x8D56;&#x3002; &#x7531;&#x4E8E;&#x6BCF;&#x4E2A;&#x5355;&#x5143;&#x90FD;&#x5728;&#x4E0D;&#x540C;&#x7684;&#x8FDB;&#x7A0B;&#x4E2D;&#x8FD0;&#x884C;&#xFF0C; &#x4F9D;&#x8D56;&#x901A;&#x8FC7;&#x8FDC;&#x7A0B;&#x8C03;&#x7528;&#x7684;&#x65B9;&#x5F0F;&#x6267;&#x884C;&#xFF0C; &#x8FD9;&#x6837;&#x5C31;&#x6709;&#x53EF;&#x80FD;&#x56E0;&#x4E3A;&#x7F51;&#x7EDC;&#x539F;&#x56E0;&#x6216;&#x662F;&#x4F9D;&#x8D56;&#x670D;&#x52A1;&#x81EA;&#x8EAB;&#x95F4;&#x9898;&#x51FA;&#x73B0;&#x8C03;&#x7528;&#x6545;&#x969C;&#x6216;&#x5EF6;&#x8FDF;&#xFF0C;&#x800C;&#x8FD9;&#x4E9B;&#x95EE;&#x9898;&#x4F1A;&#x76F4;&#x63A5;&#x5BFC;&#x81F4;&#x8C03;&#x7528;&#x65B9;&#x7684;&#x5BF9;&#x5916;&#x670D;&#x52A1;&#x4E5F;&#x51FA;&#x73B0;&#x5EF6;&#x8FDF;&#xFF0C; &#x82E5;&#x6B64;&#x65F6;&#x8C03;&#x7528;&#x65B9;&#x7684;&#x8BF7;&#x6C42;&#x4E0D;&#x65AD;&#x589E;&#x52A0;&#xFF0C;&#x6700;&#x540E;&#x5C31;&#x4F1A;&#x56E0;&#x7B49;&#x5F85;&#x51FA;&#x73B0;&#x6545;&#x969C;&#x7684;&#x4F9D;&#x8D56;&#x65B9;&#x54CD;&#x5E94;&#x5F62;&#x6210;&#x4EFB;&#x52A1;&#x79EF;&#x538B;&#xFF0C;&#x6700;&#x7EC8;&#x5BFC;&#x81F4;&#x81EA;&#x8EAB;&#x670D;&#x52A1;&#x7684;&#x762B;&#x75EA;&#x3002;</p>
+<h2 id="&#x5FEB;&#x901F;&#x5165;&#x95E8;"><a name="&#x5FEB;&#x901F;&#x5165;&#x95E8;" class="anchor-navigation-ex-anchor" href="#&#x5FEB;&#x901F;&#x5165;&#x95E8;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x5FEB;&#x901F;&#x5165;&#x95E8;</h2>
+<p><img src="images/hystrix-02.png" alt="01"></p>
+<h3 id="&#x542F;&#x52A8;&#x5DE5;&#x7A0B;&#x5982;&#x4E0B;"><a name="&#x542F;&#x52A8;&#x5DE5;&#x7A0B;&#x5982;&#x4E0B;" class="anchor-navigation-ex-anchor" href="#&#x542F;&#x52A8;&#x5DE5;&#x7A0B;&#x5982;&#x4E0B;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x542F;&#x52A8;&#x5DE5;&#x7A0B;&#x5982;&#x4E0B;</h3>
+<p>eureka-server:&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#xFF0C;&#x7AEF;&#x53E3;11112</p>
+<p>hello-server:&#x670D;&#x52A1;&#x5355;&#x5143;&#xFF0C;&#x542F;&#x52A8;&#x4E24;&#x4E2A;&#x5B9E;&#x4F8B;8081/8082</p>
+<p>ribbon-consume:&#x4F7F;&#x7528;ribbon&#x5B9E;&#x73B0;&#x7684;&#x6D88;&#x8D39;&#x8005;&#xFF0C;&#x7AEF;&#x53E3;9000</p>
+<p>&#x672A;&#x52A0;&#x5165;&#x65AD;&#x8DEF;&#x5668;&#x4E4B;&#x524D;&#xFF0C;&#x5173;&#x95ED;8081&#xFF0C;&#x53D1;&#x9001;GET&#x6D88;&#x8D39;&#xFF0C;&#x83B7;&#x5F97;&#x5982;&#x4E0B;&#x8F93;&#x51FA;</p>
+<p><img src="images/hystrix-01.png" alt="01"></p>
+<h3 id="&#x4E0B;&#x9762;&#x5F00;&#x59CB;&#x5F15;&#x5165;hystrix"><a name="&#x4E0B;&#x9762;&#x5F00;&#x59CB;&#x5F15;&#x5165;hystrix" class="anchor-navigation-ex-anchor" href="#&#x4E0B;&#x9762;&#x5F00;&#x59CB;&#x5F15;&#x5165;hystrix"><i class="fa fa-link" aria-hidden="true"></i></a>&#x4E0B;&#x9762;&#x5F00;&#x59CB;&#x5F15;&#x5165;hystrix</h3>
+<ul>
+<li><strong>&#x5728;ribbon-consume&#x7684;pom.xml&#x52A0;&#x5165;&#x4F9D;&#x8D56;</strong></li>
+</ul>
+<pre><code class="lang-java">&lt;dependency&gt;
+  &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-cloud-starter-netflix-hystrix&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<ul>
+<li><strong>&#x5DE5;&#x7A0B;&#x4E3B;&#x7C7B;&#x52A0;&#x5165;@EnableCircuitBreaker&#x6CE8;&#x89E3;&#x5F00;&#x542F;&#x65AD;&#x8DEF;&#x5668;&#x529F;&#x80FD;</strong></li>
+</ul>
+<p>&#x6CE8;&#x610F;&#xFF1A;&#x8FD9;&#x91CC;&#x8FD8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; Spring Cloud &#x5E94;&#x7528;&#x4E2D;&#x7684; @SpringCloudApplication &#x6CE8;&#x89E3;&#x6765;&#x4FEE;&#x9970;&#x5E94;&#x7528;&#x4E3B;&#x7C7B;&#xFF0C; &#x8BE5;&#x6CE8;&#x89E3;&#x7684;&#x5177;&#x4F53;&#x5B9A;&#x4E49;&#x5982;&#x4E0B;&#x6240;&#x793A;&#x3002; &#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C; &#x8BE5;&#x6CE8;&#x89E3;&#x4E2D;&#x5305;&#x542B;&#x4E86;&#x4E0A;&#x8FF0;&#x6211;&#x4EEC;&#x6240;&#x5F15;&#x7528;&#x7684;&#x4E09;&#x4E2A;&#x6CE8;&#x89E3;&#xFF0C; &#x8FD9;&#x4E5F;&#x610F;&#x5473;&#x7740;&#x2014;&#x4E2A;Spring Cloud &#x6807;&#x51C6;&#x5E94;&#x7528;&#x5E94;&#x5305;&#x542B;<strong>&#x670D;&#x52A1;&#x53D1;&#x73B0;&#x4EE5;&#x53CA;&#x65AD;&#x8DEF;&#x5668;</strong>&#x3002;</p>
+<pre><code class="lang-java"><span class="hljs-meta">@Target</span>({ElementType.TYPE})
+<span class="hljs-meta">@Retention</span>(RetentionPolicy.RUNTIME)
+<span class="hljs-meta">@Documented</span>
+<span class="hljs-meta">@Inherited</span>
+<span class="hljs-meta">@SpringBootApplication</span>
+<span class="hljs-meta">@EnableDiscoveryClient</span>
+<span class="hljs-meta">@EnableCircuitBreaker</span>
+<span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> SpringCloudApplication {
+}
+</code></pre>
+<ul>
+<li><strong>&#x6539;&#x9020;&#x670D;&#x52A1;&#x6D88;&#x8D39;&#x65B9;&#x5F0F;</strong></li>
+</ul>
+<p><strong>&#x65B0;&#x589E; HelloService &#x7C7B;</strong>&#xFF0C; &#x6CE8;&#x5165; RestTemplate &#x5B9E;&#x4F8B;&#x3002; &#x7136;&#x540E;&#xFF0C;&#x5C06;&#x5728; ConsumerController &#x4E2D;&#x5BF9; RestTemplate &#x7684;&#x4F7F;&#x7528;&#x8FC1;&#x79FB;&#x5230; helloService&#x51FD;&#x6570;&#x4E2D;&#xFF0C;&#x6700;&#x540E;&#xFF0C;&#x5728; helloService &#x51FD;&#x6570;&#x4E0A;&#x589E;&#x52A0; @HystrixCommand&#x6CE8;&#x89E3;&#x6765;&#x6307;&#x5B9A;&#x56DE;&#x8C03;&#x65B9;&#x6CD5;&#x3002;</p>
+<pre><code class="lang-java"><span class="hljs-meta">@Service</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">helloService</span> </span>{
+    <span class="hljs-meta">@Autowired</span>
+    RestTemplate restTemplate;
+
+    <span class="hljs-meta">@HystrixCommand</span>(fallbackMethod = <span class="hljs-string">&quot;helloFaceback&quot;</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">helloConsumer</span><span class="hljs-params">()</span></span>{
+        <span class="hljs-keyword">return</span> restTemplate.getForEntity(<span class="hljs-string">&quot;http://HELLOSERVICE/hello&quot;</span>,String.class).getBody();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">helloFaceback</span><span class="hljs-params">()</span></span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;error&quot;</span>;
+    }
+}
+</code></pre>
+<p><strong>&#x4FEE;&#x6539;controller</strong>,&#x6CE8;&#x5165;&#x5B9E;&#x4F8B;&#x5E76;&#x8C03;&#x7528;</p>
+<pre><code class="lang-java">    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-keyword">private</span> helloService helloService;
+
+    <span class="hljs-meta">@RequestMapping</span>(value = <span class="hljs-string">&quot;/ribbon-consumer&quot;</span>,method = RequestMethod.GET)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">helloService</span><span class="hljs-params">()</span></span>{
+        <span class="hljs-keyword">return</span> helloService.helloConsumer();
+    }
+</code></pre>
+<ul>
+<li><strong>&#x9A8C;&#x8BC1;&#x7ED3;&#x679C;</strong></li>
+</ul>
+<p>&#x6211;&#x4EEC;&#x6765;&#x9A8C;&#x8BC1;&#x4E00;&#x4E0B;&#x901A;&#x8FC7;&#x65AD;&#x8DEF;&#x5668;&#x5B9E;&#x73B0;&#x7684;&#x670D;&#x52A1;&#x56DE;&#x8C03;&#x903B;&#x8F91;&#xFF0C;&#x91CD;&#x65B0;&#x542F;&#x52A8;&#x4E4B;&#x524D;&#x5173;&#x95ED;&#x7684;8081&#x7AEF;&#x53E3;&#x7684;Hello-Service, &#x786E;&#x4FDD;&#x6B64;&#x65F6;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x3001; &#x4E24;&#x4E2A; Hello-Service &#x4EE5;&#x53CA; RIBBON&#xAD;CONSUMER &#x5747;&#x5DF2;&#x542F;&#x52A8;&#xFF0C;&#x8BBF;&#x95EE; <a href="http://localhost:9000/ribbon-consumer" target="_blank">http://localhost:9000/ribbon-consumer</a> &#x53EF;&#x4EE5;&#x8F6E;&#x8BE2;&#x4E24;&#x4E2A; HELLO-SERV&#x5DE5;CE &#x5E76;&#x8FD4;&#x56DE;&#x4E00;&#x4E9B;&#x6587;&#x5B57;&#x4FE1;&#x606F; &#x6B64;&#x65F6;&#x6211;&#x4EEC;&#x7EE7;&#x7EED;&#x65AD;&#x5F00;8081&#x7684;HELLO-SERVICE,&#x7136;&#x540E;&#x8BBF;&#x95EE; <a href="http://localhost:9000/ribbon-consumer" target="_blank">http://localhost:9000/ribbon-consumer</a>, &#x5F53;&#x8F6E;&#x8BE2;&#x5230; 8081 &#x670D;&#x52A1;&#x7AEF;&#x65F6;&#xFF0C;&#x8F93;&#x51FA;&#x5185;&#x5BB9;&#x4E3A; error, &#x4E0D;&#x518D;&#x662F;&#x4E4B;&#x524D;&#x7684;&#x9519;&#x8BEF;&#x5185;&#x5BB9;&#xFF0C; Hystrix &#x7684;&#x670D;&#x52A1;&#x56DE;&#x8C03;&#x751F;&#x6548;&#x3002;</p>
+<p><img src="images/hystrix-03.png" alt="01"></p>
+<p>&#x9664;&#x4E86;&#x901A;&#x8FC7;&#x65AD;&#x5F00;&#x5177;&#x4F53;&#x7684;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x6765;&#x6A21;&#x62DF;&#x67D0;&#x4E2A;&#x8282;&#x70B9;&#x65E0;&#x6CD5;&#x8BBF;&#x95EE;&#x7684;&#x60C5;&#x51B5;&#x4E4B;&#x5916;&#xFF0C;&#x6211;&#x4EEC;&#x8FD8;&#x53EF;&#x4EE5;&#x6A21;&#x62DF; &#x4E00; &#x4E0B;&#x670D;&#x52A1;&#x963B;&#x585E;&#xFF08;&#x957F;&#x65F6;&#x95F4;&#x672A;&#x54CD;&#x5E94;&#xFF09;&#x7684;&#x60C5;&#x51B5;&#x3002; &#x6211;&#x4EEC;&#x5BF9; HELLO-SERVICE &#x7684; /hello &#x63A5;&#x53E3;&#x505A; &#x4E00; &#x4E9B;&#x4FEE;&#x6539;&#xFF0C;&#x5177;&#x4F53;&#x5982;&#x4E0B;:</p>
+<pre><code class="lang-java"><span class="hljs-meta">@RequestMapping</span>(value = <span class="hljs-string">&quot;/hello&quot;</span>,method = RequestMethod.GET)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">index</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException </span>{
+        <span class="hljs-keyword">for</span>(String s:client.getServices()){
+            List&lt;ServiceInstance&gt; instances=client.getInstances(s);
+            <span class="hljs-comment">//&#x8BA9;&#x7EBF;&#x7A0B;&#x7B49;&#x5F85;&#x51E0;&#x79D2;</span>
+            <span class="hljs-keyword">int</span> sleepTime=<span class="hljs-keyword">new</span> Random().nextInt(<span class="hljs-number">3000</span>);
+            logger.info(<span class="hljs-string">&quot;sleepTime:&quot;</span> + sleepTime);
+            Thread.sleep(sleepTime);
+            <span class="hljs-keyword">for</span>(ServiceInstance instance:instances){
+                logger.info(
+                        <span class="hljs-string">&quot;/hello, host:&quot;</span> + instance.getHost() + <span class="hljs-string">&quot;, service_id:&quot;</span> + instance.getServiceId());
+            }
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Hello World&quot;</span>;
+    }
+</code></pre>
+<p>&#x901A;&#x8FC7; Thread. sleep ()&#x51FD;&#x6570;&#x53EF;&#x8BA9; /hello &#x63A5;&#x53E3;&#x7684;&#x5904;&#x7406;&#x7EBF;&#x7A0B;&#x4E0D;&#x662F;&#x9A6C;&#x4E0A;&#x8FD4;&#x56DE;&#x5185;&#x5BB9;&#xFF0C;&#x800C;&#x662F;&#x5728;&#x963B;&#x585E;&#x51E0;&#x79D2;&#x4E4B;&#x540E;&#x624D;&#x8FD4;&#x56DE;&#x5185;&#x5BB9;&#x3002; </p>
+<p>&#x7531;&#x4E8E; Hystrix &#x9ED8;&#x8BA4;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x4E3A; 1000 &#x6BEB;&#x79D2;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x91CC;&#x91C7;&#x7528;&#x4E86; 0&#x81F3;3000 &#x7684;&#x968F;&#x673A;&#x6570;&#x4EE5;&#x8BA9;&#x5904;&#x7406;&#x8FC7;&#x7A0B;&#x6709; &#x4E00; &#x5B9A;&#x6982;&#x7387;&#x53D1;&#x751F;&#x8D85;&#x65F6;&#x6765;&#x89E6;&#x53D1;&#x65AD;&#x8DEF;&#x5668;&#x3002;</p>
+<p><img src="D:/%E7%A7%81%E4%BA%BA/markdownFile/hystrix-04.png" alt="1555210847334"></p>
+<p>&#x4E3A;&#x4E86;&#x66F4;&#x7CBE;&#x51C6;&#x5730;&#x89C2;&#x5BDF;&#x65AD;&#x8DEF;&#x5668;&#x7684;&#x89E6;&#x53D1;&#xFF0C;&#x5728;&#x6D88;&#x8D39;&#x8005;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x4E2D;&#x505A;&#x4E00;&#x4E9B;&#x65F6;&#x95F4;&#x8BB0;&#x5F55;&#xFF0C;&#x5177;&#x4F53;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-meta">@HystrixCommand</span>(fallbackMethod = <span class="hljs-string">&quot;helloFaceback&quot;</span>,commandKey = <span class="hljs-string">&quot;helloKey&quot;</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">helloConsumer</span><span class="hljs-params">()</span></span>{
+        <span class="hljs-keyword">long</span> start = System.currentTimeMillis();
+        String result=restTemplate.getForEntity(<span class="hljs-string">&quot;http://HELLO-SERVICE/hello&quot;</span>,String.class).getBody();
+        <span class="hljs-keyword">long</span> end= System.currentTimeMillis();
+        logger.info(<span class="hljs-string">&quot;Spend time : &quot;</span>+ (end - start));
+        <span class="hljs-keyword">return</span> result.toString();
+    }
+</code></pre>
+<p>&#x91CD;&#x65B0;&#x542F;&#x52A8;HELLO-SERVICE&#x548C;RIBBON-CONSUMER&#x7684;&#x5B9E;&#x4F8B;&#xFF0C;&#x8FDE;&#x7EED;&#x8BBF;&#x95EE;<a href="http://localhost:9000/ribbon-consumer&#x51E0;&#x6B21;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x89C2;&#x5BDF;&#x5230;&#xFF0C;&#x5F53;RIBBON-CONSUMER&#x7684;&#x63A7;&#x5236;&#x53F0;&#x4E2D;&#x8F93;&#x51FA;&#x7684;Spend" target="_blank">http://localhost:9000/ribbon-consumer&#x51E0;&#x6B21;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x89C2;&#x5BDF;&#x5230;&#xFF0C;&#x5F53;RIBBON-CONSUMER&#x7684;&#x63A7;&#x5236;&#x53F0;&#x4E2D;&#x8F93;&#x51FA;&#x7684;Spend</a> time&#x5927;&#x4E8E;2000&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5C31;&#x4F1A;&#x8FD4;&#x56DE;error, &#x5373;&#x670D;&#x52A1;&#x6D88;&#x8D39;&#x8005;&#x56E0;&#x8C03;&#x7528;&#x7684;&#x670D;&#x52A1;&#x8D85;&#x65F6;&#x4ECE;&#x800C;&#x89E6;&#x53D1;&#x7194;&#x65AD;&#x8BF7;&#x6C42;&#xFF0C;&#x5E76;&#x8C03;&#x7528;&#x56DE;&#x8C03;&#x903B;&#x8F91;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x3002;</p>
+<p><strong>&#x53C2;&#x6570;&#x914D;&#x7F6E;&#x5BF9;&#x5E94;&#x7C7B;&#xFF1A;HystrixCommandProperties</strong></p>
+<pre><code>@HystrixCommand(fallbackMethod = &quot;helloFaceback&quot;,commandProperties = {@HystrixProperty(name = &quot;execution.isolation.thread.timeoutInMilliseconds&quot;,value = &quot;2000&quot;)})
+</code></pre><h2 id="hystrix&#x4EEA;&#x8868;&#x76D8;"><a name="hystrix&#x4EEA;&#x8868;&#x76D8;" class="anchor-navigation-ex-anchor" href="#hystrix&#x4EEA;&#x8868;&#x76D8;"><i class="fa fa-link" aria-hidden="true"></i></a>Hystrix&#x4EEA;&#x8868;&#x76D8;</h2>
+<p><img src="images/hystrix-05.png" alt="01"></p>
+<ul>
+<li><strong>&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x6807;&#x51C6;&#x7684; Spring Boot &#x5DE5;&#x7A0B;&#xFF0C; &#x547D;&#x540D;&#x4E3A; hystrix-dashboard &#x3002;</strong></li>
+<li><strong>&#x7F16;&#x8F91; pom.xml,  &#x5177;&#x4F53;&#x4F9D;&#x8D56;&#x5185;&#x5BB9;&#x5982;&#x4E0B;&#x6240;&#x793A;</strong>&#xFF1A;</li>
+</ul>
+<pre><code class="lang-java">        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-cloud-starter-netflix-hystrix&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-cloud-starter-netflix-hystrix-dashboard&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+</code></pre>
+<ul>
+<li><strong>&#x4E3A;&#x5E94;&#x7528;&#x4E3B;&#x7C7B;&#x52A0;&#x4E0A; @EnableHystrixDashboard, &#x542F;&#x7528; Hystrix Dashboard &#x529F;&#x80FD;</strong></li>
+<li><strong>&#x6839;&#x636E;&#x5B9E;&#x9645;&#x60C5;&#x51B5;&#x4FEE;&#x6539;application.properties &#x914D;&#x7F6E;&#x6587;&#x4EF6;</strong></li>
+</ul>
+<pre><code>spring.application.name=hystrix-dashboard
+server.port=9001
+</code></pre><p>&#x4FEE;&#x6539;ribbon-consumer&#x7684;pom</p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre><p>&#x542F;&#x52A8;&#x7C7B;&#x52A0;&#x4E0A;</p>
+<pre><code>@EnableCircuitBreaker
+@EnableHystrix
+@EnableHystrixDashboard
+
+
+
+@Bean
+public ServletRegistrationBean getServlet(){
+
+    HystrixMetricsStreamServlet streamServlet = new HystrixMetricsStreamServlet();
+
+    ServletRegistrationBean registrationBean = new ServletRegistrationBean(streamServlet);
+
+    registrationBean.setLoadOnStartup(1);
+
+    registrationBean.addUrlMappings(&quot;/actuator/hystrix.stream&quot;);
+
+    registrationBean.setName(&quot;HystrixMetricsStreamServlet&quot;);
+
+
+    return registrationBean;
+}
+</code></pre><p><img src="images/hystrix-06.png" alt="01"></p>
+<p><img src="images/hystrix-07.png" alt="01"></p>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> By <em>Dazzle Lin</em> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated</i> 2019-07-02 22:47:59 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../Chapter2/Spring cloud Ribbon.html" class="navigation navigation-prev " aria-label="Previous page: Spring cloud Ribbon">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../Chapter4/Spring Cloud Feign.html" class="navigation navigation-next " aria-label="Next page: Spring Cloud Feign">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Spring Cloud Hystrix","level":"1.4","depth":1,"next":{"title":"Spring Cloud Feign","level":"1.5","depth":1,"path":"Chapter4/Spring Cloud Feign.md","ref":"Chapter4/Spring Cloud Feign.md","articles":[]},"previous":{"title":"Spring cloud Ribbon","level":"1.3","depth":1,"path":"Chapter2/Spring cloud Ribbon.md","ref":"Chapter2/Spring cloud Ribbon.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","search-pro","github","chapter-fold","code","copy-code-button","splitter","page-footer-ex","simple-page-toc","anchor-navigation-ex","livereload"],"root":".","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"chapter-fold":{},"github":{"url":"https://github.com/linqinye"},"livereload":{},"simple-page-toc":{"maxDepth":3,"skipFirstH1":true},"page-footer-ex":{"copyright":"By <em>Dazzle Lin</em>","markdown":false,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated</i>"},"splitter":{},"search-pro":{"cutWordLib":"nodejieba","defineWord":["Gitbook Use"]},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"code":{"copyButtons":true},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"fa fa-hand-o-right","level2Icon":"fa fa-hand-o-right","level3Icon":"fa fa-hand-o-right","showLevelIcon":true},"mode":"float","multipleH1":false,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":false},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Dazzle","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"编写docker学习笔记","language":"zh-hans","gitbook":"*","description":"编写docker学习笔记"},"file":{"path":"Chapter3/Spring Cloud Hystrix.md","mtime":"2019-07-02T14:47:59.477Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-07-03T04:28:46.241Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-chapter-fold/chapter-fold.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
